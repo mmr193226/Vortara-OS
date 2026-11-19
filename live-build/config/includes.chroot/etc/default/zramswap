@@ -1,0 +1,4 @@
+# Vortara: swap comprimido en RAM. Clave para equipos con 2 GB.
+ALGO=zstd
+PERCENT=50
+PRIORITY=100

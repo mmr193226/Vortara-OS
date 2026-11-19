@@ -1,0 +1,32 @@
+#!/bin/sh
+# Marca de Vortara en el instalador Calamares (parte de la configuración de Debian).
+set -e
+
+[ -d /etc/calamares ] || exit 0
+
+src=/etc/calamares/branding/debian
+dst=/etc/calamares/branding/vortara
+mkdir -p "$dst"
+cp -a "$src"/. "$dst"/
+cp /usr/share/pixmaps/vortara-logo-256.png "$dst/vortara-logo.png"
+cp /usr/share/pixmaps/vortara-calamares-bienvenida.png "$dst/vortara-bienvenida.png"
+
+sed -i \
+	-e 's/^componentName:.*/componentName:  vortara/' \
+	-e 's/^\( *productName:\).*/\1         "Vortara OS"/' \
+	-e 's/^\( *shortProductName:\).*/\1    "Vortara"/' \
+	-e 's/^\( *version:\).*/\1             "@VORTARA_VERSION@"/' \
+	-e 's/^\( *shortVersion:\).*/\1        "@VORTARA_VERSION@"/' \
+	-e 's/^\( *versionedName:\).*/\1       "Vortara OS @VORTARA_VERSION@ (@VORTARA_CODENAME_PRETTY@)"/' \
+	-e 's/^\( *shortVersionedName:\).*/\1  "Vortara @VORTARA_VERSION@"/' \
+	-e 's/^\( *bootloaderEntryName:\).*/\1 "Vortara"/' \
+	-e 's/^\( *productLogo:\).*/\1         "vortara-logo.png"/' \
+	-e 's/^\( *productIcon:\).*/\1         "vortara-logo.png"/' \
+	-e 's/^\( *productWelcome:\).*/\1      "vortara-bienvenida.png"/' \
+	-e 's/^\( *sidebarBackground:\).*/\1    "#0B1F1D"/' \
+	-e 's/^\( *sidebarText:\).*/\1          "#E6FFFA"/' \
+	-e 's/^\( *sidebarTextSelect:\).*/\1    "#5EEAD4"/' \
+	-e 's/^\( *sidebarTextHighlight:\).*/\1 "#14B8A6"/' \
+	"$dst/branding.desc"
+
+sed -i 's/^branding:.*/branding: vortara/' /etc/calamares/settings.conf

@@ -1,0 +1,31 @@
+#!/bin/sh
+# Identidad de Vortara: os-release, issue y nombre del sistema.
+# Se usa dpkg-divert para que las actualizaciones de base-files no lo pisen.
+set -e
+
+VERSION="@VORTARA_VERSION@"
+CODENAME="@VORTARA_CODENAME@"
+CODENAME_PRETTY="@VORTARA_CODENAME_PRETTY@"
+
+dpkg-divert --quiet --local --rename --add /usr/lib/os-release
+cat > /usr/lib/os-release <<EOT
+PRETTY_NAME="Vortara OS ${VERSION} (${CODENAME_PRETTY})"
+NAME="Vortara OS"
+VERSION_ID="${VERSION}"
+VERSION="${VERSION} (${CODENAME_PRETTY})"
+VERSION_CODENAME=${CODENAME}
+DEBIAN_CODENAME=trixie
+ID=vortara
+ID_LIKE=debian
+HOME_URL="https://github.com/mmr193226/Vortara-OS"
+SUPPORT_URL="https://github.com/mmr193226/Vortara-OS/issues"
+BUG_REPORT_URL="https://github.com/mmr193226/Vortara-OS/issues"
+LOGO=vortara-logo
+EOT
+ln -sf ../usr/lib/os-release /etc/os-release
+
+for f in /etc/issue /etc/issue.net; do
+	dpkg-divert --quiet --local --rename --add "$f"
+done
+printf 'Vortara OS %s (%s) \\n \\l\n\n' "$VERSION" "$CODENAME_PRETTY" > /etc/issue
+printf 'Vortara OS %s (%s)\n' "$VERSION" "$CODENAME_PRETTY" > /etc/issue.net

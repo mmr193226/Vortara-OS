@@ -1,0 +1,13 @@
+[Unit]
+Description=Vortara: añadir el repositorio Flathub
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=!/var/lib/vortara/flathub-ok
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+ExecStartPost=/usr/bin/install -D -m 644 /dev/null /var/lib/vortara/flathub-ok
+
+[Install]
+WantedBy=multi-user.target

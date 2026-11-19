@@ -1,0 +1,15 @@
+#!/bin/sh
+# live-config (solo en la sesión live): pone "Instalar Vortara" en el escritorio.
+. /usr/lib/live/config.sh
+
+usuario="${LIVE_USERNAME:-vortara}"
+casa="/home/$usuario"
+lanzador=/usr/share/applications/calamares-install-debian.desktop
+[ -d "$casa" ] && [ -f "$lanzador" ] || exit 0
+
+for dir in Escritorio Desktop; do
+	mkdir -p "$casa/$dir"
+	install -m 755 "$lanzador" "$casa/$dir/instalar-vortara.desktop"
+	chown -R "$usuario:$usuario" "$casa/$dir"
+	break
+done

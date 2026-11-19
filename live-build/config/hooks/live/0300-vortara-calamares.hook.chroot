@@ -19,7 +19,6 @@ sed -i \
 	-e 's/^\( *shortVersion:\).*/\1        "@VORTARA_VERSION@"/' \
 	-e 's/^\( *versionedName:\).*/\1       "Vortara OS @VORTARA_VERSION@ (@VORTARA_CODENAME_PRETTY@)"/' \
 	-e 's/^\( *shortVersionedName:\).*/\1  "Vortara @VORTARA_VERSION@"/' \
-	-e 's/^\( *bootloaderEntryName:\).*/\1 "Vortara"/' \
 	-e 's/^\( *productLogo:\).*/\1         "vortara-logo.png"/' \
 	-e 's/^\( *productIcon:\).*/\1         "vortara-logo.png"/' \
 	-e 's/^\( *productWelcome:\).*/\1      "vortara-bienvenida.png"/' \
@@ -30,3 +29,23 @@ sed -i \
 	"$dst/branding.desc"
 
 sed -i 's/^branding:.*/branding: vortara/' /etc/calamares/settings.conf
+
+# bootloaderEntryName se deja como en Debian: el GRUB firmado para Secure Boot
+# busca su configuración en \EFI\debian. El menú de GRUB dirá "Vortara"
+# gracias a GRUB_DISTRIBUTOR (/etc/default/grub.d/vortara.cfg).
+
+# Al instalar, quitar también el instalador y las herramientas del modo live.
+sed -i "s/^      - 'calamares-settings-debian'/      - 'calamares-settings-debian'\n      - 'calamares'\n      - 'user-setup'/" \
+	/etc/calamares/modules/packages.conf
+
+# Lanzador del instalador en español y con el logo de Vortara.
+lanzador=/usr/share/applications/calamares-install-debian.desktop
+if [ -f "$lanzador" ]; then
+	sed -i \
+		-e 's/^Name=.*/Name=Instalar Vortara/' \
+		-e '/^Name\[/d' \
+		-e 's/^Comment=.*/Comment=Instalar Vortara OS en este equipo/' \
+		-e '/^Comment\[/d' \
+		-e 's/^Icon=.*/Icon=vortara-logo/' \
+		"$lanzador"
+fi

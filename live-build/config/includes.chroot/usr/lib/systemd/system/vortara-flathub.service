@@ -3,10 +3,14 @@ Description=Vortara: añadir el repositorio Flathub
 Wants=network-online.target
 After=network-online.target
 ConditionPathExists=!/var/lib/vortara/flathub-ok
+# Sin conexión: reintentar cada 10 minutos hasta conseguirlo.
+StartLimitIntervalSec=0
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+Restart=on-failure
+RestartSec=10min
 ExecStartPost=/usr/bin/install -D -m 644 /dev/null /var/lib/vortara/flathub-ok
 
 [Install]

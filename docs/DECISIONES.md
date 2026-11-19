@@ -71,6 +71,24 @@ de bienvenida ofrece instalar packs opcionales después.
 - Contiene los paquetes propios: branding, tema, app de bienvenida y metapaquetes
   de los packs opcionales.
 
-## Pendiente de decidir
+## 8. Detalles técnicos de la ISO
 
-Nada por ahora. Siguiente paso: configuración de `live-build` para la primera ISO.
+- Se construye **sin paquetes recomendados** para mantener la base ligera; los
+  recomendados que sí hacen falta (WiFi, portales de Flatpak, gvfs, usuario
+  live...) se listan explícitamente en `live-build/config/package-lists/`.
+- El firmware se elige a mano (`firmware.list.chroot`). No se usa la opción de
+  live-build que instala *todo* el firmware, porque incluye paquetes
+  `*-installer` que descargan de internet al instalarse.
+- El **initramfs** no incluye drivers de gráficas (se cargan desde el disco al
+  arrancar) y va comprimido con zstd: pasa de ~220 MB a ~75 MB.
+- Para Secure Boot, la entrada EFI se mantiene como `debian` (el GRUB firmado
+  por Debian busca ahí su configuración). El menú de GRUB muestra "Vortara".
+- Calamares desinstala del sistema instalado el propio instalador y las
+  herramientas del modo live.
+
+## Pendiente
+
+- Probar una instalación completa con Calamares (UEFI y BIOS).
+- App de bienvenida con los packs opcionales (Desarrollo, Ofimática/Multimedia).
+- Repositorio APT en GitHub Pages con los paquetes propios de Vortara.
+- Tema de Cinnamon con acento teal e icono del menú con el logo de Vortara.

@@ -33,6 +33,7 @@ de bienvenida ofrece instalar packs opcionales después.
 | Entorno de escritorio | Cinnamon |
 | Estilo | Oscuro moderno (modo claro disponible) |
 | Color de acento | Verde azulado (teal) |
+| Logo | Vórtice/espiral teal (boceto en `branding/logo/vortara-logo.svg`) |
 
 ## 4. Software
 
@@ -44,9 +45,10 @@ de bienvenida ofrece instalar packs opcionales después.
 
 ### Packs opcionales (app de bienvenida)
 
-- **Desarrollo — Básico**: git, build-essential, Python, editor de código.
+- **Desarrollo — Básico**: git, build-essential, Python, Geany y VSCodium
+  (VSCodium vía Flatpak/repositorio oficial; Geany para equipos con poca RAM).
 - **Desarrollo — Lenguajes extra**: Node.js, Go, Rust, Java (OpenJDK).
-- **Ofimática / Multimedia**: por definir.
+- **Ofimática / Multimedia**: LibreOffice, VLC, GIMP, Thunderbird.
 
 ## 5. Idioma
 
@@ -58,11 +60,17 @@ de bienvenida ofrece instalar packs opcionales después.
 | Aspecto | Decisión |
 |---|---|
 | Numeración | Año.mes, p. ej. `26.11` |
+| Nombres en clave | Fenómenos naturales, en orden alfabético |
+| Primera versión | **Vortara 26.11 "Aurora"** |
 | Actualizaciones | Solo notificar; nada se instala automáticamente |
+
+## 7. Repositorio APT propio
+
+- Alojado en **GitHub Pages**, publicado con GitHub Actions desde este repositorio.
+- Firmado con una clave GPG de Vortara.
+- Contiene los paquetes propios: branding, tema, app de bienvenida y metapaquetes
+  de los packs opcionales.
 
 ## Pendiente de decidir
 
-- Logo y nombre de la versión (si tendrá nombre en clave).
-- Contenido exacto del pack Ofimática / Multimedia.
-- Editor de código del pack de Desarrollo (VSCodium, Geany…).
-- Repositorio APT propio para paquetes de Vortara (alojamiento).
+Nada por ahora. Siguiente paso: configuración de `live-build` para la primera ISO.

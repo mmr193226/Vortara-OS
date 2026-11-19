@@ -14,6 +14,7 @@ man-db
 manpages-es
 htop
 zram-tools
+zstd
 dosfstools
 ntfs-3g
 exfatprogs

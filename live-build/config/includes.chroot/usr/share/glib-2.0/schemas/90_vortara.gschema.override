@@ -19,9 +19,6 @@ picture-uri='file:///usr/share/backgrounds/vortara/aurora.png'
 picture-options='zoom'
 primary-color='#0B1F1D'
 
-[org.cinnamon.desktop.screensaver]
-picture-uri='file:///usr/share/backgrounds/vortara/aurora.png'
-
 [org.cinnamon]
 favorite-apps=['firefox-esr.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop']
 

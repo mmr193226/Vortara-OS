@@ -7,7 +7,7 @@ VERSION="@VORTARA_VERSION@"
 CODENAME="@VORTARA_CODENAME@"
 CODENAME_PRETTY="@VORTARA_CODENAME_PRETTY@"
 
-dpkg-divert --quiet --local --rename --add /usr/lib/os-release
+dpkg-divert --quiet --local --no-rename --add /usr/lib/os-release
 cat > /usr/lib/os-release <<EOT
 PRETTY_NAME="Vortara OS ${VERSION} (${CODENAME_PRETTY})"
 NAME="Vortara OS"
@@ -25,7 +25,7 @@ EOT
 ln -sf ../usr/lib/os-release /etc/os-release
 
 for f in /etc/issue /etc/issue.net; do
-	dpkg-divert --quiet --local --rename --add "$f"
+	dpkg-divert --quiet --local --no-rename --add "$f"
 done
 printf 'Vortara OS %s (%s) \\n \\l\n\n' "$VERSION" "$CODENAME_PRETTY" > /etc/issue
 printf 'Vortara OS %s (%s)\n' "$VERSION" "$CODENAME_PRETTY" > /etc/issue.net

@@ -40,10 +40,17 @@ es_debian_trixie() {
 preparar_config() {
 	# Copia la configuración y sustituye los datos de la versión.
 	local dir="$1"
+	local cache="$TRABAJO/cache-lb"
 	[ -d "$dir" ] && desmontar_bajo "$dir"
+	# Se conserva la caché de paquetes de live-build entre construcciones.
+	if [ -d "$dir/cache" ]; then
+		rm -rf "$cache"
+		mv "$dir/cache" "$cache"
+	fi
 	rm -rf "$dir"
 	mkdir -p "$dir"
 	cp -a "$RAIZ/live-build/." "$dir/"
+	[ -d "$cache" ] && mv "$cache" "$dir/cache"
 	grep -rlZ '@VORTARA_' "$dir/config" | xargs -0 -r sed -i \
 		-e "s/@VORTARA_VERSION@/${VORTARA_VERSION}/g" \
 		-e "s/@VORTARA_CODENAME@/${VORTARA_CODENAME}/g" \
@@ -66,7 +73,7 @@ preparar_config() {
 construir() {
 	# $1 = directorio con la configuración (visto desde donde se ejecuta lb)
 	cd "$1"
-	lb clean --purge >/dev/null 2>&1 || true
+	lb clean >/dev/null 2>&1 || true
 	lb config
 	lb build
 }
@@ -99,7 +106,7 @@ else
 	trap 'for m in dev/pts dev sys proc; do umount -l "$HOST/$m" 2>/dev/null || true; done' EXIT
 
 	preparar_config "$HOST/build/vortara"
-	chroot "$HOST" /bin/bash -c "cd /build/vortara && lb clean --purge >/dev/null 2>&1; lb config && lb build"
+	chroot "$HOST" /bin/bash -c "cd /build/vortara && lb clean >/dev/null 2>&1; lb config && lb build"
 	cp "$HOST/build/vortara/$ISO" "$SALIDA/"
 fi
 

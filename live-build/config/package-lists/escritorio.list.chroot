@@ -12,7 +12,6 @@ x11-xserver-utils
 xdg-user-dirs-gtk
 xdg-utils
 dbus-x11
-policykit-1-gnome
 gnome-keyring
 network-manager
 network-manager-gnome

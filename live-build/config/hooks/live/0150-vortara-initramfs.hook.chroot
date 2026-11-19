@@ -1,0 +1,34 @@
+#!/bin/sh
+# Vortara: initramfs ligero. Los hooks de plymouth y live-boot (kms) meten
+# todos los drivers de gráficas y su firmware (>150 MB). No hacen falta para
+# arrancar: plymouth usa el framebuffer genérico (simpledrm) y los drivers
+# reales se cargan desde el disco. Se desvían con dpkg-divert para que las
+# actualizaciones de los paquetes no deshagan el cambio.
+set -e
+
+H=/usr/share/initramfs-tools/hooks
+# Los originales se guardan fuera de hooks/: initramfs-tools ejecuta todo lo
+# que haya allí (incluidos nombres con punto como plymouth.distrib).
+D=/usr/lib/vortara/initramfs-hooks
+mkdir -p "$D"
+
+if [ -f "$H/plymouth" ]; then
+	dpkg-divert --quiet --local --rename --divert "$D/plymouth" --add "$H/plymouth"
+	cat > "$H/plymouth" <<'EOT'
+#!/bin/sh
+# Vortara: plymouth sin drivers de gráficas (ver dpkg-divert).
+MODULES=list exec /usr/lib/vortara/initramfs-hooks/plymouth "$@"
+EOT
+	chmod 755 "$H/plymouth"
+fi
+
+if [ -f "$H/kms" ]; then
+	dpkg-divert --quiet --local --rename --divert "$D/kms" --add "$H/kms"
+	cat > "$H/kms" <<'EOT'
+#!/bin/sh
+# Vortara: desactivado (ver dpkg-divert). Los drivers se cargan desde el disco.
+[ "$1" = prereqs ] && exit 0
+exit 0
+EOT
+	chmod 755 "$H/kms"
+fi

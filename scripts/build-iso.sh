@@ -22,12 +22,15 @@ HOST="$TRABAJO/host"
 
 [ "$(id -u)" -eq 0 ] || { echo "Ejecuta este script como root (sudo)." >&2; exit 1; }
 
-if [ "${1:-}" = "--limpiar" ]; then
-	for m in dev/pts dev proc sys; do umount "$HOST/$m" 2>/dev/null || true; done
-	rm -rf "$TRABAJO"
-	echo "Directorio de trabajo borrado."
-	exit 0
-fi
+desmontar_bajo() {
+	# Desmonta todo lo que quede montado dentro de $1 (p. ej. tras una
+	# construcción interrumpida) antes de borrar nada.
+	local base m
+	base="$(readlink -f "$1")"
+	awk '{print $2}' /proc/mounts | { grep "^${base}/" || true; } | sort -r | while read -r m; do
+		umount -l "$m" || true
+	done
+}
 
 es_debian_trixie() {
 	. /etc/os-release
@@ -37,6 +40,7 @@ es_debian_trixie() {
 preparar_config() {
 	# Copia la configuración y sustituye los datos de la versión.
 	local dir="$1"
+	[ -d "$dir" ] && desmontar_bajo "$dir"
 	rm -rf "$dir"
 	mkdir -p "$dir"
 	cp -a "$RAIZ/live-build/." "$dir/"
@@ -44,6 +48,19 @@ preparar_config() {
 		-e "s/@VORTARA_VERSION@/${VORTARA_VERSION}/g" \
 		-e "s/@VORTARA_CODENAME@/${VORTARA_CODENAME}/g" \
 		-e "s/@VORTARA_CODENAME_PRETTY@/${VORTARA_CODENAME_PRETTY}/g"
+
+	# live-build limpia las variables de entorno, así que un proxy del sistema
+	# no llega a apt. Se le pasa con config/apt/apt.conf, que live-build
+	# retira al terminar: no queda dentro de la ISO.
+	local proxy_http="${http_proxy:-${HTTP_PROXY:-}}"
+	local proxy_https="${https_proxy:-${HTTPS_PROXY:-}}"
+	if [ -n "$proxy_http$proxy_https" ]; then
+		mkdir -p "$dir/config/apt"
+		: > "$dir/config/apt/apt.conf"
+		[ -n "$proxy_http" ] && echo "Acquire::http::Proxy \"$proxy_http\";" >> "$dir/config/apt/apt.conf"
+		[ -n "$proxy_https" ] && echo "Acquire::https::Proxy \"$proxy_https\";" >> "$dir/config/apt/apt.conf"
+	fi
+	return 0
 }
 
 construir() {
@@ -53,6 +70,13 @@ construir() {
 	lb config
 	lb build
 }
+
+if [ "${1:-}" = "--limpiar" ]; then
+	[ -d "$TRABAJO" ] && desmontar_bajo "$TRABAJO"
+	rm -rf "$TRABAJO"
+	echo "Directorio de trabajo borrado."
+	exit 0
+fi
 
 mkdir -p "$TRABAJO" "$SALIDA"
 ISO="vortara-${VORTARA_VERSION}-amd64.hybrid.iso"

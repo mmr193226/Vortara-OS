@@ -96,11 +96,16 @@ de bienvenida ofrece instalar packs opcionales después.
   correcta. El sistema arranca con GRUB "Vortara", inicia sesión en Cinnamon,
   usa el kernel de backports, zram tiene prioridad sobre la swap del disco y
   ocupa 3,8 GB. Shim y GRUB firmados quedan en `EFI/debian`.
+- **Instalación BIOS** (tabla MSDOS, GRUB en el MBR): correcta, con los mismos
+  resultados.
+- **Presentación del instalador**: se ve y avanza sola (hacían falta los
+  módulos QML `qtquick` y `qtquick-window`, que Calamares no declara).
+- **GRUB del sistema instalado**: fondo y colores de Vortara, aplicados por el
+  propio instalador.
 
 ## Pendiente
 
-- Probar la instalación en BIOS.
-- Comprobar en la próxima ISO la presentación del instalador (faltaba `qml6-module-qtquick`, ya añadido).
+- El submenú de GRUB sale en inglés («Advanced options for...»).
 - App de bienvenida con los packs opcionales (Desarrollo, Ofimática/Multimedia).
 - Repositorio APT en GitHub Pages con los paquetes propios de Vortara.
 - Tema de Cinnamon con acento teal e icono del menú con el logo de Vortara.

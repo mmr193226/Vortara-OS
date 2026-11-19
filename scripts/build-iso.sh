@@ -37,6 +37,10 @@ es_debian_trixie() {
 	[ "${VERSION_CODENAME:-}" = "trixie" ] && [ "${ID:-}" = "debian" ] && command -v lb >/dev/null
 }
 
+# Herramientas necesarias para construir: live-build y apt-utils
+# (apt-ftparchive crea el repositorio de GRUB que va dentro de la ISO).
+HERRAMIENTAS="live-build apt-utils ca-certificates"
+
 preparar_config() {
 	# Copia la configuración y sustituye los datos de la versión.
 	local dir="$1"
@@ -89,6 +93,7 @@ mkdir -p "$TRABAJO" "$SALIDA"
 ISO="vortara-${VORTARA_VERSION}-amd64.hybrid.iso"
 
 if es_debian_trixie; then
+	command -v apt-ftparchive >/dev/null || apt-get install -y $HERRAMIENTAS
 	preparar_config "$TRABAJO/vortara"
 	construir "$TRABAJO/vortara"
 	cp "$TRABAJO/vortara/$ISO" "$SALIDA/"
@@ -96,7 +101,7 @@ else
 	command -v debootstrap >/dev/null || { echo "Instala debootstrap primero." >&2; exit 1; }
 	if [ ! -x "$HOST/usr/bin/lb" ]; then
 		echo ">> Creando entorno Debian 13 para construir (solo la primera vez)..."
-		debootstrap --variant=minbase --include=live-build,ca-certificates \
+		debootstrap --variant=minbase --include="$(echo $HERRAMIENTAS | tr ' ' ',')" \
 			trixie "$HOST" "${VORTARA_MIRROR}"
 	fi
 	cp /etc/resolv.conf "$HOST/etc/resolv.conf"
@@ -104,6 +109,8 @@ else
 		mountpoint -q "$HOST/$m" || mount --bind "/$m" "$HOST/$m"
 	done
 	trap 'for m in dev/pts dev sys proc; do umount -l "$HOST/$m" 2>/dev/null || true; done' EXIT
+	# Entornos creados con versiones anteriores de este script.
+	[ -x "$HOST/usr/bin/apt-ftparchive" ] || chroot "$HOST" apt-get install -y $HERRAMIENTAS
 
 	preparar_config "$HOST/build/vortara"
 	chroot "$HOST" /bin/bash -c "cd /build/vortara && lb clean >/dev/null 2>&1; lb config && lb build"

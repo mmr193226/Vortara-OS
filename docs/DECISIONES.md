@@ -85,10 +85,22 @@ de bienvenida ofrece instalar packs opcionales después.
   por Debian busca ahí su configuración). El menú de GRUB muestra "Vortara".
 - Calamares desinstala del sistema instalado el propio instalador y las
   herramientas del modo live.
+- La ISO lleva un pequeño repositorio (`pool/`, ~26 MB) con GRUB para UEFI
+  (shim y GRUB firmados) y para BIOS, así que **se puede instalar sin
+  Internet**. El sistema instalado conserva las fuentes de APT completas
+  (main, contrib, non-free, non-free-firmware y backports).
+
+## Pruebas
+
+- **Instalación UEFI** (QEMU, 2 GB de RAM, sin red, borrando el disco):
+  correcta. El sistema arranca con GRUB "Vortara", inicia sesión en Cinnamon,
+  usa el kernel de backports, zram tiene prioridad sobre la swap del disco y
+  ocupa 3,8 GB. Shim y GRUB firmados quedan en `EFI/debian`.
 
 ## Pendiente
 
-- Probar una instalación completa con Calamares (UEFI y BIOS).
+- Probar la instalación en BIOS.
+- Comprobar en la próxima ISO la presentación del instalador (faltaba `qml6-module-qtquick`, ya añadido).
 - App de bienvenida con los packs opcionales (Desarrollo, Ofimática/Multimedia).
 - Repositorio APT en GitHub Pages con los paquetes propios de Vortara.
 - Tema de Cinnamon con acento teal e icono del menú con el logo de Vortara.

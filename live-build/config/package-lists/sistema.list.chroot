@@ -42,6 +42,9 @@ wireless-regdb
 dnsmasq-base
 network-manager-l10n
 
+# Diccionario para comprobar contraseñas (sin él, Calamares rechaza todas)
+cracklib-runtime
+
 # Sistemas de archivos que Calamares puede necesitar
 btrfs-progs
 squashfs-tools

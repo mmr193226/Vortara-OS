@@ -26,7 +26,7 @@ nemo
 nemo-fileroller
 file-roller
 mousepad
-atril
+evince
 eog
 gnome-calculator
 gnome-system-monitor
@@ -45,3 +45,16 @@ fonts-noto-color-emoji
 fonts-dejavu
 plymouth
 plymouth-themes
+
+# Recomendados que hacen falta (la ISO se construye sin "recomendados")
+xapp-sn-watcher
+libxapp-gtk3-module
+metacity-common
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+xdg-desktop-portal-xapp
+gvfs-backends
+gvfs-fuse
+lightdm-settings
+alsa-utils
+inxi

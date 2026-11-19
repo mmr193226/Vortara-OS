@@ -24,10 +24,10 @@ const fondo = `
 </body>`;
 
 const logoTexto = `
-<body style="margin:0;background:transparent;display:flex;align-items:center;gap:20px;
-  width:520px;height:128px;font-family:${fuente}">
-  <div style="width:112px;height:112px">${logo.replace('width="256" height="256"', 'width="112" height="112"')}</div>
-  <div style="color:#E6FFFA;font-size:64px;font-weight:600;letter-spacing:2px">Vortara</div>
+<body style="margin:0;background:transparent;display:flex;align-items:center;gap:12px;
+  width:240px;height:64px;font-family:${fuente}">
+  <div style="width:56px;height:56px">${logo.replace('width="256" height="256"', 'width="56" height="56"')}</div>
+  <div style="color:#E6FFFA;font-size:32px;font-weight:600;letter-spacing:1px">Vortara</div>
 </body>`;
 
 const bienvenida = `
@@ -47,7 +47,7 @@ const bienvenida = `
     await p.close();
   };
   await shot(fondo, 1920, 1080, path.join(fondos, 'aurora.png'));
-  await shot(logoTexto, 520, 128, path.join(pixmaps, 'vortara-logo-text.png'), true);
+  await shot(logoTexto, 240, 64, path.join(pixmaps, 'vortara-logo-text.png'), true);
   await shot(bienvenida, 800, 420, path.join(pixmaps, 'vortara-calamares-bienvenida.png'), true);
   for (const s of [16, 22, 24, 32, 48, 64, 128, 256]) {
     const html = `<body style="margin:0;background:transparent">${logo.replace('width="256" height="256"', `width="${s}" height="${s}"`)}</body>`;

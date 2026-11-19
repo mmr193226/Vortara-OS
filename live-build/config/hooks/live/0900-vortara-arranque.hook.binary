@@ -1,0 +1,28 @@
+#!/bin/sh
+# Menú de arranque de Vortara: textos en español, colores teal y sin el
+# título genérico de live-build. Se ejecuta en el directorio binary/.
+set -e
+
+for f in boot/grub/grub.cfg isolinux/live.cfg isolinux/menu.cfg isolinux/utilities.cfg; do
+	[ -f "$f" ] || continue
+	sed -i \
+		-e 's/Live system (amd64 fail-safe mode)/Probar Vortara (modo seguro)/' \
+		-e 's/Live system (amd64)/Probar o instalar Vortara/' \
+		-e 's/Live system/Probar o instalar Vortara/' \
+		-e 's/Utilities\.\.\./Utilidades.../' \
+		-e 's/Boot menu/Menú de arranque/' \
+		"$f"
+done
+
+t=boot/grub/live-theme/theme.txt
+if [ -f "$t" ]; then
+	sed -i \
+		-e 's|^title-text:.*|title-text: ""|' \
+		-e 's|item_color = .*|item_color = "#99F6E4"|' \
+		-e 's|selected_item_color= .*|selected_item_color= "#FFFFFF"|' \
+		-e 's|fg_color = .*|fg_color = "#14B8A6"|' \
+		-e 's|bg_color = .*|bg_color = "#0B3B37"|' \
+		-e 's|border_color = .*|border_color = "#14B8A6"|' \
+		-e 's|text_color = .*|text_color = "#E6FFFA"|' \
+		"$t"
+fi

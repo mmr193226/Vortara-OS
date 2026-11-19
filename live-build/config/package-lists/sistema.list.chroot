@@ -35,3 +35,13 @@ gstreamer1.0-plugins-bad
 gstreamer1.0-plugins-ugly
 gstreamer1.0-libav
 gstreamer1.0-pipewire
+
+# Red: WiFi y punto de acceso
+wpasupplicant
+wireless-regdb
+dnsmasq-base
+network-manager-l10n
+
+# Sistemas de archivos que Calamares puede necesitar
+btrfs-progs
+squashfs-tools

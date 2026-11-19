@@ -1,0 +1,7 @@
+# Repositorio local dentro de la ISO (pool/ y dists/), para que el instalador
+# pueda instalar el cargador de arranque sin conexión a Internet.
+# UEFI, con Secure Boot (shim y GRUB firmados por Debian):
+grub-efi
+grub-efi-amd64
+grub-efi-amd64-signed
+shim-signed

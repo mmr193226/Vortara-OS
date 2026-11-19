@@ -58,3 +58,20 @@ if [ -f "$lanzador" ]; then
 		-e 's/^Icon=.*/Icon=vortara-logo/' \
 		"$lanzador"
 fi
+
+# Cargador de arranque: en UEFI se instala también el shim y el GRUB firmados
+# (Secure Boot). Los paquetes salen del repositorio que va dentro de la ISO,
+# así que funciona sin Internet.
+helpers=/usr/share/calamares/helpers
+sed -i 's/apt-get -y install grub-efi$/apt-get -y install grub-efi-amd64 grub-efi-amd64-signed shim-signed/' \
+	"$helpers/calamares-bootloader-config"
+grep -q 'grub-efi-amd64-signed' "$helpers/calamares-bootloader-config"
+
+# Fuentes de APT del sistema instalado: se conservan las del sistema live
+# (main, contrib, non-free, non-free-firmware y backports con su prioridad),
+# en lugar de la lista reducida que escribe Debian.
+cat > "$helpers/calamares-sources-final" <<'FIN'
+#!/bin/sh
+# Vortara: el sistema instalado conserva las fuentes de APT del sistema live.
+exit 0
+FIN

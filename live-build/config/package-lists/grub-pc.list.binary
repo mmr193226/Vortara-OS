@@ -1,0 +1,4 @@
+# Repositorio local dentro de la ISO: GRUB para equipos con BIOS.
+# Va en una lista aparte porque grub-pc y grub-efi-amd64 no pueden
+# instalarse a la vez.
+grub-pc

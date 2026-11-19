@@ -1,3 +1,6 @@
 # Solo en la sesión live (se elimina del sistema instalado)
 calamares
 calamares-settings-debian
+# Módulos QML para la presentación durante la instalación (calamares no
+# los declara como dependencia).
+qml6-module-qtquick

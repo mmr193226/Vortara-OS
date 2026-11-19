@@ -10,9 +10,22 @@ for f in boot/grub/grub.cfg isolinux/live.cfg isolinux/menu.cfg isolinux/utiliti
 		-e 's/Live system (amd64)/Probar o instalar Vortara/' \
 		-e 's/Live system/Probar o instalar Vortara/' \
 		-e 's/Utilities\.\.\./Utilidades.../' \
-		-e 's/Boot menu/Menú de arranque/' \
 		"$f"
 done
+
+# syslinux (BIOS) no muestra bien los acentos y el título se solapa con el
+# logo del fondo: se deja sin título. El resto en español sin tildes.
+if [ -f isolinux/menu.cfg ]; then
+	sed -i \
+		-e 's/^menu title .*/menu title/' \
+		-e 's/menu label ^Utilities/menu label ^Utilidades/' \
+		-e 's/menu title Utilities/menu title Utilidades/' \
+		-e 's/menu label ^Back\.\./menu label ^Volver/' \
+		isolinux/menu.cfg
+fi
+if [ -f isolinux/utilities.cfg ]; then
+	sed -i 's/Hardware Detection Tool (HDT)/Deteccion de hardware (HDT)/' isolinux/utilities.cfg
+fi
 
 t=boot/grub/live-theme/theme.txt
 if [ -f "$t" ]; then

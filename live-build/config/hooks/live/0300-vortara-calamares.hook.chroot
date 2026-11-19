@@ -22,10 +22,15 @@ sed -i \
 	-e 's/^\( *productLogo:\).*/\1         "vortara-logo.png"/' \
 	-e 's/^\( *productIcon:\).*/\1         "vortara-logo.png"/' \
 	-e 's/^\( *productWelcome:\).*/\1      "vortara-bienvenida.png"/' \
-	-e 's/^\( *sidebarBackground:\).*/\1    "#0B1F1D"/' \
-	-e 's/^\( *sidebarText:\).*/\1          "#E6FFFA"/' \
-	-e 's/^\( *sidebarTextSelect:\).*/\1    "#5EEAD4"/' \
-	-e 's/^\( *sidebarTextHighlight:\).*/\1 "#14B8A6"/' \
+	-e 's|^\( *productUrl:\).*|\1          https://github.com/mmr193226/Vortara-OS|' \
+	-e 's|^\( *supportUrl:\).*|\1          https://github.com/mmr193226/Vortara-OS/issues|' \
+	-e 's|^\( *knownIssuesUrl:\).*|\1      https://github.com/mmr193226/Vortara-OS/issues|' \
+	-e 's|^\( *releaseNotesUrl:\).*|\1     https://github.com/mmr193226/Vortara-OS/blob/main/docs/DECISIONES.md|' \
+	-e 's|^\( *donateUrl:\).*|\1           https://github.com/mmr193226/Vortara-OS|' \
+	-e 's|^\( *SidebarBackground:\).*|\1    "#0B1F1D"|' \
+	-e 's|^\( *SidebarText:\).*|\1          "#E6FFFA"|' \
+	-e 's|^\( *SidebarTextCurrent:\).*|\1   "#FFFFFF"|' \
+	-e 's|^\( *SidebarBackgroundCurrent:\).*|\1 "#0F766E"|' \
 	"$dst/branding.desc"
 
 sed -i 's/^branding:.*/branding: vortara/' /etc/calamares/settings.conf
@@ -33,6 +38,9 @@ sed -i 's/^branding:.*/branding: vortara/' /etc/calamares/settings.conf
 # bootloaderEntryName se deja como en Debian: el GRUB firmado para Secure Boot
 # busca su configuración en \EFI\debian. El menú de GRUB dirá "Vortara"
 # gracias a GRUB_DISTRIBUTOR (/etc/default/grub.d/vortara.cfg).
+
+# Espacio mínimo: el sistema instalado ocupa ~6 GB; 10 GB deja margen.
+sed -i 's/^\( *requiredStorage:\).*/\1    10/' /etc/calamares/modules/welcome.conf
 
 # Al instalar, quitar también el instalador y las herramientas del modo live.
 sed -i "s/^      - 'calamares-settings-debian'/      - 'calamares-settings-debian'\n      - 'calamares'\n      - 'user-setup'/" \

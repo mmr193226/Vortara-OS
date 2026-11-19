@@ -23,6 +23,16 @@ const fondo = `
   </div>
 </body>`;
 
+// Fondo del menú de GRUB del sistema instalado (4:3, se estira a la pantalla).
+// El logo va pequeño y en una esquina para no quedar debajo del texto del menú.
+const grub = `
+<body style="margin:0;width:1024px;height:768px;overflow:hidden;position:relative;
+  background: radial-gradient(ellipse 80% 70% at 50% 40%, #0F3D38 0%, #0B1F1D 60%, #071211 100%);">
+  <div style="position:absolute;right:40px;bottom:36px;width:120px;height:120px;opacity:.35">
+    ${logo.replace('width="256" height="256"', 'width="120" height="120"')}
+  </div>
+</body>`;
+
 const logoTexto = `
 <body style="margin:0;background:transparent;display:flex;align-items:center;gap:12px;
   width:240px;height:64px;font-family:${fuente}">
@@ -47,6 +57,7 @@ const bienvenida = `
     await p.close();
   };
   await shot(fondo, 1920, 1080, path.join(fondos, 'aurora.png'));
+  await shot(grub, 1024, 768, path.join(fondos, 'grub.png'));
   await shot(logoTexto, 240, 64, path.join(pixmaps, 'vortara-logo-text.png'), true);
   await shot(bienvenida, 800, 420, path.join(pixmaps, 'vortara-calamares-bienvenida.png'), true);
   for (const s of [16, 22, 24, 32, 48, 64, 128, 256]) {

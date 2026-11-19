@@ -6,6 +6,11 @@ grep -qw 'boot=live' /proc/cmdline || exit 0
 lanzador=/usr/share/applications/calamares-install-debian.desktop
 [ -f "$lanzador" ] || exit 0
 
+# Las carpetas personales (Escritorio, Documentos...) se crean con
+# xdg-user-dirs-update, que también arranca al iniciar la sesión. Se ejecuta
+# aquí primero: si no, xdg-user-dir puede devolver ~/Desktop, que Nemo no
+# muestra cuando el idioma es español.
+xdg-user-dirs-update 2>/dev/null || true
 escritorio="$(xdg-user-dir DESKTOP 2>/dev/null)"
 [ -n "$escritorio" ] && [ "$escritorio" != "$HOME" ] || escritorio="$HOME/Escritorio"
 mkdir -p "$escritorio"

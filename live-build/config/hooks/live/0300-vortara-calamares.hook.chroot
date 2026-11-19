@@ -47,6 +47,10 @@ sed -i 's/^\( *requiredStorage:\).*/\1    10/' /etc/calamares/modules/welcome.co
 sed -i "s/^      - 'calamares-settings-debian'/      - 'calamares-settings-debian'\n      - 'calamares'\n      - 'user-setup'/" \
 	/etc/calamares/modules/packages.conf
 
+# El icono del escritorio lo pone /usr/libexec/vortara/lanzador-instalador;
+# se quita el autostart de Debian para que no salga duplicado.
+rm -f /etc/xdg/autostart/calamares-desktop-icon.desktop
+
 # Lanzador del instalador en español y con el logo de Vortara.
 lanzador=/usr/share/applications/calamares-install-debian.desktop
 if [ -f "$lanzador" ]; then

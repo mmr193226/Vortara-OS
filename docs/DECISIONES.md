@@ -102,6 +102,8 @@ de bienvenida ofrece instalar packs opcionales después.
   módulos QML `qtquick` y `qtquick-window`, que Calamares no declara).
 - **GRUB del sistema instalado**: fondo y colores de Vortara, aplicados por el
   propio instalador.
+- **Icono «Instalar Vortara»**: aparece una sola vez y abre el instalador
+  directamente. Sin disco, el instalador avisa y no deja continuar.
 
 ## Pendiente
 

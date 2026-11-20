@@ -6,11 +6,6 @@ case "$1" in
 		/usr/libexec/vortara/generar-tema-cinnamon
 		glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 		gtk-update-icon-cache -q /usr/share/icons/hicolor 2>/dev/null || true
-		# Primera instalación: avatar de Vortara para los usuarios nuevos (en
-		# lugar del logo de Debian). En actualizaciones no se toca.
-		if [ -z "$2" ] && [ -f /usr/share/pixmaps/vortara-avatar.png ]; then
-			cp /usr/share/pixmaps/vortara-avatar.png /etc/skel/.face
-		fi
 		;;
 	triggered)
 		/usr/libexec/vortara/generar-tema-cinnamon

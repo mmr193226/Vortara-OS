@@ -27,6 +27,21 @@ def ejecutar(orden, **kw):
     return subprocess.run(orden, env=entorno, stdin=subprocess.DEVNULL, **kw).returncode
 
 
+def actualizar_listas(espera):
+    """apt-get update; devuelve False si no respondió ningún repositorio."""
+    entorno = dict(os.environ, DEBIAN_FRONTEND="noninteractive", LC_ALL="C.UTF-8")
+    orden = ["apt-get", *espera, "-o", "Acquire::Retries=0",
+             "-o", "Acquire::http::Timeout=20", "-o", "Acquire::https::Timeout=20", "update"]
+    respondio = False
+    with subprocess.Popen(orden, env=entorno, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                          stderr=subprocess.STDOUT, text=True, errors="replace") as proc:
+        for linea in proc.stdout:
+            print(linea, end="", flush=True)
+            if linea.startswith(("Hit:", "Get:")):
+                respondio = True
+    return respondio
+
+
 def main():
     if os.geteuid() != 0:
         aviso("error:uso")
@@ -50,7 +65,11 @@ def main():
         # se espera a que termine en lugar de fallar.
         espera = ["-o", "DPkg::Lock::Timeout=300"]
         aviso("fase:actualizar")
-        ejecutar(["apt-get", *espera, "update"])
+        if not actualizar_listas(espera):
+            # Ningún repositorio respondió: sin conexión no tiene sentido seguir
+            # (apt tardaría varios minutos en rendirse con cada paquete).
+            aviso("error:red")
+            return 2
         aviso("fase:descargar")
         instalar = [
             "apt-get", "install", "-y", *espera,

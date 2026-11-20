@@ -144,6 +144,9 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   propio instalador.
 - **Icono «Instalar Vortara»**: aparece una sola vez y abre el instalador
   directamente. Sin disco, el instalador avisa y no deja continuar.
+- **Tema Vortara** (instalación UEFI nueva): el sistema instalado arranca con
+  el tema, la barra al estilo Windows 7, el orbe y el avatar de Vortara; el
+  inicio de sesión muestra el usuario y pide solo la contraseña.
 - **App de bienvenida**: los tres packs se instalaron desde la app (VSCodium
   incluido) y quedaron marcados como instalados. En el sistema instalado sale
   al iniciar sesión, pide la contraseña con polkit y, sin red, avisa al momento.

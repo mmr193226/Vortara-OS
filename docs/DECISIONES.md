@@ -145,7 +145,10 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   que faltan («Opciones avanzadas para…», «Cargando Linux…», «modo de
   recuperación», «Configuración del firmware UEFI») sin tocar los demás, y
   aparta el catálogo original con `dpkg-divert` para que las actualizaciones
-  de GRUB no lo pisen.
+  de GRUB no lo pisen. Además, la configuración de GRUB de Vortara toma el
+  idioma de `/etc/default/locale`: el instalador y algunas actualizaciones del
+  kernel ejecutan `update-grub` sin idioma, y el menú salía en inglés. (Ahora
+  todo esto vive en el paquete `vortara-branding`.)
 
 ## Pruebas
 
@@ -161,6 +164,11 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   propio instalador.
 - **Icono «Instalar Vortara»**: aparece una sola vez y abre el instalador
   directamente. Sin disco, el instalador avisa y no deja continuar.
+- **Paquetes propios** (ISO con `paquetes/`, instalación UEFI nueva): los
+  paquetes se instalan bien en la ISO; el menú de GRUB del sistema instalado
+  sale entero en español incluso si `update-grub` se ejecuta con `LC_ALL=C`;
+  el avatar de Vortara se pone al iniciar sesión. Los disparadores funcionan
+  al actualizar Cinnamon y grub-common, y al desinstalar todo vuelve a Debian.
 - **Tema Vortara** (instalación UEFI nueva): el sistema instalado arranca con
   el tema, la barra al estilo Windows 7, el orbe y el avatar de Vortara; el
   inicio de sesión muestra el usuario y pide solo la contraseña.

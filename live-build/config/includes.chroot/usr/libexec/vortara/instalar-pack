@@ -6,7 +6,7 @@
 # paquetes que vengan de fuera, así que no sirve para instalar otra cosa.
 #
 # Además de la salida de apt, escribe líneas que lee la app:
-#   fase:<actualizar|descargar|instalar|flatpak|fin>
+#   fase:<actualizar|descargar|reintentar|flatpak|fin>
 #   error:<red|apt|flatpak|uso>
 # y apt añade las suyas (dlstatus:/pmstatus:) gracias a APT::Status-Fd=1.
 import json
@@ -46,20 +46,31 @@ def main():
         flatpaks += [p for p in packs[i].get("flatpak", []) if p not in flatpaks]
 
     if paquetes:
+        # Si otro programa está usando apt (p. ej. el aviso de actualizaciones),
+        # se espera a que termine en lugar de fallar.
+        espera = ["-o", "DPkg::Lock::Timeout=300"]
         aviso("fase:actualizar")
-        ejecutar(["apt-get", "update"])
+        ejecutar(["apt-get", *espera, "update"])
         aviso("fase:descargar")
-        codigo = ejecutar([
-            "apt-get", "install", "-y",
+        instalar = [
+            "apt-get", "install", "-y", *espera,
             "-o", "APT::Status-Fd=1",
             "-o", "Dpkg::Use-Pty=0",
             "-o", "Dpkg::Options::=--force-confdef",
             "-o", "Dpkg::Options::=--force-confold",
             *paquetes,
-        ])
+        ]
+        codigo = ejecutar(instalar)
+        if codigo != 0:
+            # Un paquete que no terminó de configurarse (o una instalación
+            # interrumpida antes) se arregla casi siempre al reintentar.
+            aviso("fase:reintentar")
+            ejecutar(["dpkg", "--configure", "-a"])
+            codigo = ejecutar(instalar)
         if codigo != 0:
             # Sin red, apt no puede descargar: es el fallo más habitual.
-            sin_red = ejecutar(["apt-get", "install", "-y", "--download-only", "-qq", *paquetes],
+            sin_red = ejecutar(["apt-get", "install", "-y", "--download-only", "-qq", *espera,
+                                *paquetes],
                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0
             aviso("error:red" if sin_red else "error:apt")
             return 2

@@ -37,6 +37,8 @@ CSS = b"""
 
 
 def en_sesion_live():
+    if os.environ.get("VORTARA_SIMULAR_LIVE") == "1":  # solo para pruebas
+        return True
     try:
         with open("/proc/cmdline", encoding="utf-8") as f:
             return "boot=live" in f.read().split()
@@ -197,7 +199,8 @@ class Ventana(Gtk.ApplicationWindow):
         titulo.get_style_context().add_class("titulo-grande")
         caja.pack_start(titulo, False, False, 0)
 
-        version = self.info.get("VERSION", "")
+        # "26.11 (Aurora)" -> "26.11 «Aurora»"
+        version = self.info.get("VERSION", "").replace(" (", " «").replace(")", "»")
         sub = Gtk.Label(label=f"Versión {version} · basada en Debian 13" if version
                         else "Basada en Debian 13")
         sub.get_style_context().add_class("acento")
@@ -363,6 +366,7 @@ class Ventana(Gtk.ApplicationWindow):
             textos = {
                 "actualizar": ("Actualizando la lista de programas…", 0.04),
                 "descargar": ("Descargando…", 0.08),
+                "reintentar": ("Hubo un problema; reintentando…", 0.5),
                 "flatpak": ("Instalando desde Flathub (puede tardar un poco)…", None),
                 "fin": ("Listo.", 1.0),
             }
@@ -382,15 +386,23 @@ class Ventana(Gtk.ApplicationWindow):
                 self.estado.set_text("Descargando…")
                 self.barra.set_fraction(0.08 + 0.42 * pct)
             else:
-                self.estado.set_text(f"Instalando… {partes[3]}")
+                self.estado.set_text(f"Instalando {partes[1]}…")
                 self.barra.set_fraction(0.50 + 0.45 * pct)
         elif tipo == "error" and len(partes) > 1:
             self.error = {
                 "red": "No se pudo descargar. Comprueba la conexión a Internet y vuelve a intentarlo.",
                 "apt": "Hubo un problema al instalar. Mira los detalles.",
-                "flatpak": "No se pudo instalar desde Flathub. Comprueba la conexión a Internet.",
+                "flatpak": self.texto_error_flatpak(),
                 "uso": "Petición no válida.",
             }.get(partes[1], "Hubo un problema al instalar.")
+
+    def texto_error_flatpak(self):
+        pack = self.tarjeta_activa.pack
+        apps = ", ".join(a.rsplit(".", 1)[-1].capitalize() for a in pack.get("flatpak", []))
+        if pack.get("apt"):
+            return (f"Los demás programas se instalaron, pero {apps} (de Flathub) no. "
+                    "Comprueba la conexión a Internet y pulsa «Instalar» otra vez.")
+        return f"No se pudo instalar {apps} desde Flathub. Comprueba la conexión a Internet."
 
     def pulsar(self):
         def paso():
@@ -423,6 +435,7 @@ class Ventana(Gtk.ApplicationWindow):
             self.progreso.hide()
             return
         if error:
+            self.barra.set_fraction(0)
             self.estado.set_text(error)
             self.estado.get_style_context().add_class("error")
             self.detalles.set_expanded(True)

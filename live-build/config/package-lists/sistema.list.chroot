@@ -48,3 +48,7 @@ cracklib-runtime
 # Sistemas de archivos que Calamares puede necesitar
 btrfs-progs
 squashfs-tools
+
+# App de bienvenida (Python + GTK3)
+python3-gi
+gir1.2-gtk-3.0

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<!-- Fondos de Vortara en Configuración > Fondos. -->
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>Vortara Aurora</name>
+    <filename>/usr/share/backgrounds/vortara/aurora.png</filename>
+    <options>zoom</options>
+    <pcolor>#0B1F1D</pcolor>
+    <scolor>#0B1F1D</scolor>
+  </wallpaper>
+</wallpapers>

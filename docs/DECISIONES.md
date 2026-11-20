@@ -50,6 +50,21 @@ de bienvenida ofrece instalar packs opcionales después.
 - **Desarrollo — Lenguajes extra**: Node.js, Go, Rust, Java (OpenJDK).
 - **Ofimática / Multimedia**: LibreOffice, VLC, GIMP, Thunderbird.
 
+La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
+
+- Sale al iniciar sesión hasta que se desmarca «Mostrar esta ventana al iniciar
+  sesión». En la sesión live ofrece «Instalar Vortara» y los packs aparecen
+  desactivados.
+- Tres secciones: Inicio, Programas (los packs) y Primeros pasos (fondo,
+  configuración, avisos de actualizaciones, impresoras, terminal, ayuda).
+- Los packs están en `/usr/share/vortara/packs.json`. VSCodium se instala
+  desde Flathub; lo demás desde los repositorios de Debian.
+- Instala con `/usr/libexec/vortara/instalar-pack`, que se ejecuta con pkexec
+  (pide la contraseña con un mensaje en español) y **solo acepta packs de esa
+  lista**, nunca nombres de paquetes de fuera.
+- Sin conexión avisa al momento; si un paquete falla al configurarse, lo
+  repara y reintenta una vez; si apt está ocupado, espera.
+
 ## 5. Idioma
 
 - Español por defecto (`es_ES.UTF-8`).
@@ -104,10 +119,14 @@ de bienvenida ofrece instalar packs opcionales después.
   propio instalador.
 - **Icono «Instalar Vortara»**: aparece una sola vez y abre el instalador
   directamente. Sin disco, el instalador avisa y no deja continuar.
+- **App de bienvenida**: los tres packs se instalaron desde la app (VSCodium
+  incluido) y quedaron marcados como instalados. En el sistema instalado sale
+  al iniciar sesión, pide la contraseña con polkit y, sin red, avisa al momento.
 
 ## Pendiente
 
 - El submenú de GRUB sale en inglés («Advanced options for...»).
-- App de bienvenida con los packs opcionales (Desarrollo, Ofimática/Multimedia).
 - Repositorio APT en GitHub Pages con los paquetes propios de Vortara.
-- Tema de Cinnamon con acento teal e icono del menú con el logo de Vortara.
+- Tema de Cinnamon de estilo Aero (Windows 7) con acento teal e icono del menú
+  con el logo de Vortara. Incluir el fondo de Vortara en la lista de fondos y
+  un avatar de usuario propio (ahora sale el logo de Debian).

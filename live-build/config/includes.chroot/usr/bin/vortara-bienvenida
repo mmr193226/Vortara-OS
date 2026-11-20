@@ -97,6 +97,16 @@ def abrir(orden):
         pass
 
 
+def abrir_app(desktop_id):
+    """Abre una aplicación por su lanzador .desktop (sin depender de gtk-launch)."""
+    info = Gio.DesktopAppInfo.new(desktop_id)
+    if info:
+        try:
+            info.launch([], None)
+        except GLib.Error:
+            pass
+
+
 def abrir_url(url):
     Gtk.show_uri_on_window(None, url, Gdk.CURRENT_TIME)
 
@@ -219,8 +229,7 @@ class Ventana(Gtk.ApplicationWindow):
         if self.live:
             instalar = Gtk.Button(label="Instalar Vortara")
             instalar.get_style_context().add_class("suggested-action")
-            instalar.connect("clicked", lambda _b: abrir(
-                ["gtk-launch", "calamares-install-debian.desktop"]))
+            instalar.connect("clicked", lambda _b: abrir_app("calamares-install-debian.desktop"))
             botones.pack_start(instalar, False, False, 0)
         else:
             programas = Gtk.Button(label="Elegir programas")
@@ -286,14 +295,13 @@ class Ventana(Gtk.ApplicationWindow):
              "Pantalla, sonido, red, usuarios…", ["cinnamon-settings"]),
             ("software-properties", "Avisos de actualizaciones",
              "Vortara avisa; tú decides cuándo actualizar",
-             ["gtk-launch",
-              "org.guido-berhoerster.code.package-update-indicator.preferences.desktop"]),
+             "app:org.guido-berhoerster.code.package-update-indicator.preferences.desktop"),
             ("printer", "Impresoras", "Añade y configura impresoras",
              ["system-config-printer"]),
             ("utilities-terminal", "Terminal", "Para quien prefiere el teclado",
              ["gnome-terminal"]),
             ("help-browser", "Ayuda y comunidad", "Proyecto, dudas y errores",
-             URL_PROYECTO),
+             "url:" + URL_PROYECTO),
         ]
         for n, (icono, titulo, sub, accion) in enumerate(accesos):
             boton = Gtk.Button()
@@ -312,8 +320,10 @@ class Ventana(Gtk.ApplicationWindow):
             textos.pack_start(s, False, False, 0)
             fila.pack_start(textos, True, True, 0)
             boton.add(fila)
-            if isinstance(accion, str):
-                boton.connect("clicked", lambda _b, u=accion: abrir_url(u))
+            if isinstance(accion, str) and accion.startswith("url:"):
+                boton.connect("clicked", lambda _b, u=accion[4:]: abrir_url(u))
+            elif isinstance(accion, str) and accion.startswith("app:"):
+                boton.connect("clicked", lambda _b, a=accion[4:]: abrir_app(a))
             else:
                 boton.connect("clicked", lambda _b, o=accion: abrir(o))
             rejilla.attach(boton, n % 2, n // 2, 1, 1)

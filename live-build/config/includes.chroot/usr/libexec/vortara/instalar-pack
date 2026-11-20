@@ -1,0 +1,81 @@
+#!/usr/bin/python3 -I
+# Vortara: instala uno o varios packs de la app de bienvenida.
+# Se ejecuta como root a través de pkexec (acción org.vortara.bienvenida.instalar-pack).
+#
+# Solo acepta identificadores de /usr/share/vortara/packs.json: nunca nombres de
+# paquetes que vengan de fuera, así que no sirve para instalar otra cosa.
+#
+# Además de la salida de apt, escribe líneas que lee la app:
+#   fase:<actualizar|descargar|instalar|flatpak|fin>
+#   error:<red|apt|flatpak|uso>
+# y apt añade las suyas (dlstatus:/pmstatus:) gracias a APT::Status-Fd=1.
+import json
+import os
+import subprocess
+import sys
+
+PACKS = "/usr/share/vortara/packs.json"
+FLATHUB = "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+
+def aviso(texto):
+    print(texto, flush=True)
+
+
+def ejecutar(orden, **kw):
+    entorno = dict(os.environ, DEBIAN_FRONTEND="noninteractive", LC_ALL="C.UTF-8")
+    return subprocess.run(orden, env=entorno, stdin=subprocess.DEVNULL, **kw).returncode
+
+
+def main():
+    if os.geteuid() != 0:
+        aviso("error:uso")
+        return 1
+
+    with open(PACKS, encoding="utf-8") as f:
+        packs = json.load(f)
+
+    ids = sys.argv[1:]
+    if not ids or any(i not in packs for i in ids):
+        aviso("error:uso")
+        return 1
+
+    paquetes, flatpaks = [], []
+    for i in ids:
+        paquetes += [p for p in packs[i].get("apt", []) if p not in paquetes]
+        flatpaks += [p for p in packs[i].get("flatpak", []) if p not in flatpaks]
+
+    if paquetes:
+        aviso("fase:actualizar")
+        ejecutar(["apt-get", "update"])
+        aviso("fase:descargar")
+        codigo = ejecutar([
+            "apt-get", "install", "-y",
+            "-o", "APT::Status-Fd=1",
+            "-o", "Dpkg::Use-Pty=0",
+            "-o", "Dpkg::Options::=--force-confdef",
+            "-o", "Dpkg::Options::=--force-confold",
+            *paquetes,
+        ])
+        if codigo != 0:
+            # Sin red, apt no puede descargar: es el fallo más habitual.
+            sin_red = ejecutar(["apt-get", "install", "-y", "--download-only", "-qq", *paquetes],
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0
+            aviso("error:red" if sin_red else "error:apt")
+            return 2
+
+    if flatpaks:
+        aviso("fase:flatpak")
+        ejecutar(["flatpak", "remote-add", "--system", "--if-not-exists", "flathub", FLATHUB])
+        codigo = ejecutar(["flatpak", "install", "--system", "-y", "--noninteractive",
+                           "flathub", *flatpaks])
+        if codigo != 0:
+            aviso("error:flatpak")
+            return 3
+
+    aviso("fase:fin")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

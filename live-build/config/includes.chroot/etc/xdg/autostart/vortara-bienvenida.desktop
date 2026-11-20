@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Bienvenida a Vortara
+Exec=vortara-bienvenida --inicio
+Icon=vortara-logo
+OnlyShowIn=X-Cinnamon;
+NoDisplay=true
+X-GNOME-Autostart-Delay=3

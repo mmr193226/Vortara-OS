@@ -31,9 +31,34 @@ de bienvenida ofrece instalar packs opcionales después.
 | Aspecto | Decisión |
 |---|---|
 | Entorno de escritorio | Cinnamon |
-| Estilo | Oscuro moderno (modo claro disponible) |
+| Estilo | Oscuro, con cristal al estilo Aero de Windows 7 (tema «Vortara») |
 | Color de acento | Verde azulado (teal) |
 | Logo | Vórtice/espiral teal (boceto en `branding/logo/vortara-logo.svg`) |
+| Barra de tareas | Abajo, 44 px, al estilo de Windows 7 |
+
+### Tema «Vortara»
+
+Diseño propio inspirado en Aero (no usa imágenes ni recursos de Windows):
+
+- **GTK3** (`/usr/share/themes/Vortara/gtk-3.0`): parte de Adwaita-dark. Selección
+  y botones principales en teal, cabeceras de cristal oscuro con brillo, botones
+  de la barra de título como rectángulos de cristal (cerrar en rojo, los demás
+  con brillo teal al pasar por encima).
+- **Bordes de ventana**: Muffin (Cinnamon 6.4) ya no usa temas `metacity-1`;
+  dibuja los bordes con el CSS del tema GTK, así que todas las ventanas comparten
+  el mismo aspecto.
+- **Cinnamon**: el gancho `0400-vortara-tema` copia el tema por defecto de
+  Cinnamon, cambia sus azules por teal y le añade
+  `/usr/share/vortara/tema/cinnamon-vortara.css`: panel de cristal translúcido,
+  programas abiertos con marco de cristal (el activo con brillo teal) y menús de
+  cristal. Al partir del tema del paquete, se adapta solo a nuevas versiones.
+- **Barra**: orbe de Vortara como botón de inicio (`vortara-menu.svg`), programas
+  anclados (Firefox ESR, Archivos, Terminal), reloj con fecha en dos líneas y la
+  esquina derecha para mostrar el escritorio.
+- Avatar de Vortara para los usuarios nuevos (`/etc/skel/.face`), el fondo en
+  Configuración > Fondos y la pantalla de inicio de sesión con el mismo tema.
+- No se usa transparencia con desenfoque: Cinnamon no la tiene de serie y
+  costaría rendimiento en equipos con poca RAM.
 
 ## 4. Software
 
@@ -127,6 +152,3 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
 
 - El submenú de GRUB sale en inglés («Advanced options for...»).
 - Repositorio APT en GitHub Pages con los paquetes propios de Vortara.
-- Tema de Cinnamon de estilo Aero (Windows 7) con acento teal e icono del menú
-  con el logo de Vortara. Incluir el fondo de Vortara en la lista de fondos y
-  un avatar de usuario propio (ahora sale el logo de Debian).

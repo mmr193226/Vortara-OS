@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+if [ "$1" = remove ] || [ "$1" = purge ]; then
+	# El tema de Cinnamon se generó al instalar: no está en la lista del paquete.
+	rm -rf /usr/share/themes/Vortara/cinnamon
+	glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+fi

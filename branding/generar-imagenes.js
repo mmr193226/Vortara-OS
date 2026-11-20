@@ -6,11 +6,16 @@ const path = require('path');
 
 const raiz = path.resolve(__dirname, '..');
 const logo = fs.readFileSync(path.join(raiz, 'branding/logo/vortara-logo.svg'), 'utf8');
-const dest = path.join(raiz, 'live-build/config/includes.chroot');
-const pixmaps = path.join(dest, 'usr/share/pixmaps');
-const fondos = path.join(dest, 'usr/share/backgrounds/vortara');
-fs.mkdirSync(pixmaps, { recursive: true });
-fs.mkdirSync(fondos, { recursive: true });
+// Cada imagen va al paquete que la instala (paquetes/<nombre>/raiz) o, si
+// solo la usa la ISO (el instalador), a live-build/config/includes.chroot.
+const branding = path.join(raiz, 'paquetes/vortara-branding/raiz');
+const tema = path.join(raiz, 'paquetes/vortara-tema/raiz');
+const iso = path.join(raiz, 'live-build/config/includes.chroot');
+const pixmaps = path.join(branding, 'usr/share/pixmaps');
+const fondos = path.join(branding, 'usr/share/backgrounds/vortara');
+const pixmapsTema = path.join(tema, 'usr/share/pixmaps');
+const pixmapsIso = path.join(iso, 'usr/share/pixmaps');
+for (const d of [pixmaps, fondos, pixmapsTema, pixmapsIso]) fs.mkdirSync(d, { recursive: true });
 
 const fuente = "'Noto Sans', 'DejaVu Sans', sans-serif";
 
@@ -88,19 +93,19 @@ const orbe = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" widt
   await shot(fondo, 1920, 1080, path.join(fondos, 'aurora.png'));
   await shot(grub, 1024, 768, path.join(fondos, 'grub.png'));
   await shot(logoTexto, 240, 64, path.join(pixmaps, 'vortara-logo-text.png'), true);
-  await shot(bienvenida, 800, 420, path.join(pixmaps, 'vortara-calamares-bienvenida.png'), true);
+  await shot(bienvenida, 800, 420, path.join(pixmapsIso, 'vortara-calamares-bienvenida.png'), true);
   for (const s of [16, 22, 24, 32, 48, 64, 128, 256]) {
     const html = `<body style="margin:0;background:transparent">${logo.replace('width="256" height="256"', `width="${s}" height="${s}"`)}</body>`;
     await shot(html, s, s, path.join(pixmaps, `vortara-logo-${s}.png`), true);
   }
-  const iconos = path.join(dest, 'usr/share/icons/hicolor/scalable/apps');
+  const iconos = path.join(tema, 'usr/share/icons/hicolor/scalable/apps');
   fs.mkdirSync(iconos, { recursive: true });
   fs.writeFileSync(path.join(iconos, 'vortara-menu.svg'), orbe);
   // Avatar por defecto de los usuarios nuevos (/etc/skel/.face).
   await shot(`<body style="margin:0;background:transparent">${orbe}</body>`, 256, 256,
-    path.join(pixmaps, 'vortara-avatar.png'), true);
+    path.join(pixmapsTema, 'vortara-avatar.png'), true);
   await shot(`<body style="margin:0;background:#222">${orbe}</body>`, 256, 256,
     path.join(raiz, 'branding/logo/vortara-menu-vista.png'));
   await b.close();
-  console.log('Imágenes generadas en', dest);
+  console.log('Imágenes generadas en paquetes/ y live-build/config/includes.chroot');
 })();

@@ -1,6 +1,10 @@
 #!/bin/sh
-# Tema «Vortara» para Cinnamon (cristal oscuro con acento teal, estilo Aero)
-# y valores por defecto de la barra de tareas al estilo de Windows 7.
+# Vortara: genera el tema «Vortara» para Cinnamon (cristal oscuro con acento
+# teal, estilo Aero) y pone los valores por defecto de la barra de tareas al
+# estilo de Windows 7.
+#
+# Lo ejecuta vortara-tema al instalarse y cada vez que Cinnamon se actualiza
+# (disparador de dpkg), porque parte de los archivos de Cinnamon.
 set -e
 
 tema=/usr/share/themes/Vortara
@@ -9,6 +13,7 @@ tema=/usr/share/themes/Vortara
 # Se parte del tema por defecto del paquete (así se adapta solo si Cinnamon
 # se actualiza), se cambian sus azules por teal y se añade la capa de Vortara.
 if [ -f /usr/share/cinnamon/theme/cinnamon.css ]; then
+	rm -rf /usr/share/themes/Vortara/cinnamon
 	mkdir -p "$tema/cinnamon"
 	cp -a /usr/share/cinnamon/theme/. "$tema/cinnamon/"
 	sed -i \
@@ -77,9 +82,3 @@ with open(ruta, "w", encoding="utf-8") as f:
 FIN
 fi
 
-# --- Avatar de los usuarios nuevos (en lugar del logo de Debian) ----------
-if [ -f /usr/share/pixmaps/vortara-avatar.png ]; then
-	cp /usr/share/pixmaps/vortara-avatar.png /etc/skel/.face
-fi
-
-gtk-update-icon-cache -q /usr/share/icons/hicolor 2>/dev/null || true

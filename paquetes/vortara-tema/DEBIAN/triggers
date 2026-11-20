@@ -1,0 +1,4 @@
+# Cuando Cinnamon se actualiza, se vuelve a generar el tema de Vortara y se
+# reponen los valores por defecto de la barra (sus esquemas se sobrescriben).
+interest-noawait /usr/share/cinnamon/theme
+interest-noawait /usr/share/cinnamon/applets

@@ -1,0 +1,7 @@
+# Repositorio de Vortara OS: paquetes propios del sistema.
+# Está firmado; apt comprueba la firma con la clave de Vortara.
+Types: deb
+URIs: https://mmr193226.github.io/Vortara-OS/
+Suites: aurora
+Components: main
+Signed-By: /usr/share/keyrings/vortara-archive-keyring.asc

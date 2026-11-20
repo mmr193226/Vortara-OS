@@ -17,12 +17,5 @@ systemctl enable zramswap.service || true
 # Política de actualizaciones: solo notificar. Nada se instala solo.
 apt-get purge -y unattended-upgrades 2>/dev/null || true
 
-# Logo para iconos del sistema (LOGO= en os-release).
-for size in 16 22 24 32 48 64 128 256; do
-	d=/usr/share/icons/hicolor/${size}x${size}/apps
-	mkdir -p "$d"
-	cp /usr/share/pixmaps/vortara-logo-${size}.png "$d/vortara-logo.png" 2>/dev/null || true
-done
-mkdir -p /usr/share/icons/hicolor/scalable/apps
-cp /usr/share/pixmaps/vortara-logo.svg /usr/share/icons/hicolor/scalable/apps/vortara-logo.svg
-gtk-update-icon-cache -q /usr/share/icons/hicolor 2>/dev/null || true
+# Los iconos del logo, el tema y la app de bienvenida vienen en los paquetes
+# vortara-* (paquetes/), que live-build instala desde config/packages.chroot.

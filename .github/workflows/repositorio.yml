@@ -1,0 +1,82 @@
+# Construye los paquetes propios de Vortara, monta el repositorio APT, lo firma
+# y lo publica en GitHub Pages: https://mmr193226.github.io/Vortara-OS/
+#
+# Necesita (una sola vez, en la web de GitHub):
+#   - Settings > Secrets and variables > Actions: secreto VORTARA_GPG_PRIVATE_KEY
+#     con la clave privada (la crea scripts/crear-clave-repo.sh).
+#   - Settings > Pages > Source: «GitHub Actions».
+name: Repositorio APT
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "paquetes/**"
+      - "scripts/construir-paquetes.sh"
+      - "scripts/construir-repo.sh"
+      - "live-build/vortara.conf"
+      - ".github/workflows/repositorio.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: repositorio-apt
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Herramientas
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq apt-utils
+
+      - name: Importar la clave de firma
+        env:
+          CLAVE: ${{ secrets.VORTARA_GPG_PRIVATE_KEY }}
+        run: |
+          if [ -z "$CLAVE" ]; then
+            echo "::error::Falta el secreto VORTARA_GPG_PRIVATE_KEY (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+          printf '%s\n' "$CLAVE" | gpg --batch --import
+          gpg --list-secret-keys
+
+      - name: Comprobar que la clave coincide con la de los equipos
+        run: |
+          publica=paquetes/vortara-archive-keyring/raiz/usr/share/keyrings/vortara-archive-keyring.asc
+          if [ ! -f "$publica" ]; then
+            echo "::error::Falta la clave pública en $publica."
+            exit 1
+          fi
+          privada=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr/ {print $10; exit}')
+          if ! gpg --show-keys --with-colons "$publica" | grep -q "$privada"; then
+            echo "::error::La clave privada del secreto no corresponde a la clave pública del repositorio."
+            exit 1
+          fi
+
+      - name: Construir los paquetes
+        run: ./scripts/construir-paquetes.sh "$RUNNER_TEMP/debs"
+
+      - name: Montar y firmar el repositorio
+        run: ./scripts/construir-repo.sh "$RUNNER_TEMP/debs" "$RUNNER_TEMP/repo"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/repo
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v4

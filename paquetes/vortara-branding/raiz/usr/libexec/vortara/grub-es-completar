@@ -1,20 +1,12 @@
-#!/bin/sh
-# GRUB en español: la traducción de Debian es de 2019 (GRUB 2.04) y no tiene
-# los textos del menú de las versiones nuevas («Advanced options for...»,
-# «Loading Linux...»). Se añaden a su catálogo sin tocar lo que ya traduce.
+#!/usr/bin/python3 -I
+# Vortara: completa la traducción al español del menú de GRUB.
 #
-# El catálogo original se aparta con dpkg-divert: así las actualizaciones de
-# grub-common no sobrescriben el de Vortara.
-set -e
-
-mo=/usr/share/locale/es/LC_MESSAGES/grub.mo
-[ -f "$mo" ] || exit 0
-
-if ! dpkg-divert --list "$mo" | grep -q vortara; then
-	dpkg-divert --package vortara --rename --divert "$mo.debian" --add "$mo"
-fi
-
-python3 - "$mo.debian" "$mo" <<'FIN'
+# La traducción de Debian (grub.mo) es de 2019 y no tiene los textos del menú
+# de las versiones nuevas («Advanced options for...», «Loading Linux...»).
+# Lee el catálogo original, que vortara-branding aparta con dpkg-divert a
+# grub.mo.debian, le añade lo que falta sin tocar lo demás y escribe grub.mo.
+#
+# Uso: grub-es-completar ORIGEN DESTINO
 import struct
 import sys
 
@@ -63,10 +55,3 @@ with open(destino, "wb") as f:
     for longitud, posicion in tabla:
         f.write(struct.pack("<2I", longitud, posicion))
     f.write(cuerpo)
-FIN
-
-# La entrada del firmware UEFI tiene el texto fijo en el script (sin gettext).
-uefi=/etc/grub.d/30_uefi-firmware
-if [ -f "$uefi" ]; then
-	sed -i 's/^LABEL="UEFI Firmware Settings"$/LABEL="Configuración del firmware UEFI"/' "$uefi"
-fi

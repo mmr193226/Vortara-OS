@@ -55,6 +55,10 @@ preparar_config() {
 	mkdir -p "$dir"
 	cp -a "$RAIZ/live-build/." "$dir/"
 	[ -d "$cache" ] && mv "$cache" "$dir/cache"
+	# Paquetes propios de Vortara (paquetes/): live-build instala los .deb
+	# que encuentra en config/packages.chroot. Los packs no van en la ISO.
+	"$RAIZ/scripts/construir-paquetes.sh" --sin-packs "$dir/config/packages.chroot"
+
 	grep -rlZ '@VORTARA_' "$dir/config" | xargs -0 -r sed -i \
 		-e "s/@VORTARA_VERSION@/${VORTARA_VERSION}/g" \
 		-e "s/@VORTARA_CODENAME@/${VORTARA_CODENAME}/g" \

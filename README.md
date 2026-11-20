@@ -35,6 +35,10 @@ sudo ./scripts/build-iso.sh --limpiar
 | `live-build/config/package-lists/` | Paquetes que se incluyen en la ISO |
 | `live-build/config/archives/` | Repositorio backports y prioridad del kernel |
 | `live-build/config/hooks/live/` | Scripts que personalizan el sistema durante la construcción |
-| `live-build/config/includes.chroot/` | Archivos que se copian tal cual al sistema |
+| `live-build/config/includes.chroot/` | Archivos que se copian tal cual al sistema (los propios de la ISO) |
+| `paquetes/` | Paquetes `.deb` propios: tema, app de bienvenida, identidad visual, packs (ver `paquetes/LEEME.md`) |
 | `branding/` | Logo y generador de imágenes (`node branding/generar-imagenes.js`) |
-| `scripts/build-iso.sh` | Script de construcción |
+| `scripts/build-iso.sh` | Script de construcción de la ISO |
+| `scripts/construir-paquetes.sh`, `scripts/construir-repo.sh` | Construyen los paquetes y el repositorio APT |
+| `scripts/crear-clave-repo.sh` | Crea la clave que firma el repositorio (una sola vez) |
+| `.github/workflows/repositorio.yml` | Publica el repositorio APT en GitHub Pages |

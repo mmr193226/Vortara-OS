@@ -106,10 +106,20 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
 
 ## 7. Repositorio APT propio
 
-- Alojado en **GitHub Pages**, publicado con GitHub Actions desde este repositorio.
-- Firmado con una clave GPG de Vortara.
-- Contiene los paquetes propios: branding, tema, app de bienvenida y metapaquetes
-  de los packs opcionales.
+- Alojado en **GitHub Pages** (<https://mmr193226.github.io/Vortara-OS/>),
+  publicado con GitHub Actions (`.github/workflows/repositorio.yml`) al llevar
+  cambios de `paquetes/` a la rama `main`.
+- Suite `aurora`, componente `main` (el nombre de la versión).
+- Firmado con una clave GPG de Vortara (Ed25519, solo firma). La **privada** la
+  crea el responsable del proyecto en su ordenador con
+  `scripts/crear-clave-repo.sh` y la guarda en el secreto
+  `VORTARA_GPG_PRIVATE_KEY` de GitHub; nunca va al repositorio. La **pública**
+  va en el paquete `vortara-archive-keyring`, que añade el repositorio a apt.
+- Contiene los paquetes propios: `vortara-branding`, `vortara-tema`,
+  `vortara-bienvenida`, `vortara-archive-keyring` y los metapaquetes
+  `vortara-pack-*`. Detalles en `paquetes/LEEME.md`.
+- La ISO instala los mismos paquetes (menos los packs), así que lo que se
+  publique llega también a los equipos ya instalados.
 
 ## 8. Detalles técnicos de la ISO
 

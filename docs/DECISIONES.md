@@ -130,6 +130,13 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   Internet**. El sistema instalado conserva las fuentes de APT completas
   (main, contrib, non-free, non-free-firmware y backports).
 
+- **GRUB en español**: la traducción de Debian es de 2019 y no tiene los textos
+  del menú de las versiones nuevas. El gancho `0500-vortara-grub-es` añade los
+  que faltan («Opciones avanzadas para…», «Cargando Linux…», «modo de
+  recuperación», «Configuración del firmware UEFI») sin tocar los demás, y
+  aparta el catálogo original con `dpkg-divert` para que las actualizaciones
+  de GRUB no lo pisen.
+
 ## Pruebas
 
 - **Instalación UEFI** (QEMU, 2 GB de RAM, sin red, borrando el disco):
@@ -153,5 +160,4 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
 
 ## Pendiente
 
-- El submenú de GRUB sale en inglés («Advanced options for...»).
 - Repositorio APT en GitHub Pages con los paquetes propios de Vortara.

@@ -1,0 +1,72 @@
+#!/bin/sh
+# GRUB en español: la traducción de Debian es de 2019 (GRUB 2.04) y no tiene
+# los textos del menú de las versiones nuevas («Advanced options for...»,
+# «Loading Linux...»). Se añaden a su catálogo sin tocar lo que ya traduce.
+#
+# El catálogo original se aparta con dpkg-divert: así las actualizaciones de
+# grub-common no sobrescriben el de Vortara.
+set -e
+
+mo=/usr/share/locale/es/LC_MESSAGES/grub.mo
+[ -f "$mo" ] || exit 0
+
+if ! dpkg-divert --list "$mo" | grep -q vortara; then
+	dpkg-divert --package vortara --rename --divert "$mo.debian" --add "$mo"
+fi
+
+python3 - "$mo.debian" "$mo" <<'FIN'
+import struct
+import sys
+
+origen, destino = sys.argv[1], sys.argv[2]
+with open(origen, "rb") as f:
+    mo = f.read()
+
+# Leer las entradas tal cual (incluidas las de plural, que guardan
+# "singular\0plural" en la clave).
+magia = struct.unpack("<I", mo[:4])[0]
+orden = "<" if magia == 0x950412DE else ">"
+_, n, pos_ids, pos_strs = struct.unpack(orden + "4I", mo[4:20])
+entradas = {}
+for i in range(n):
+    lid, oid = struct.unpack(orden + "2I", mo[pos_ids + 8 * i:pos_ids + 8 * i + 8])
+    lst, ost = struct.unpack(orden + "2I", mo[pos_strs + 8 * i:pos_strs + 8 * i + 8])
+    entradas[mo[oid:oid + lid]] = mo[ost:ost + lst]
+
+# Textos que se ven en el menú de arranque (scripts de /etc/grub.d).
+nuevos = {
+    "Advanced options for %s": "Opciones avanzadas para %s",
+    "%s, with Linux %s": "%s, con Linux %s",
+    "%s, with Linux %s (%s)": "%s, con Linux %s (%s)",
+    "recovery mode": "modo de recuperación",
+    "Loading Linux %s ...": "Cargando Linux %s...",
+    "Loading initial ramdisk ...": "Cargando el disco RAM inicial...",
+    "(on %s)": "(en %s)",
+}
+for original, traduccion in nuevos.items():
+    entradas.setdefault(original.encode("utf-8"), traduccion.encode("utf-8"))
+
+# Escribir el .mo con las claves ordenadas (gettext las busca por bisección).
+claves = sorted(entradas)
+n = len(claves)
+pos_ids, pos_strs = 7 * 4, 7 * 4 + n * 8
+datos = pos_strs + n * 8
+tabla, cuerpo = [], b""
+for k in claves:
+    tabla.append((len(k), datos + len(cuerpo)))
+    cuerpo += k + b"\0"
+for k in claves:
+    tabla.append((len(entradas[k]), datos + len(cuerpo)))
+    cuerpo += entradas[k] + b"\0"
+with open(destino, "wb") as f:
+    f.write(struct.pack("<7I", 0x950412DE, 0, n, pos_ids, pos_strs, 0, 0))
+    for longitud, posicion in tabla:
+        f.write(struct.pack("<2I", longitud, posicion))
+    f.write(cuerpo)
+FIN
+
+# La entrada del firmware UEFI tiene el texto fijo en el script (sin gettext).
+uefi=/etc/grub.d/30_uefi-firmware
+if [ -f "$uefi" ]; then
+	sed -i 's/^LABEL="UEFI Firmware Settings"$/LABEL="Configuración del firmware UEFI"/' "$uefi"
+fi

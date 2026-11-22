@@ -11,6 +11,10 @@ cp -a "$src"/. "$dst"/
 cp /usr/share/pixmaps/vortara-logo-256.png "$dst/vortara-logo.png"
 cp /usr/share/pixmaps/vortara-calamares-bienvenida.png "$dst/vortara-bienvenida.png"
 cp /usr/share/vortara/calamares/show.qml "$dst/show.qml"
+# Traducciones de la presentación: Calamares las busca en lang/ del tema y las
+# aplica en cuanto el usuario cambia de idioma.
+mkdir -p "$dst/lang"
+cp /usr/share/vortara/calamares/lang/*.qm "$dst/lang/"
 
 sed -i \
 	-e 's/^componentName:.*/componentName:  vortara/' \

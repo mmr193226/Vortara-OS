@@ -106,6 +106,12 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   `.po`, editable con Poedit); `scripts/traducciones.py` las extrae, comprueba
   y compila. Las de GRUB, en
   `paquetes/vortara-branding/raiz/usr/share/vortara/grub/traducciones.json`.
+- La presentación del instalador tiene los textos en inglés con `qsTr()`;
+  Calamares carga `lang/calamares-vortara_<idioma>.qm` del tema y los cambia al
+  elegir idioma (sin traducción, sale en inglés). Las traducciones están en
+  `branding/presentacion/traducciones.json`; `scripts/compilar-presentacion.py`
+  genera los `.ts` y los compila con `lrelease` (paquete `qt6-l10n-tools`). Los
+  `.qm` se guardan en el repositorio, así que la ISO no necesita `lrelease`.
 
 ## 6. Versiones y actualizaciones
 

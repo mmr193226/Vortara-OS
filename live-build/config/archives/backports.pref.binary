@@ -1,0 +1,5 @@
+# Kernel y firmware desde trixie-backports para soportar hardware más nuevo.
+# El resto del sistema se queda en trixie estable.
+Package: linux-* firmware-*
+Pin: release n=trixie-backports
+Pin-Priority: 900

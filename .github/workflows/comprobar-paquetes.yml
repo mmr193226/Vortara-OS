@@ -1,0 +1,48 @@
+# Comprueba en cada pull request que los paquetes y el repositorio APT se
+# construyen bien. No firma ni publica nada (eso lo hace repositorio.yml al
+# llegar los cambios a main).
+name: Comprobar paquetes
+
+on:
+  pull_request:
+    paths:
+      - "paquetes/**"
+      - "scripts/construir-paquetes.sh"
+      - "scripts/construir-repo.sh"
+      - "live-build/vortara.conf"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Herramientas
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq apt-utils
+
+      - name: Construir los paquetes
+        run: ./scripts/construir-paquetes.sh "$RUNNER_TEMP/debs"
+
+      - name: Revisar los paquetes
+        run: |
+          for deb in "$RUNNER_TEMP"/debs/*.deb; do
+            echo "== $(basename "$deb")"
+            dpkg-deb --info "$deb" | sed -n 's/^ \(Package\|Version\|Depends\):/  \1:/p'
+          done
+          test -f "$RUNNER_TEMP"/debs/vortara-archive-keyring_*_all.deb
+
+      - name: Montar el repositorio (sin firmar)
+        run: ./scripts/construir-repo.sh "$RUNNER_TEMP/debs" "$RUNNER_TEMP/repo"
+
+      - name: Comprobar la estructura del repositorio
+        run: |
+          r="$RUNNER_TEMP/repo"
+          test -s "$r/dists/aurora/Release"
+          test -s "$r/dists/aurora/main/binary-amd64/Packages.gz"
+          test -s "$r/vortara-archive-keyring.asc"
+          grep -c '^Package:' "$r/dists/aurora/main/binary-amd64/Packages"

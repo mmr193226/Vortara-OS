@@ -1,0 +1,3 @@
+# Si grub-common actualiza su traducción (apartada con dpkg-divert), se
+# vuelve a completar la de Vortara.
+interest-noawait /usr/share/locale/es/LC_MESSAGES/grub.mo.debian

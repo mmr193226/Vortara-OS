@@ -1,0 +1,11 @@
+Package: vortara-archive-keyring
+Version: 26.11.1
+Architecture: all
+Maintainer: Vortara OS <mmr193226@users.noreply.github.com>
+Section: misc
+Priority: important
+Homepage: https://github.com/mmr193226/Vortara-OS
+Description: clave y dirección del repositorio APT de Vortara OS
+ Añade el repositorio de Vortara (paquetes propios del sistema: tema, app de
+ bienvenida, identidad visual y packs) y la clave pública con la que apt
+ comprueba que lo que descarga está firmado por Vortara.

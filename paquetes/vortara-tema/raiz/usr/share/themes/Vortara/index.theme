@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Vortara
+Comment=Tema oscuro de Vortara OS con acento teal y cristal (estilo Aero)
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Vortara
+IconTheme=Papirus-Dark
+CursorTheme=Adwaita
+ButtonLayout=:minimize,maximize,close

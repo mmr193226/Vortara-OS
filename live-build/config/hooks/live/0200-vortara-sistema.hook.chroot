@@ -1,0 +1,21 @@
+#!/bin/sh
+# Ajustes del sistema: idioma, servicios y valores por defecto del escritorio.
+set -e
+
+# Idiomas: español por defecto, inglés disponible.
+sed -i -e 's/^# *\(es_ES.UTF-8 UTF-8\)/\1/' -e 's/^# *\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
+locale-gen
+update-locale LANG=es_ES.UTF-8
+
+# Valores por defecto de Cinnamon (tema oscuro, fondo, favoritos).
+glib-compile-schemas /usr/share/glib-2.0/schemas
+
+# Servicios propios.
+systemctl enable vortara-flathub.service
+systemctl enable zramswap.service || true
+
+# Política de actualizaciones: solo notificar. Nada se instala solo.
+apt-get purge -y unattended-upgrades 2>/dev/null || true
+
+# Los iconos del logo, el tema y la app de bienvenida vienen en los paquetes
+# vortara-* (paquetes/), que live-build instala desde config/packages.chroot.

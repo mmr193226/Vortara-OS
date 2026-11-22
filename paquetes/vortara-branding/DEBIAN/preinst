@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+# La traducción de GRUB de Debian se aparta para poner la completa de Vortara.
+if [ "$1" = install ] || [ "$1" = upgrade ]; then
+	dpkg-divert --package vortara-branding --rename \
+		--divert /usr/share/locale/es/LC_MESSAGES/grub.mo.debian \
+		--add /usr/share/locale/es/LC_MESSAGES/grub.mo >/dev/null
+fi

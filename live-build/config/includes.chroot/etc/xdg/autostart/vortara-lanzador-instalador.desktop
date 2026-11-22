@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Vortara: lanzador del instalador
+Exec=/usr/libexec/vortara/lanzador-instalador
+OnlyShowIn=X-Cinnamon;
+NoDisplay=true
+X-GNOME-Autostart-Phase=Initialization

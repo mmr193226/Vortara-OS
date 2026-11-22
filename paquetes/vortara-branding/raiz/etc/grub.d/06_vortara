@@ -1,0 +1,8 @@
+#!/bin/sh
+# Vortara: colores del menú de GRUB a juego con el fondo (texto claro y la
+# opción elegida en verde azulado). "black" como fondo significa transparente.
+set -e
+cat <<'FIN'
+set menu_color_normal=light-gray/black
+set menu_color_highlight=white/cyan
+FIN

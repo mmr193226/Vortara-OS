@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Bienvenida a Vortara
+Comment=Primeros pasos y packs de programas
+Exec=vortara-bienvenida
+Icon=vortara-logo
+Terminal=false
+Categories=System;Settings;
+Keywords=bienvenida;programas;packs;instalar;vortara;

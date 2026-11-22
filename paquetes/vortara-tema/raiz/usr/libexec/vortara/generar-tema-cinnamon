@@ -1,0 +1,84 @@
+#!/bin/sh
+# Vortara: genera el tema «Vortara» para Cinnamon (cristal oscuro con acento
+# teal, estilo Aero) y pone los valores por defecto de la barra de tareas al
+# estilo de Windows 7.
+#
+# Lo ejecuta vortara-tema al instalarse y cada vez que Cinnamon se actualiza
+# (disparador de dpkg), porque parte de los archivos de Cinnamon.
+set -e
+
+tema=/usr/share/themes/Vortara
+
+# --- Tema de Cinnamon ---------------------------------------------------
+# Se parte del tema por defecto del paquete (así se adapta solo si Cinnamon
+# se actualiza), se cambian sus azules por teal y se añade la capa de Vortara.
+if [ -f /usr/share/cinnamon/theme/cinnamon.css ]; then
+	rm -rf /usr/share/themes/Vortara/cinnamon
+	mkdir -p "$tema/cinnamon"
+	cp -a /usr/share/cinnamon/theme/. "$tema/cinnamon/"
+	sed -i \
+		-e 's/#3584e4/#14B8A6/gI' \
+		-e 's/#1c71d8/#0F766E/gI' \
+		-e 's/#1f76e1/#0F9488/gI' \
+		-e 's/#78aeed/#5EEAD4/gI' \
+		"$tema/cinnamon/cinnamon.css"
+	cat /usr/share/vortara/tema/cinnamon-vortara.css >> "$tema/cinnamon/cinnamon.css"
+	# Si no se sustituyó ningún azul, el tema por defecto ha cambiado: avisar.
+	if grep -qi '#3584e4' "$tema/cinnamon/cinnamon.css"; then
+		echo "Aviso: quedan azules sin cambiar en el tema de Cinnamon" >&2
+	fi
+fi
+
+# --- Applets de la barra de tareas ---------------------------------------
+# Se cambian los valores por defecto de sus esquemas (los usan los usuarios
+# nuevos al crear su configuración).
+applets=/usr/share/cinnamon/applets
+
+# Menú: el orbe de Vortara como botón de inicio, sin texto.
+m="$applets/menu@cinnamon.org/settings-schema.json"
+if [ -f "$m" ]; then
+	python3 - "$m" <<'FIN'
+import json, sys
+ruta = sys.argv[1]
+with open(ruta, encoding="utf-8") as f:
+    datos = json.load(f)
+datos["menu-custom"]["default"] = True
+datos["menu-icon"]["default"] = "vortara-menu"
+datos["menu-icon-size"]["default"] = 36
+datos["menu-label"]["default"] = ""
+with open(ruta, "w", encoding="utf-8") as f:
+    json.dump(datos, f, indent=4, ensure_ascii=False)
+FIN
+fi
+
+# Lista de ventanas: programas anclados que existen en Vortara
+# (en Debian, Firefox es firefox-esr.desktop).
+g="$applets/grouped-window-list@cinnamon.org/settings-schema.json"
+if [ -f "$g" ]; then
+	python3 - "$g" <<'FIN'
+import json, sys
+ruta = sys.argv[1]
+with open(ruta, encoding="utf-8") as f:
+    datos = json.load(f)
+datos["pinned-apps"]["default"] = ["firefox-esr.desktop", "nemo.desktop",
+                                   "org.gnome.Terminal.desktop"]
+with open(ruta, "w", encoding="utf-8") as f:
+    json.dump(datos, f, indent=4, ensure_ascii=False)
+FIN
+fi
+
+# Reloj: hora y fecha en dos líneas, como en Windows 7.
+c="$applets/calendar@cinnamon.org/settings-schema.json"
+if [ -f "$c" ]; then
+	python3 - "$c" <<'FIN'
+import json, sys
+ruta = sys.argv[1]
+with open(ruta, encoding="utf-8") as f:
+    datos = json.load(f)
+datos["use-custom-format"]["default"] = True
+datos["custom-format"]["default"] = "%H:%M%n%d/%m/%Y"
+with open(ruta, "w", encoding="utf-8") as f:
+    json.dump(datos, f, indent=4, ensure_ascii=False)
+FIN
+fi
+

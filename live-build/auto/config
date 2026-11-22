@@ -1,0 +1,33 @@
+#!/bin/sh
+# Configuración de live-build para Vortara OS.
+# No se ejecuta directamente: lo llama `lb config` (ver scripts/build-iso.sh).
+set -e
+
+. ./vortara.conf
+
+lb config noauto \
+	--mode debian \
+	--distribution trixie \
+	--architectures amd64 \
+	--archive-areas "main contrib non-free non-free-firmware" \
+	--mirror-bootstrap "${VORTARA_MIRROR}" \
+	--mirror-chroot "${VORTARA_MIRROR}" \
+	--mirror-binary "${VORTARA_MIRROR}" \
+	--mirror-chroot-security "${VORTARA_MIRROR_SECURITY}" \
+	--mirror-binary-security "${VORTARA_MIRROR_SECURITY}" \
+	--security true \
+	--updates true \
+	--apt-recommends false \
+	--linux-flavours amd64 \
+	--firmware-chroot false \
+	--firmware-binary false \
+	--debian-installer none \
+	--binary-images iso-hybrid \
+	--bootloaders "syslinux,grub-efi" \
+	--memtest none \
+	--iso-application "Vortara OS" \
+	--iso-publisher "Vortara" \
+	--iso-volume "Vortara ${VORTARA_VERSION}" \
+	--image-name "vortara-${VORTARA_VERSION}" \
+	--bootappend-live "boot=live components quiet splash locales=es_ES.UTF-8 keyboard-layouts=es timezone=Europe/Madrid username=vortara user-fullname=Vortara hostname=vortara" \
+	"${@}"

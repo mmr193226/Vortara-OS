@@ -1,0 +1,18 @@
+#!/bin/sh
+# Vortara: pone el avatar de Vortara al usuario si todavía tiene el de Debian.
+#
+# Los usuarios nuevos copian ~/.face de /etc/skel, que es del paquete
+# desktop-base (logo de Debian) y no se debe modificar. Al iniciar sesión, si
+# ~/.face sigue siendo ese, se cambia por el de Vortara. Solo una vez: si
+# luego el usuario elige otro avatar, no se toca.
+marca="${XDG_CONFIG_HOME:-$HOME/.config}/vortara/avatar-aplicado"
+[ -e "$marca" ] && exit 0
+mkdir -p "$(dirname "$marca")"
+touch "$marca"
+
+avatar=/usr/share/pixmaps/vortara-avatar.png
+[ -f "$avatar" ] || exit 0
+if [ ! -e "$HOME/.face" ] || cmp -s "$HOME/.face" /etc/skel/.face; then
+	cp "$avatar" "$HOME/.face"
+	ln -sf .face "$HOME/.face.icon"
+fi

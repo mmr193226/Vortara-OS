@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Vortara: avatar inicial
+Exec=/usr/libexec/vortara/avatar-inicial
+OnlyShowIn=X-Cinnamon;
+NoDisplay=true
+X-GNOME-Autostart-Phase=Initialization

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Vortara: modo ligero
+Exec=/usr/libexec/vortara/modo-ligero
+OnlyShowIn=X-Cinnamon;
+NoDisplay=true
+X-GNOME-Autostart-Phase=Initialization

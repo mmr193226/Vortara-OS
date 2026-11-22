@@ -1,0 +1,19 @@
+#!/bin/sh
+# Vortara: en la sesión live pone "Instalar Vortara" en el escritorio.
+# Se ejecuta al iniciar la sesión (autostart), cuando la carpeta personal y el
+# escritorio ya existen. En el sistema instalado no hace nada.
+grep -qw 'boot=live' /proc/cmdline || exit 0
+lanzador=/usr/share/applications/calamares-install-debian.desktop
+[ -f "$lanzador" ] || exit 0
+
+# Las carpetas personales (Escritorio, Documentos...) se crean con
+# xdg-user-dirs-update, que también arranca al iniciar la sesión. Se ejecuta
+# aquí primero: si no, xdg-user-dir puede devolver ~/Desktop, que Nemo no
+# muestra cuando el idioma es español.
+xdg-user-dirs-update 2>/dev/null || true
+escritorio="$(xdg-user-dir DESKTOP 2>/dev/null)"
+[ -n "$escritorio" ] && [ "$escritorio" != "$HOME" ] || escritorio="$HOME/Escritorio"
+mkdir -p "$escritorio"
+install -m 755 "$lanzador" "$escritorio/instalar-vortara.desktop"
+# Que Nemo lo trate como lanzador de confianza (sin preguntar al abrirlo).
+gio set "$escritorio/instalar-vortara.desktop" metadata::trusted true 2>/dev/null || true

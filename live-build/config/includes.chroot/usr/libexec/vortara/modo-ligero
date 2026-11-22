@@ -1,0 +1,18 @@
+#!/bin/sh
+# Vortara: en equipos con poca RAM (3 GB o menos) desactiva animaciones y
+# efectos de Cinnamon la primera vez que el usuario inicia sesión.
+# El usuario puede volver a activarlos en Configuración > Efectos.
+marca="${XDG_CONFIG_HOME:-$HOME/.config}/vortara/modo-ligero-aplicado"
+[ -e "$marca" ] && exit 0
+
+ram_kb=$(awk '/^MemTotal:/ {print $2}' /proc/meminfo)
+if [ "${ram_kb:-0}" -le 3145728 ]; then
+	gsettings set org.cinnamon desktop-effects-workspace false 2>/dev/null
+	gsettings set org.cinnamon desktop-effects-on-menus false 2>/dev/null
+	gsettings set org.cinnamon desktop-effects-on-dialogs false 2>/dev/null
+	gsettings set org.cinnamon enable-animations false 2>/dev/null
+	gsettings set org.cinnamon startup-animation false 2>/dev/null
+	gsettings set org.cinnamon.muffin unredirect-fullscreen-windows true 2>/dev/null
+fi
+
+mkdir -p "$(dirname "$marca")" && touch "$marca"

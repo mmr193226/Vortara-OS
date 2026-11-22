@@ -164,6 +164,11 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   propio instalador.
 - **Icono «Instalar Vortara»**: aparece una sola vez y abre el instalador
   directamente. Sin disco, el instalador avisa y no deja continuar.
+- **Repositorio APT publicado** (<https://mmr193226.github.io/Vortara-OS/>):
+  GitHub Actions lo firma con la clave del secreto y lo publica; apt acepta la
+  firma y ve todos los paquetes. Una actualización real (vortara-branding
+  26.11.1 → 26.11.2) se descargó del repositorio y se instaló. La ISO final
+  ya trae el repositorio configurado con la clave.
 - **Paquetes propios** (ISO con `paquetes/`, instalación UEFI nueva): los
   paquetes se instalan bien en la ISO; el menú de GRUB del sistema instalado
   sale entero en español incluso si `update-grub` se ejecuta con `LC_ALL=C`;
@@ -178,4 +183,7 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
 
 ## Pendiente
 
-- Repositorio APT en GitHub Pages con los paquetes propios de Vortara.
+Todo lo decidido al principio está hecho. Ideas para más adelante:
+
+- Traducir la app de bienvenida y el tema a otros idiomas (ahora, solo español).
+- Probar en equipos reales antiguos (2 GB de RAM) además de la máquina virtual.

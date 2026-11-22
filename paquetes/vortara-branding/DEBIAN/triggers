@@ -1,3 +1,9 @@
-# Si grub-common actualiza su traducción (apartada con dpkg-divert), se
-# vuelve a completar la de Vortara.
+# Si grub-common actualiza alguna de sus traducciones (apartadas con
+# dpkg-divert), se vuelven a completar las de Vortara.
 interest-noawait /usr/share/locale/es/LC_MESSAGES/grub.mo.debian
+interest-noawait /usr/share/locale/pt/LC_MESSAGES/grub.mo.debian
+interest-noawait /usr/share/locale/pt_BR/LC_MESSAGES/grub.mo.debian
+interest-noawait /usr/share/locale/fr/LC_MESSAGES/grub.mo.debian
+interest-noawait /usr/share/locale/de/LC_MESSAGES/grub.mo.debian
+interest-noawait /usr/share/locale/it/LC_MESSAGES/grub.mo.debian
+interest-noawait /usr/share/locale/ca/LC_MESSAGES/grub.mo.debian

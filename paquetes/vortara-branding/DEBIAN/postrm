@@ -1,11 +1,17 @@
 #!/bin/sh
 set -e
-mo=/usr/share/locale/es/LC_MESSAGES/grub.mo
 if [ "$1" = remove ] || [ "$1" = abort-install ] || [ "$1" = disappear ]; then
-	# Quitar la traducción de Vortara y devolver la de Debian a su sitio.
-	if [ -f "$mo.debian" ]; then
-		rm -f "$mo"
+	# Quitar las traducciones de Vortara y devolver las de Debian a su sitio.
+	for idioma in es pt pt_BR fr de it ca; do
+		mo="/usr/share/locale/$idioma/LC_MESSAGES/grub.mo"
+		if [ -f "$mo.debian" ]; then
+			rm -f "$mo"
+		fi
+		dpkg-divert --package vortara-branding --rename \
+			--divert "$mo.debian" --remove "$mo" >/dev/null
+	done
+	if [ -f /etc/grub.d/30_uefi-firmware ]; then
+		sed -i 's/^LABEL="\$(gettext "UEFI Firmware Settings")"$/LABEL="UEFI Firmware Settings"/' \
+			/etc/grub.d/30_uefi-firmware
 	fi
-	dpkg-divert --package vortara-branding --rename \
-		--divert "$mo.debian" --remove "$mo" >/dev/null
 fi

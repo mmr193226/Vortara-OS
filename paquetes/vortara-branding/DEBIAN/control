@@ -1,5 +1,5 @@
 Package: vortara-branding
-Version: 26.11.2
+Version: 26.11.3
 Architecture: all
 Maintainer: Vortara OS <mmr193226@users.noreply.github.com>
 Section: misc
@@ -8,4 +8,4 @@ Depends: python3
 Homepage: https://github.com/mmr193226/Vortara-OS
 Description: identidad visual de Vortara OS
  Logo, fondos de escritorio y aspecto del menú de arranque (GRUB) de
- Vortara OS. Completa además la traducción al español del menú de GRUB.
+ Vortara OS. Completa además las traducciones del menú de GRUB.

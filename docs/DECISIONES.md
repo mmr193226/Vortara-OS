@@ -94,6 +94,18 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
 
 - Español por defecto (`es_ES.UTF-8`).
 - El instalador permite elegir cualquier idioma y distribución de teclado.
+- Lo propio de Vortara está traducido a **inglés, portugués (de Portugal y de
+  Brasil), francés, alemán, italiano y catalán**: la app de bienvenida, sus
+  lanzadores y el mensaje de la contraseña, el lanzador del instalador y su
+  presentación, el menú de GRUB y la descripción del tema. Si el idioma del
+  usuario no tiene traducción, la app sale en **inglés**, no en español.
+- El pack de ofimática instala los diccionarios, la ayuda y el idioma de
+  LibreOffice y Thunderbird del idioma del usuario.
+- El reloj de la barra muestra la fecha con el formato de cada idioma.
+- Las traducciones de la app están en `paquetes/vortara-bienvenida/po/` (formato
+  `.po`, editable con Poedit); `scripts/traducciones.py` las extrae, comprueba
+  y compila. Las de GRUB, en
+  `paquetes/vortara-branding/raiz/usr/share/vortara/grub/traducciones.json`.
 
 ## 6. Versiones y actualizaciones
 
@@ -185,5 +197,4 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
 
 Todo lo decidido al principio está hecho. Ideas para más adelante:
 
-- Traducir la app de bienvenida y el tema a otros idiomas (ahora, solo español).
 - Probar en equipos reales antiguos (2 GB de RAM) además de la máquina virtual.

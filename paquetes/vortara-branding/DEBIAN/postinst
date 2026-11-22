@@ -1,22 +1,21 @@
 #!/bin/sh
 set -e
 
-mo=/usr/share/locale/es/LC_MESSAGES/grub.mo
-
-completar_grub_es() {
-	if [ -f "$mo.debian" ]; then
-		/usr/libexec/vortara/grub-es-completar "$mo.debian" "$mo"
-	fi
-	# La entrada del firmware UEFI tiene el texto fijo en el script.
+completar_grub() {
+	/usr/libexec/vortara/grub-completar-traducciones
+	# La entrada del firmware UEFI tiene el texto fijo en el script: se hace
+	# traducible (versiones anteriores lo ponían siempre en español).
 	if [ -f /etc/grub.d/30_uefi-firmware ]; then
-		sed -i 's/^LABEL="UEFI Firmware Settings"$/LABEL="Configuración del firmware UEFI"/' \
+		sed -i \
+			-e 's/^LABEL="UEFI Firmware Settings"$/LABEL="$(gettext "UEFI Firmware Settings")"/' \
+			-e 's/^LABEL="Configuración del firmware UEFI"$/LABEL="$(gettext "UEFI Firmware Settings")"/' \
 			/etc/grub.d/30_uefi-firmware
 	fi
 }
 
 case "$1" in
 	configure)
-		completar_grub_es
+		completar_grub
 		gtk-update-icon-cache -q /usr/share/icons/hicolor 2>/dev/null || true
 		# En un sistema ya instalado, aplicar el aspecto nuevo del menú.
 		if [ -f /boot/grub/grub.cfg ] && command -v update-grub >/dev/null; then
@@ -24,6 +23,6 @@ case "$1" in
 		fi
 		;;
 	triggered)
-		completar_grub_es
+		completar_grub
 		;;
 esac

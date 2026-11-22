@@ -1,0 +1,72 @@
+{
+  "es": {
+    "Advanced options for %s": "Opciones avanzadas para %s",
+    "%s, with Linux %s": "%s, con Linux %s",
+    "%s, with Linux %s (%s)": "%s, con Linux %s (%s)",
+    "recovery mode": "modo de recuperación",
+    "Loading Linux %s ...": "Cargando Linux %s...",
+    "Loading initial ramdisk ...": "Cargando el disco RAM inicial...",
+    "(on %s)": "(en %s)",
+    "UEFI Firmware Settings": "Configuración del firmware UEFI"
+  },
+  "pt": {
+    "Advanced options for %s": "Opções avançadas para %s",
+    "%s, with Linux %s": "%s, com Linux %s",
+    "%s, with Linux %s (%s)": "%s, com Linux %s (%s)",
+    "recovery mode": "modo de recuperação",
+    "Loading Linux %s ...": "A carregar o Linux %s...",
+    "Loading initial ramdisk ...": "A carregar o disco RAM inicial...",
+    "(on %s)": "(em %s)",
+    "UEFI Firmware Settings": "Definições do firmware UEFI"
+  },
+  "pt_BR": {
+    "Advanced options for %s": "Opções avançadas para %s",
+    "%s, with Linux %s": "%s, com Linux %s",
+    "%s, with Linux %s (%s)": "%s, com Linux %s (%s)",
+    "recovery mode": "modo de recuperação",
+    "Loading Linux %s ...": "Carregando o Linux %s...",
+    "Loading initial ramdisk ...": "Carregando o disco RAM inicial...",
+    "(on %s)": "(em %s)",
+    "UEFI Firmware Settings": "Configurações do firmware UEFI"
+  },
+  "fr": {
+    "Advanced options for %s": "Options avancées pour %s",
+    "%s, with Linux %s": "%s, avec Linux %s",
+    "%s, with Linux %s (%s)": "%s, avec Linux %s (%s)",
+    "recovery mode": "mode de récupération",
+    "Loading Linux %s ...": "Chargement de Linux %s...",
+    "Loading initial ramdisk ...": "Chargement du disque mémoire initial...",
+    "(on %s)": "(sur %s)",
+    "UEFI Firmware Settings": "Paramètres du micrologiciel UEFI"
+  },
+  "de": {
+    "Advanced options for %s": "Erweiterte Optionen für %s",
+    "%s, with Linux %s": "%s, mit Linux %s",
+    "%s, with Linux %s (%s)": "%s, mit Linux %s (%s)",
+    "recovery mode": "Wiederherstellungsmodus",
+    "Loading Linux %s ...": "Linux %s wird geladen …",
+    "Loading initial ramdisk ...": "Initiale Ramdisk wird geladen …",
+    "(on %s)": "(auf %s)",
+    "UEFI Firmware Settings": "UEFI-Firmware-Einstellungen"
+  },
+  "it": {
+    "Advanced options for %s": "Opzioni avanzate per %s",
+    "%s, with Linux %s": "%s, con Linux %s",
+    "%s, with Linux %s (%s)": "%s, con Linux %s (%s)",
+    "recovery mode": "modalità di ripristino",
+    "Loading Linux %s ...": "Caricamento di Linux %s...",
+    "Loading initial ramdisk ...": "Caricamento del ramdisk iniziale...",
+    "(on %s)": "(su %s)",
+    "UEFI Firmware Settings": "Impostazioni firmware UEFI"
+  },
+  "ca": {
+    "Advanced options for %s": "Opcions avançades per a %s",
+    "%s, with Linux %s": "%s, amb Linux %s",
+    "%s, with Linux %s (%s)": "%s, amb Linux %s (%s)",
+    "recovery mode": "mode de recuperació",
+    "Loading Linux %s ...": "S’està carregant el Linux %s...",
+    "Loading initial ramdisk ...": "S’està carregant el disc RAM inicial...",
+    "(on %s)": "(a %s)",
+    "UEFI Firmware Settings": "Configuració del microprogramari UEFI"
+  }
+}

@@ -2,6 +2,13 @@
 Type=X-GNOME-Metatheme
 Name=Vortara
 Comment=Tema oscuro de Vortara OS con acento teal y cristal (estilo Aero)
+Comment[en]=Vortara OS dark theme with a teal accent and glass (Aero style)
+Comment[pt]=Tema escuro do Vortara OS com destaque azul-petróleo e vidro (estilo Aero)
+Comment[pt_BR]=Tema escuro do Vortara OS com destaque azul-petróleo e vidro (estilo Aero)
+Comment[fr]=Thème sombre de Vortara OS avec accent bleu canard et verre (style Aero)
+Comment[de]=Dunkles Vortara-OS-Design mit Petrol-Akzent und Glas (Aero-Stil)
+Comment[it]=Tema scuro di Vortara OS con accento verde acqua e vetro (stile Aero)
+Comment[ca]=Tema fosc de Vortara OS amb accent verd blavós i vidre (estil Aero)
 Encoding=UTF-8
 
 [X-GNOME-Metatheme]

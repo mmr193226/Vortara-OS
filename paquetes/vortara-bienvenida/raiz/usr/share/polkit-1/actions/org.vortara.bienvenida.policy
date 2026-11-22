@@ -7,8 +7,20 @@
   <action id="org.vortara.bienvenida.instalar-pack">
     <description>Install Vortara software packs</description>
     <description xml:lang="es">Instalar packs de programas de Vortara</description>
+    <description xml:lang="pt">Instalar packs de programas do Vortara</description>
+    <description xml:lang="pt_BR">Instalar packs de programas do Vortara</description>
+    <description xml:lang="fr">Installer des packs de logiciels Vortara</description>
+    <description xml:lang="de">Vortara-Programmpakete installieren</description>
+    <description xml:lang="it">Installare pacchetti di programmi di Vortara</description>
+    <description xml:lang="ca">Instal·lar paquets de programes de Vortara</description>
     <message>Authentication is required to install software</message>
     <message xml:lang="es">Para instalar programas hace falta la contraseña de administrador</message>
+    <message xml:lang="pt">É necessária a palavra-passe de administrador para instalar programas</message>
+    <message xml:lang="pt_BR">É necessária a senha de administrador para instalar programas</message>
+    <message xml:lang="fr">Le mot de passe administrateur est nécessaire pour installer des logiciels</message>
+    <message xml:lang="de">Zum Installieren von Programmen ist das Administratorpasswort erforderlich</message>
+    <message xml:lang="it">Per installare programmi è necessaria la password di amministratore</message>
+    <message xml:lang="ca">Cal la contrasenya d’administrador per instal·lar programes</message>
     <icon_name>vortara-logo</icon_name>
     <defaults>
       <allow_any>auth_admin</allow_any>

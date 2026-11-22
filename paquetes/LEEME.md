@@ -29,6 +29,23 @@ Cada carpeta tiene:
    publica el repositorio. Los equipos con Vortara verán el aviso de
    actualización.
 
+## Traducciones
+
+- **App de bienvenida**: los textos están en español en el código, marcados con
+  `_("...")`. Las traducciones, en `vortara-bienvenida/po/<idioma>.po`.
+  - Tras cambiar textos de la app o de `packs.json`:
+    `python3 scripts/traducciones.py extraer` (añade los textos nuevos a
+    todos los `.po`) y traducirlos.
+  - Para un idioma nuevo: copiar `po/vortara-bienvenida.pot` a
+    `po/<código>.po` (por ejemplo `nl.po`) y traducirlo. Si el pack de
+    ofimática tiene paquetes de idioma para él, añadirlos en `por_idioma`
+    de `packs.json`.
+  - `python3 scripts/traducciones.py comprobar` revisa que todo esté al día;
+    también lo hace GitHub en cada pull request.
+- **GRUB**: `vortara-branding/raiz/usr/share/vortara/grub/traducciones.json`.
+  Un idioma nuevo hay que añadirlo también en `DEBIAN/preinst`, `DEBIAN/postrm`
+  y `DEBIAN/triggers` (la comprobación avisa si no coinciden).
+
 ## Probar en local
 
 ```bash

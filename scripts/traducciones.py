@@ -152,6 +152,7 @@ def comprobar():
                 print(f"{po.name}: marcadores distintos en «{msgid[:50]}»")
                 errores += 1
         print(f"{po.name}: {len(entradas) - len(faltan)}/{len(entradas)} traducidos")
+    errores += comprobar_grub()
     actuales = set(textos_de_la_app())
     for po in sorted(DIR_PO.glob("*.po")):
         _c, entradas = leer_po(po)
@@ -159,6 +160,37 @@ def comprobar():
             print(f"{po.name}: no está al día con la app (ejecuta «extraer»)")
             errores += 1
     return 1 if errores else 0
+
+
+def comprobar_grub():
+    """Los idiomas de GRUB deben coincidir en traducciones.json, preinst,
+    postrm y triggers de vortara-branding."""
+    paquete = RAIZ / "paquetes" / "vortara-branding"
+    datos = json.loads((paquete / "raiz/usr/share/vortara/grub/traducciones.json")
+                       .read_text(encoding="utf-8"))
+    idiomas = set(datos)
+    errores = 0
+    for script in ("preinst", "postrm"):
+        m = re.search(r"for idioma in ([^;]+);", (paquete / "DEBIAN" / script).read_text())
+        if not m or set(m.group(1).split()) != idiomas:
+            print(f"GRUB: los idiomas de DEBIAN/{script} no coinciden con traducciones.json")
+            errores += 1
+    disparadores = set(re.findall(r"/usr/share/locale/([^/]+)/LC_MESSAGES/grub\.mo\.debian",
+                                  (paquete / "DEBIAN" / "triggers").read_text()))
+    if disparadores != idiomas:
+        print("GRUB: los idiomas de DEBIAN/triggers no coinciden con traducciones.json")
+        errores += 1
+    claves = set(next(iter(datos.values())))
+    for idioma, textos in datos.items():
+        if set(textos) != claves:
+            print(f"GRUB: a «{idioma}» le faltan textos o le sobran")
+            errores += 1
+        for original, traduccion in textos.items():
+            if original.count("%s") != traduccion.count("%s") or "'" in traduccion:
+                print(f"GRUB: «{idioma}»: revisa «{traduccion}» (%s o comilla simple)")
+                errores += 1
+    print(f"GRUB: {len(idiomas)} idiomas" + ("" if errores else ", todo coincide"))
+    return errores
 
 
 # --- Compilación --------------------------------------------------------------

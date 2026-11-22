@@ -1,0 +1,206 @@
+# Traducción de la app de bienvenida de Vortara OS (de).
+msgid ""
+msgstr ""
+"Project-Id-Version: vortara-bienvenida\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Incluye: {lista}"
+msgstr "Enthält: {lista}"
+
+msgid "Instalar"
+msgstr "Installieren"
+
+msgid "Instalando…"
+msgstr "Wird installiert …"
+
+msgid "✓ Instalado"
+msgstr "✓ Installiert"
+
+msgid "Bienvenida a Vortara"
+msgstr "Willkommen bei Vortara"
+
+msgid "Inicio"
+msgstr "Start"
+
+msgid "Programas"
+msgstr "Programme"
+
+msgid "Primeros pasos"
+msgstr "Erste Schritte"
+
+msgid "Mostrar esta ventana al iniciar sesión"
+msgstr "Dieses Fenster bei der Anmeldung anzeigen"
+
+msgid "Te damos la bienvenida a Vortara OS"
+msgstr "Willkommen bei Vortara OS"
+
+msgid "Versión {numero} «{nombre}» · basada en Debian 13"
+msgstr "Version {numero} „{nombre}“ · basiert auf Debian 13"
+
+msgid "Basada en Debian 13"
+msgstr "Basiert auf Debian 13"
+
+msgid ""
+"Estás probando Vortara sin instalarlo: nada cambia en tu equipo.\n"
+"Cuando quieras, instálalo con el botón de abajo."
+msgstr ""
+"Sie testen Vortara, ohne es zu installieren: An Ihrem Computer ändert sich nichts.\n"
+"Wann immer Sie möchten, installieren Sie es mit der Schaltfläche unten."
+
+msgid ""
+"Tu sistema está listo. Desde aquí puedes añadir programas para\n"
+"programar, trabajar con documentos o ver vídeos, y dar los primeros pasos."
+msgstr ""
+"Ihr System ist bereit. Hier können Sie Programme zum\n"
+"Programmieren, Arbeiten mit Dokumenten oder Ansehen von Videos hinzufügen und die ersten Schritte machen."
+
+msgid "Instalar Vortara"
+msgstr "Vortara installieren"
+
+msgid "Elegir programas"
+msgstr "Programme auswählen"
+
+msgid ""
+"Vortara viene ligero de serie. Añade solo los programas que vayas a usar: cada pack se descarga e instala de una vez."
+msgstr ""
+"Vortara ist von Haus aus schlank. Fügen Sie nur die Programme hinzu, die Sie nutzen: Jedes Paket wird in einem Schritt heruntergeladen und installiert."
+
+msgid ""
+"Podrás instalar estos packs cuando Vortara esté instalado en tu equipo."
+msgstr ""
+"Sie können diese Pakete installieren, sobald Vortara auf Ihrem Computer installiert ist."
+
+msgid "Detalles"
+msgstr "Details"
+
+msgid "¿Buscas otra aplicación? Encuentra miles en Flathub"
+msgstr "Suchen Sie eine andere Anwendung? Tausende finden Sie auf Flathub"
+
+msgid "Fondo de escritorio"
+msgstr "Hintergrundbild"
+
+msgid "Elige otra imagen o un color"
+msgstr "Wählen Sie ein anderes Bild oder eine Farbe"
+
+msgid "Configuración"
+msgstr "Einstellungen"
+
+msgid "Pantalla, sonido, red, usuarios…"
+msgstr "Bildschirm, Ton, Netzwerk, Benutzer …"
+
+msgid "Avisos de actualizaciones"
+msgstr "Update-Hinweise"
+
+msgid "Vortara avisa; tú decides cuándo actualizar"
+msgstr "Vortara informiert Sie; Sie entscheiden, wann aktualisiert wird"
+
+msgid "Añade y configura impresoras"
+msgstr "Drucker hinzufügen und einrichten"
+
+msgid "Impresoras"
+msgstr "Drucker"
+
+msgid "Para quien prefiere el teclado"
+msgstr "Für alle, die die Tastatur bevorzugen"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Ayuda y comunidad"
+msgstr "Hilfe und Community"
+
+msgid "Proyecto, dudas y errores"
+msgstr "Projekt, Fragen und Fehler"
+
+msgid "Preparando «{nombre}»…"
+msgstr "„{nombre}“ wird vorbereitet …"
+
+msgid "No se pudo iniciar la instalación: {error}"
+msgstr "Die Installation konnte nicht gestartet werden: {error}"
+
+msgid "Actualizando la lista de programas…"
+msgstr "Programmliste wird aktualisiert …"
+
+msgid "Descargando…"
+msgstr "Wird heruntergeladen …"
+
+msgid "Hubo un problema; reintentando…"
+msgstr "Es gab ein Problem; neuer Versuch …"
+
+msgid "Instalando desde Flathub (puede tardar un poco)…"
+msgstr "Installation von Flathub (kann etwas dauern) …"
+
+msgid "Listo."
+msgstr "Fertig."
+
+msgid "Instalando {paquete}…"
+msgstr "{paquete} wird installiert …"
+
+msgid ""
+"No se pudo descargar. Comprueba la conexión a Internet y vuelve a intentarlo."
+msgstr ""
+"Herunterladen nicht möglich. Prüfen Sie die Internetverbindung und versuchen Sie es erneut."
+
+msgid "Hubo un problema al instalar. Mira los detalles."
+msgstr "Bei der Installation ist ein Problem aufgetreten. Siehe Details."
+
+msgid "Petición no válida."
+msgstr "Ungültige Anfrage."
+
+msgid "Hubo un problema al instalar."
+msgstr "Bei der Installation ist ein Problem aufgetreten."
+
+msgid ""
+"Los demás programas se instalaron, pero {apps} (de Flathub) no. Comprueba la conexión a Internet y pulsa «Instalar» otra vez."
+msgstr ""
+"Die übrigen Programme wurden installiert, {apps} (von Flathub) jedoch nicht. Prüfen Sie die Internetverbindung und klicken Sie erneut auf „Installieren“."
+
+msgid ""
+"No se pudo instalar {apps} desde Flathub. Comprueba la conexión a Internet."
+msgstr ""
+"{apps} konnte nicht von Flathub installiert werden. Prüfen Sie die Internetverbindung."
+
+msgid "«{nombre}» instalado. Encontrarás los programas en el menú."
+msgstr "„{nombre}“ installiert. Die Programme finden Sie im Menü."
+
+msgid "Se están instalando programas"
+msgstr "Programme werden installiert"
+
+msgid "Espera a que termine la instalación para cerrar la ventana."
+msgstr ""
+"Warten Sie, bis die Installation abgeschlossen ist, bevor Sie das Fenster schließen."
+
+msgid "Desarrollo básico"
+msgstr "Grundausstattung Entwicklung"
+
+msgid "Lo necesario para empezar a programar."
+msgstr "Alles, was Sie zum Programmieren brauchen."
+
+msgid ""
+"Git, compiladores de C y C++, Python (pip y entornos virtuales), Geany y VSCodium"
+msgstr ""
+"Git, C- und C++-Compiler, Python (pip und virtuelle Umgebungen), Geany und VSCodium"
+
+msgid "Lenguajes extra"
+msgstr "Weitere Sprachen"
+
+msgid "Más lenguajes de programación y sus herramientas."
+msgstr "Weitere Programmiersprachen und ihre Werkzeuge."
+
+msgid "Node.js y npm, Go, Rust (con Cargo) y Java (OpenJDK)"
+msgstr "Node.js und npm, Go, Rust (mit Cargo) und Java (OpenJDK)"
+
+msgid "Ofimática y multimedia"
+msgstr "Büro und Multimedia"
+
+msgid "Documentos, correo, fotos y vídeo."
+msgstr "Dokumente, E-Mail, Fotos und Video."
+
+msgid ""
+"LibreOffice (Writer, Calc, Impress) en tu idioma, Thunderbird, GIMP y VLC"
+msgstr ""
+"LibreOffice (Writer, Calc, Impress) in Ihrer Sprache, Thunderbird, GIMP und VLC"
+

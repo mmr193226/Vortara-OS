@@ -25,6 +25,9 @@ jobs:
       - name: Herramientas
         run: sudo apt-get update -qq && sudo apt-get install -y -qq apt-utils
 
+      - name: Comprobar las traducciones
+        run: python3 scripts/traducciones.py comprobar
+
       - name: Construir los paquetes
         run: ./scripts/construir-paquetes.sh "$RUNNER_TEMP/debs"
 

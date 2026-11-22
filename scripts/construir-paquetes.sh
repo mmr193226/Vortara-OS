@@ -60,6 +60,11 @@ for origen in "$RAIZ"/paquetes/*/; do
 	cp -a "$origen/raiz/." "$dir/"
 	cp -a "$origen/DEBIAN" "$dir/DEBIAN"
 
+	if [ "$nombre" = vortara-bienvenida ]; then
+		# Traducciones de la app (po/*.po -> /usr/share/locale/*/LC_MESSAGES/*.mo).
+		python3 "$RAIZ/scripts/traducciones.py" compilar "$dir"
+	fi
+
 	if [ "$nombre" = vortara-branding ]; then
 		# Iconos del logo en el tema hicolor (los usa el sistema: LOGO= en
 		# os-release, lanzadores...), a partir de los de /usr/share/pixmaps.
@@ -92,8 +97,12 @@ for ident, pack in datos.items():
     dir_debian = os.path.join(trabajo, nombre, "DEBIAN")
     os.makedirs(dir_debian)
     extra = ""
+    if pack.get("por_idioma"):
+        extra += ("\n .\n Las traducciones (diccionarios, ayuda e idioma de LibreOffice y "
+                  "Thunderbird) las añade la app de bienvenida según el idioma del "
+                  "sistema.")
     if pack.get("flatpak"):
-        extra = ("\n .\n Desde Flathub (no se instala con este paquete; usa la app de "
+        extra += ("\n .\n Desde Flathub (no se instala con este paquete; usa la app de "
                  "bienvenida):\n " + ", ".join(pack["flatpak"]))
     with open(os.path.join(dir_debian, "control"), "w", encoding="utf-8") as f:
         f.write(f"""Package: {nombre}

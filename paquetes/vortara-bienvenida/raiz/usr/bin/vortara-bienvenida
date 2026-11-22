@@ -4,8 +4,10 @@
 #   vortara-bienvenida           abre la ventana
 #   vortara-bienvenida --inicio  igual, pero solo si el usuario no la ha
 #                                desactivado (se usa al iniciar sesión)
+import gettext
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -18,8 +20,52 @@ APP_ID = "org.vortara.Bienvenida"
 PACKS = "/usr/share/vortara/packs.json"
 AYUDANTE = "/usr/libexec/vortara/instalar-pack"
 URL_PROYECTO = "https://github.com/mmr193226/Vortara-OS"
-URL_FLATHUB = "https://flathub.org/es"
+URL_FLATHUB = "https://flathub.org/"
 CONFIG = os.path.join(GLib.get_user_config_dir(), "vortara", "bienvenida.conf")
+DOMINIO = "vortara-bienvenida"
+
+
+def idioma_sesion():
+    """Código del idioma de la sesión, como «pt_BR» o «fr» (vacío si no hay)."""
+    for variable in ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"):
+        valor = os.environ.get(variable)
+        if valor:
+            return valor.split(":")[0].split(".")[0].split("@")[0]
+    return ""
+
+
+def argumento_idioma():
+    """--idioma=... para el ayudante, solo si el código es válido (no «C»)."""
+    idioma = idioma_sesion()
+    if re.fullmatch(r"[a-z]{2,3}(_[A-Z]{2})?", idioma):
+        return ["--idioma=" + idioma]
+    return []
+
+
+def paquetes_del_pack(pack):
+    """Paquetes de Debian del pack, con los de traducción del idioma de la sesión."""
+    idioma = idioma_sesion()
+    traducciones = pack.get("por_idioma", {})
+    extra = traducciones.get(idioma) or traducciones.get(idioma.split("_")[0]) or []
+    return pack.get("apt", []) + extra
+
+
+def preparar_traduccion():
+    """Traducción según el idioma de la sesión.
+
+    Los textos originales están en español. Si el idioma de la sesión no es
+    español y no tiene traducción, se usa la inglesa (mejor que el español
+    para quien no lo habla).
+    """
+    idioma = idioma_sesion()
+    traduccion = gettext.translation(DOMINIO, fallback=True)
+    sin_traduccion = type(traduccion) is gettext.NullTranslations
+    if sin_traduccion and idioma[:2] not in ("es", "", "C") and idioma != "POSIX":
+        traduccion = gettext.translation(DOMINIO, languages=["en"], fallback=True)
+    return traduccion.gettext
+
+
+_ = preparar_traduccion()
 
 CSS = b"""
 .titulo-grande { font-size: 22pt; font-weight: bold; }
@@ -76,7 +122,7 @@ def guardar_mostrar(valor):
 
 
 def pack_instalado(pack):
-    paquetes = pack.get("apt", [])
+    paquetes = paquetes_del_pack(pack)
     if paquetes:
         r = subprocess.run(["dpkg-query", "-W", "-f=${db:Status-Abbrev}\n", *paquetes],
                            capture_output=True, text=True)
@@ -125,10 +171,11 @@ class TarjetaPack(Gtk.Box):
         self.pack_start(icono, False, False, 0)
 
         textos = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
-        nombre = Gtk.Label(label=pack["nombre"], xalign=0)
+        nombre = Gtk.Label(label=_(pack["nombre"]), xalign=0)
         nombre.get_style_context().add_class("titulo-tarjeta")
-        descripcion = Gtk.Label(label=pack["descripcion"], xalign=0, wrap=True)
-        incluye = Gtk.Label(label="Incluye: " + pack["incluye"], xalign=0, wrap=True)
+        descripcion = Gtk.Label(label=_(pack["descripcion"]), xalign=0, wrap=True)
+        incluye = Gtk.Label(label=_("Incluye: {lista}").format(lista=_(pack["incluye"])),
+                            xalign=0, wrap=True)
         incluye.get_style_context().add_class("dim-label")
         for w in (nombre, descripcion, incluye):
             textos.pack_start(w, False, False, 0)
@@ -146,23 +193,23 @@ class TarjetaPack(Gtk.Box):
         ctx = self.boton.get_style_context()
         ctx.remove_class("suggested-action")
         if self.live:
-            self.boton.set_label("Instalar")
+            self.boton.set_label(_("Instalar"))
             self.boton.set_sensitive(False)
         elif instalando:
-            self.boton.set_label("Instalando…")
+            self.boton.set_label(_("Instalando…"))
             self.boton.set_sensitive(False)
         elif pack_instalado(self.pack):
-            self.boton.set_label("✓ Instalado")
+            self.boton.set_label(_("✓ Instalado"))
             self.boton.set_sensitive(False)
         else:
-            self.boton.set_label("Instalar")
+            self.boton.set_label(_("Instalar"))
             self.boton.set_sensitive(not bloqueado)
             ctx.add_class("suggested-action")
 
 
 class Ventana(Gtk.ApplicationWindow):
     def __init__(self, app):
-        super().__init__(application=app, title="Bienvenida a Vortara")
+        super().__init__(application=app, title=_("Bienvenida a Vortara"))
         self.set_default_size(820, 580)
         self.set_icon_name("vortara-logo")
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -175,9 +222,9 @@ class Ventana(Gtk.ApplicationWindow):
             self.packs = json.load(f)
 
         self.pila = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
-        self.pila.add_titled(self.pagina_inicio(), "inicio", "Inicio")
-        self.pila.add_titled(self.pagina_programas(), "programas", "Programas")
-        self.pila.add_titled(self.pagina_primeros_pasos(), "pasos", "Primeros pasos")
+        self.pila.add_titled(self.pagina_inicio(), "inicio", _("Inicio"))
+        self.pila.add_titled(self.pagina_programas(), "programas", _("Programas"))
+        self.pila.add_titled(self.pagina_primeros_pasos(), "pasos", _("Primeros pasos"))
 
         cabecera = Gtk.HeaderBar(show_close_button=True)
         cabecera.set_custom_title(Gtk.StackSwitcher(stack=self.pila))
@@ -187,7 +234,7 @@ class Ventana(Gtk.ApplicationWindow):
         caja.pack_start(self.pila, True, True, 0)
         if not self.live:
             pie = Gtk.Box(spacing=6, margin=10)
-            mostrar = Gtk.CheckButton(label="Mostrar esta ventana al iniciar sesión")
+            mostrar = Gtk.CheckButton(label=_("Mostrar esta ventana al iniciar sesión"))
             mostrar.set_active(leer_mostrar())
             mostrar.connect("toggled", lambda b: guardar_mostrar(b.get_active()))
             pie.pack_start(mostrar, False, False, 0)
@@ -205,38 +252,45 @@ class Ventana(Gtk.ApplicationWindow):
         logo.set_pixel_size(128)
         caja.pack_start(logo, False, False, 0)
 
-        titulo = Gtk.Label(label="Te damos la bienvenida a Vortara OS")
+        titulo = Gtk.Label(label=_("Te damos la bienvenida a Vortara OS"))
         titulo.get_style_context().add_class("titulo-grande")
         caja.pack_start(titulo, False, False, 0)
 
-        # "26.11 (Aurora)" -> "26.11 «Aurora»"
-        version = self.info.get("VERSION", "").replace(" (", " «").replace(")", "»")
-        sub = Gtk.Label(label=f"Versión {version} · basada en Debian 13" if version
-                        else "Basada en Debian 13")
+        # VERSION="26.11 (Aurora)": número y nombre por separado, para que cada
+        # idioma ponga sus comillas.
+        version = self.info.get("VERSION", "")
+        numero, _sep, nombre = version.partition(" (")
+        nombre = nombre.rstrip(")")
+        if numero and nombre:
+            texto_version = _("Versión {numero} «{nombre}» · basada en Debian 13").format(
+                numero=numero, nombre=nombre)
+        else:
+            texto_version = _("Basada en Debian 13")
+        sub = Gtk.Label(label=texto_version)
         sub.get_style_context().add_class("acento")
         caja.pack_start(sub, False, False, 0)
 
         if self.live:
-            texto = ("Estás probando Vortara sin instalarlo: nada cambia en tu equipo.\n"
-                     "Cuando quieras, instálalo con el botón de abajo.")
+            texto = _("Estás probando Vortara sin instalarlo: nada cambia en tu equipo.\n"
+                      "Cuando quieras, instálalo con el botón de abajo.")
         else:
-            texto = ("Tu sistema está listo. Desde aquí puedes añadir programas para\n"
-                     "programar, trabajar con documentos o ver vídeos, y dar los primeros pasos.")
+            texto = _("Tu sistema está listo. Desde aquí puedes añadir programas para\n"
+                      "programar, trabajar con documentos o ver vídeos, y dar los primeros pasos.")
         parrafo = Gtk.Label(label=texto, justify=Gtk.Justification.CENTER)
         caja.pack_start(parrafo, False, False, 6)
 
         botones = Gtk.Box(spacing=10, halign=Gtk.Align.CENTER)
         if self.live:
-            instalar = Gtk.Button(label="Instalar Vortara")
+            instalar = Gtk.Button(label=_("Instalar Vortara"))
             instalar.get_style_context().add_class("suggested-action")
             instalar.connect("clicked", lambda _b: abrir_app("calamares-install-debian.desktop"))
             botones.pack_start(instalar, False, False, 0)
         else:
-            programas = Gtk.Button(label="Elegir programas")
+            programas = Gtk.Button(label=_("Elegir programas"))
             programas.get_style_context().add_class("suggested-action")
             programas.connect("clicked", lambda _b: self.pila.set_visible_child_name("programas"))
             botones.pack_start(programas, False, False, 0)
-        pasos = Gtk.Button(label="Primeros pasos")
+        pasos = Gtk.Button(label=_("Primeros pasos"))
         pasos.connect("clicked", lambda _b: self.pila.set_visible_child_name("pasos"))
         botones.pack_start(pasos, False, False, 0)
         caja.pack_start(botones, False, False, 8)
@@ -244,13 +298,13 @@ class Ventana(Gtk.ApplicationWindow):
 
     def pagina_programas(self):
         caja = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin=20)
-        intro = Gtk.Label(xalign=0, wrap=True, label=(
+        intro = Gtk.Label(xalign=0, wrap=True, label=_(
             "Vortara viene ligero de serie. Añade solo los programas que vayas a usar: "
             "cada pack se descarga e instala de una vez."))
         caja.pack_start(intro, False, False, 0)
 
         if self.live:
-            aviso = Gtk.Label(xalign=0, wrap=True, label=(
+            aviso = Gtk.Label(xalign=0, wrap=True, label=_(
                 "Podrás instalar estos packs cuando Vortara esté instalado en tu equipo."))
             aviso.get_style_context().add_class("acento")
             caja.pack_start(aviso, False, False, 0)
@@ -269,7 +323,7 @@ class Ventana(Gtk.ApplicationWindow):
                                      wrap_mode=Gtk.WrapMode.CHAR)
         desplazable = Gtk.ScrolledWindow(min_content_height=140)
         desplazable.add(self.registro)
-        self.detalles = Gtk.Expander(label="Detalles")
+        self.detalles = Gtk.Expander(label=_("Detalles"))
         self.detalles.add(desplazable)
         for w in (self.estado, self.barra, self.detalles):
             self.progreso.pack_start(w, False, False, 0)
@@ -277,7 +331,7 @@ class Ventana(Gtk.ApplicationWindow):
         caja.pack_start(self.progreso, False, False, 0)
 
         flathub = Gtk.LinkButton(uri=URL_FLATHUB,
-                                 label="¿Buscas otra aplicación? Encuentra miles en Flathub")
+                                 label=_("¿Buscas otra aplicación? Encuentra miles en Flathub"))
         flathub.set_halign(Gtk.Align.START)
         caja.pack_end(flathub, False, False, 0)
 
@@ -289,18 +343,18 @@ class Ventana(Gtk.ApplicationWindow):
         rejilla = Gtk.Grid(column_spacing=12, row_spacing=12, margin=24,
                            column_homogeneous=True, halign=Gtk.Align.FILL)
         accesos = [
-            ("preferences-desktop-wallpaper", "Fondo de escritorio",
-             "Elige otra imagen o un color", ["cinnamon-settings", "backgrounds"]),
-            ("preferences-system", "Configuración",
-             "Pantalla, sonido, red, usuarios…", ["cinnamon-settings"]),
-            ("software-properties", "Avisos de actualizaciones",
-             "Vortara avisa; tú decides cuándo actualizar",
+            ("preferences-desktop-wallpaper", _("Fondo de escritorio"),
+             _("Elige otra imagen o un color"), ["cinnamon-settings", "backgrounds"]),
+            ("preferences-system", _("Configuración"),
+             _("Pantalla, sonido, red, usuarios…"), ["cinnamon-settings"]),
+            ("software-properties", _("Avisos de actualizaciones"),
+             _("Vortara avisa; tú decides cuándo actualizar"),
              "app:org.guido-berhoerster.code.package-update-indicator.preferences.desktop"),
-            ("printer", "Impresoras", "Añade y configura impresoras",
+            ("printer", _("Impresoras"), _("Añade y configura impresoras"),
              ["system-config-printer"]),
-            ("utilities-terminal", "Terminal", "Para quien prefiere el teclado",
+            ("utilities-terminal", _("Terminal"), _("Para quien prefiere el teclado"),
              ["gnome-terminal"]),
-            ("help-browser", "Ayuda y comunidad", "Proyecto, dudas y errores",
+            ("help-browser", _("Ayuda y comunidad"), _("Proyecto, dudas y errores"),
              "url:" + URL_PROYECTO),
         ]
         for n, (icono, titulo, sub, accion) in enumerate(accesos):
@@ -339,17 +393,18 @@ class Ventana(Gtk.ApplicationWindow):
             t.actualizar(instalando=(t is tarjeta), bloqueado=True)
         self.registro.get_buffer().set_text("")
         self.estado.get_style_context().remove_class("error")
-        self.estado.set_text(f"Preparando «{tarjeta.pack['nombre']}»…")
+        self.estado.set_text(_("Preparando «{nombre}»…").format(nombre=_(tarjeta.pack["nombre"])))
         self.barra.set_fraction(0)
         self.progreso.set_no_show_all(False)
         self.progreso.show_all()
 
         try:
             self.proceso = Gio.Subprocess.new(
-                ["pkexec", AYUDANTE, tarjeta.ident],
+                ["pkexec", AYUDANTE, tarjeta.ident, *argumento_idioma()],
                 Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_MERGE)
         except GLib.Error as e:
-            self.terminar(error=f"No se pudo iniciar la instalación: {e.message}")
+            self.terminar(error=_("No se pudo iniciar la instalación: {error}").format(
+                error=e.message))
             return
         self.error = None
         self.flujo = Gio.DataInputStream.new(self.proceso.get_stdout_pipe())
@@ -374,11 +429,11 @@ class Ventana(Gtk.ApplicationWindow):
         if tipo == "fase" and len(partes) > 1:
             fase = partes[1]
             textos = {
-                "actualizar": ("Actualizando la lista de programas…", 0.04),
-                "descargar": ("Descargando…", 0.08),
-                "reintentar": ("Hubo un problema; reintentando…", 0.5),
-                "flatpak": ("Instalando desde Flathub (puede tardar un poco)…", None),
-                "fin": ("Listo.", 1.0),
+                "actualizar": (_("Actualizando la lista de programas…"), 0.04),
+                "descargar": (_("Descargando…"), 0.08),
+                "reintentar": (_("Hubo un problema; reintentando…"), 0.5),
+                "flatpak": (_("Instalando desde Flathub (puede tardar un poco)…"), None),
+                "fin": (_("Listo."), 1.0),
             }
             if fase in textos:
                 texto, fraccion = textos[fase]
@@ -393,26 +448,29 @@ class Ventana(Gtk.ApplicationWindow):
             except ValueError:
                 return
             if tipo == "dlstatus":
-                self.estado.set_text("Descargando…")
+                self.estado.set_text(_("Descargando…"))
                 self.barra.set_fraction(0.08 + 0.42 * pct)
             else:
-                self.estado.set_text(f"Instalando {partes[1]}…")
+                self.estado.set_text(_("Instalando {paquete}…").format(paquete=partes[1]))
                 self.barra.set_fraction(0.50 + 0.45 * pct)
         elif tipo == "error" and len(partes) > 1:
             self.error = {
-                "red": "No se pudo descargar. Comprueba la conexión a Internet y vuelve a intentarlo.",
-                "apt": "Hubo un problema al instalar. Mira los detalles.",
+                "red": _("No se pudo descargar. Comprueba la conexión a Internet y vuelve a "
+                         "intentarlo."),
+                "apt": _("Hubo un problema al instalar. Mira los detalles."),
                 "flatpak": self.texto_error_flatpak(),
-                "uso": "Petición no válida.",
-            }.get(partes[1], "Hubo un problema al instalar.")
+                "uso": _("Petición no válida."),
+            }.get(partes[1], _("Hubo un problema al instalar."))
 
     def texto_error_flatpak(self):
         pack = self.tarjeta_activa.pack
         apps = ", ".join(a.rsplit(".", 1)[-1].capitalize() for a in pack.get("flatpak", []))
         if pack.get("apt"):
-            return (f"Los demás programas se instalaron, pero {apps} (de Flathub) no. "
-                    "Comprueba la conexión a Internet y pulsa «Instalar» otra vez.")
-        return f"No se pudo instalar {apps} desde Flathub. Comprueba la conexión a Internet."
+            return _("Los demás programas se instalaron, pero {apps} (de Flathub) no. "
+                     "Comprueba la conexión a Internet y pulsa «Instalar» otra vez.").format(
+                apps=apps)
+        return _("No se pudo instalar {apps} desde Flathub. Comprueba la conexión a "
+                 "Internet.").format(apps=apps)
 
     def pulsar(self):
         def paso():
@@ -432,10 +490,11 @@ class Ventana(Gtk.ApplicationWindow):
             # Se canceló o falló la contraseña: se vuelve al estado anterior.
             self.terminar(oculto=True)
         elif codigo == 0:
-            self.terminar(texto=f"«{self.tarjeta_activa.pack['nombre']}» instalado. "
-                                 "Encontrarás los programas en el menú.")
+            self.terminar(texto=_("«{nombre}» instalado. Encontrarás los programas en el "
+                                  "menú.").format(nombre=_(self.tarjeta_activa.pack["nombre"])))
         else:
-            self.terminar(error=self.error or "Hubo un problema al instalar. Mira los detalles.")
+            self.terminar(error=self.error or _("Hubo un problema al instalar. Mira los "
+                                                "detalles."))
 
     def terminar(self, texto=None, error=None, oculto=False):
         self.proceso = None
@@ -458,8 +517,9 @@ class Ventana(Gtk.ApplicationWindow):
             return False
         dialogo = Gtk.MessageDialog(
             transient_for=self, modal=True, message_type=Gtk.MessageType.INFO,
-            buttons=Gtk.ButtonsType.OK, text="Se están instalando programas")
-        dialogo.format_secondary_text("Espera a que termine la instalación para cerrar la ventana.")
+            buttons=Gtk.ButtonsType.OK, text=_("Se están instalando programas"))
+        dialogo.format_secondary_text(
+            _("Espera a que termine la instalación para cerrar la ventana."))
         dialogo.run()
         dialogo.destroy()
         return True

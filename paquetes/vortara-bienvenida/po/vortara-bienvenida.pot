@@ -1,0 +1,194 @@
+# Plantilla de traducción de la app de bienvenida de Vortara OS.
+msgid ""
+msgstr ""
+"Project-Id-Version: vortara-bienvenida\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Incluye: {lista}"
+msgstr ""
+
+msgid "Instalar"
+msgstr ""
+
+msgid "Instalando…"
+msgstr ""
+
+msgid "✓ Instalado"
+msgstr ""
+
+msgid "Bienvenida a Vortara"
+msgstr ""
+
+msgid "Inicio"
+msgstr ""
+
+msgid "Programas"
+msgstr ""
+
+msgid "Primeros pasos"
+msgstr ""
+
+msgid "Mostrar esta ventana al iniciar sesión"
+msgstr ""
+
+msgid "Te damos la bienvenida a Vortara OS"
+msgstr ""
+
+msgid "Versión {numero} «{nombre}» · basada en Debian 13"
+msgstr ""
+
+msgid "Basada en Debian 13"
+msgstr ""
+
+msgid ""
+"Estás probando Vortara sin instalarlo: nada cambia en tu equipo.\n"
+"Cuando quieras, instálalo con el botón de abajo."
+msgstr ""
+
+msgid ""
+"Tu sistema está listo. Desde aquí puedes añadir programas para\n"
+"programar, trabajar con documentos o ver vídeos, y dar los primeros pasos."
+msgstr ""
+
+msgid "Instalar Vortara"
+msgstr ""
+
+msgid "Elegir programas"
+msgstr ""
+
+msgid ""
+"Vortara viene ligero de serie. Añade solo los programas que vayas a usar: cada pack se descarga e instala de una vez."
+msgstr ""
+
+msgid ""
+"Podrás instalar estos packs cuando Vortara esté instalado en tu equipo."
+msgstr ""
+
+msgid "Detalles"
+msgstr ""
+
+msgid "¿Buscas otra aplicación? Encuentra miles en Flathub"
+msgstr ""
+
+msgid "Fondo de escritorio"
+msgstr ""
+
+msgid "Elige otra imagen o un color"
+msgstr ""
+
+msgid "Configuración"
+msgstr ""
+
+msgid "Pantalla, sonido, red, usuarios…"
+msgstr ""
+
+msgid "Avisos de actualizaciones"
+msgstr ""
+
+msgid "Vortara avisa; tú decides cuándo actualizar"
+msgstr ""
+
+msgid "Añade y configura impresoras"
+msgstr ""
+
+msgid "Impresoras"
+msgstr ""
+
+msgid "Para quien prefiere el teclado"
+msgstr ""
+
+msgid "Terminal"
+msgstr ""
+
+msgid "Ayuda y comunidad"
+msgstr ""
+
+msgid "Proyecto, dudas y errores"
+msgstr ""
+
+msgid "Preparando «{nombre}»…"
+msgstr ""
+
+msgid "No se pudo iniciar la instalación: {error}"
+msgstr ""
+
+msgid "Actualizando la lista de programas…"
+msgstr ""
+
+msgid "Descargando…"
+msgstr ""
+
+msgid "Hubo un problema; reintentando…"
+msgstr ""
+
+msgid "Instalando desde Flathub (puede tardar un poco)…"
+msgstr ""
+
+msgid "Listo."
+msgstr ""
+
+msgid "Instalando {paquete}…"
+msgstr ""
+
+msgid ""
+"No se pudo descargar. Comprueba la conexión a Internet y vuelve a intentarlo."
+msgstr ""
+
+msgid "Hubo un problema al instalar. Mira los detalles."
+msgstr ""
+
+msgid "Petición no válida."
+msgstr ""
+
+msgid "Hubo un problema al instalar."
+msgstr ""
+
+msgid ""
+"Los demás programas se instalaron, pero {apps} (de Flathub) no. Comprueba la conexión a Internet y pulsa «Instalar» otra vez."
+msgstr ""
+
+msgid ""
+"No se pudo instalar {apps} desde Flathub. Comprueba la conexión a Internet."
+msgstr ""
+
+msgid "«{nombre}» instalado. Encontrarás los programas en el menú."
+msgstr ""
+
+msgid "Se están instalando programas"
+msgstr ""
+
+msgid "Espera a que termine la instalación para cerrar la ventana."
+msgstr ""
+
+msgid "Desarrollo básico"
+msgstr ""
+
+msgid "Lo necesario para empezar a programar."
+msgstr ""
+
+msgid ""
+"Git, compiladores de C y C++, Python (pip y entornos virtuales), Geany y VSCodium"
+msgstr ""
+
+msgid "Lenguajes extra"
+msgstr ""
+
+msgid "Más lenguajes de programación y sus herramientas."
+msgstr ""
+
+msgid "Node.js y npm, Go, Rust (con Cargo) y Java (OpenJDK)"
+msgstr ""
+
+msgid "Ofimática y multimedia"
+msgstr ""
+
+msgid "Documentos, correo, fotos y vídeo."
+msgstr ""
+
+msgid ""
+"LibreOffice (Writer, Calc, Impress) en tu idioma, Thunderbird, GIMP y VLC"
+msgstr ""
+

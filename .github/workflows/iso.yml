@@ -1,0 +1,63 @@
+# Construye la ISO de Vortara en GitHub y la publica en «Releases» para que se
+# pueda descargar: https://github.com/mmr193226/Vortara-OS/releases
+#
+# Se lanza a mano (Actions > ISO de Vortara > Run workflow). Tarda unos 40
+# minutos. Si ya existe la publicación de esta versión, sustituye la ISO.
+name: ISO de Vortara
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: iso
+  cancel-in-progress: false
+
+jobs:
+  iso:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Hacer sitio en el disco
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h / /mnt
+
+      - name: Herramientas
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq debootstrap debian-archive-keyring
+
+      - name: Construir la ISO
+        # El directorio de trabajo va en /mnt, que tiene más espacio libre.
+        run: sudo VORTARA_TRABAJO=/mnt/vortara-build ./scripts/build-iso.sh
+
+      - name: Suma de comprobación
+        run: |
+          cd salida
+          sha256sum vortara-*.iso > SHA256SUMS
+          cat SHA256SUMS
+          ls -lh
+
+      - name: Publicar en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          . live-build/vortara.conf
+          etiqueta="v${VORTARA_VERSION}"
+          titulo="Vortara OS ${VORTARA_VERSION} «${VORTARA_CODENAME_PRETTY}»"
+          notas="Vortara OS ${VORTARA_VERSION} «${VORTARA_CODENAME_PRETTY}», basada en Debian 13 con Cinnamon.
+
+          Descarga la ISO y grábala en un USB (por ejemplo con balenaEtcher o Ventoy). Arranca en equipos UEFI y BIOS, desde 2 GB de RAM.
+
+          Comprueba la descarga con SHA256SUMS: sha256sum -c SHA256SUMS
+
+          Construida automáticamente desde el commit ${GITHUB_SHA::7}."
+          if gh release view "$etiqueta" >/dev/null 2>&1; then
+            gh release upload "$etiqueta" salida/vortara-*.iso salida/SHA256SUMS --clobber
+          else
+            gh release create "$etiqueta" salida/vortara-*.iso salida/SHA256SUMS \
+              --target "$GITHUB_SHA" --title "$titulo" --notes "$notas" --prerelease
+          fi

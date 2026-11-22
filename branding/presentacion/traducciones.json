@@ -1,0 +1,82 @@
+{
+  "es": [
+    "Bienvenido a Vortara OS",
+    "Versión 26.11 «Aurora», basada en Debian 13.<br/>La instalación sigue sola; tardará unos minutos.",
+    "Ligero de verdad",
+    "Pensado para ir bien desde 2 GB de RAM: escritorio Cinnamon ajustado y memoria comprimida con zram.",
+    "Miles de aplicaciones",
+    "Además de los paquetes de Debian, puedes instalar aplicaciones de Flathub con Flatpak.",
+    "Tú decides cuándo actualizar",
+    "Vortara te avisa cuando hay actualizaciones, pero nunca instala nada sin tu permiso."
+  ],
+  "en": [
+    "Welcome to Vortara OS",
+    "Version 26.11 “Aurora”, based on Debian 13.<br/>The installation carries on by itself; it will take a few minutes.",
+    "Truly lightweight",
+    "Designed to run well from 2 GB of RAM: a tuned Cinnamon desktop and compressed memory with zram.",
+    "Thousands of applications",
+    "Besides Debian's packages, you can install applications from Flathub with Flatpak.",
+    "You decide when to update",
+    "Vortara lets you know when updates are available, but never installs anything without your permission."
+  ],
+  "pt": [
+    "Bem-vindo ao Vortara OS",
+    "Versão 26.11 «Aurora», baseada no Debian 13.<br/>A instalação continua sozinha; vai demorar alguns minutos.",
+    "Leve a sério",
+    "Pensado para funcionar bem a partir de 2 GB de RAM: ambiente Cinnamon ajustado e memória comprimida com zram.",
+    "Milhares de aplicações",
+    "Além dos pacotes do Debian, pode instalar aplicações do Flathub com o Flatpak.",
+    "É você quem decide quando atualizar",
+    "O Vortara avisa quando há atualizações, mas nunca instala nada sem a sua autorização."
+  ],
+  "pt_BR": [
+    "Boas-vindas ao Vortara OS",
+    "Versão 26.11 “Aurora”, baseada no Debian 13.<br/>A instalação continua sozinha; vai levar alguns minutos.",
+    "Leve de verdade",
+    "Pensado para funcionar bem a partir de 2 GB de RAM: ambiente Cinnamon ajustado e memória comprimida com zram.",
+    "Milhares de aplicativos",
+    "Além dos pacotes do Debian, você pode instalar aplicativos do Flathub com o Flatpak.",
+    "Você decide quando atualizar",
+    "O Vortara avisa quando há atualizações, mas nunca instala nada sem a sua permissão."
+  ],
+  "fr": [
+    "Bienvenue dans Vortara OS",
+    "Version 26.11 « Aurora », basée sur Debian 13.<br/>L’installation se poursuit toute seule ; elle prendra quelques minutes.",
+    "Vraiment léger",
+    "Conçu pour bien fonctionner dès 2 Go de RAM : bureau Cinnamon optimisé et mémoire compressée avec zram.",
+    "Des milliers d’applications",
+    "En plus des paquets Debian, vous pouvez installer des applications de Flathub avec Flatpak.",
+    "Vous décidez quand mettre à jour",
+    "Vortara vous prévient quand des mises à jour sont disponibles, mais n’installe jamais rien sans votre accord."
+  ],
+  "de": [
+    "Willkommen bei Vortara OS",
+    "Version 26.11 „Aurora“, basiert auf Debian 13.<br/>Die Installation läuft von selbst weiter; sie dauert einige Minuten.",
+    "Wirklich schlank",
+    "Läuft schon ab 2 GB RAM flüssig: abgestimmter Cinnamon-Desktop und komprimierter Arbeitsspeicher mit zram.",
+    "Tausende Anwendungen",
+    "Neben den Debian-Paketen können Sie mit Flatpak Anwendungen von Flathub installieren.",
+    "Sie entscheiden, wann aktualisiert wird",
+    "Vortara meldet verfügbare Updates, installiert aber nie etwas ohne Ihre Zustimmung."
+  ],
+  "it": [
+    "Benvenuto in Vortara OS",
+    "Versione 26.11 «Aurora», basata su Debian 13.<br/>L’installazione prosegue da sola; ci vorrà qualche minuto.",
+    "Davvero leggero",
+    "Pensato per funzionare bene già con 2 GB di RAM: desktop Cinnamon ottimizzato e memoria compressa con zram.",
+    "Migliaia di applicazioni",
+    "Oltre ai pacchetti di Debian, puoi installare applicazioni da Flathub con Flatpak.",
+    "Decidi tu quando aggiornare",
+    "Vortara ti avvisa quando ci sono aggiornamenti, ma non installa mai nulla senza il tuo permesso."
+  ],
+  "ca": [
+    "Us donem la benvinguda a Vortara OS",
+    "Versió 26.11 «Aurora», basada en Debian 13.<br/>La instal·lació continua tota sola; trigarà uns minuts.",
+    "Lleuger de debò",
+    "Pensat per anar bé a partir de 2 GB de RAM: escriptori Cinnamon ajustat i memòria comprimida amb zram.",
+    "Milers d’aplicacions",
+    "A més dels paquets de Debian, podeu instal·lar aplicacions de Flathub amb Flatpak.",
+    "Vós decidiu quan actualitzar",
+    "Vortara us avisa quan hi ha actualitzacions, però no instal·la mai res sense el vostre permís."
+  ]
+}

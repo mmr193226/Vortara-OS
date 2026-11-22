@@ -11,6 +11,10 @@ cp -a "$src"/. "$dst"/
 cp /usr/share/pixmaps/vortara-logo-256.png "$dst/vortara-logo.png"
 cp /usr/share/pixmaps/vortara-calamares-bienvenida.png "$dst/vortara-bienvenida.png"
 cp /usr/share/vortara/calamares/show.qml "$dst/show.qml"
+# Traducciones de la presentación: Calamares las busca en lang/ del tema y las
+# aplica en cuanto el usuario cambia de idioma.
+mkdir -p "$dst/lang"
+cp /usr/share/vortara/calamares/lang/*.qm "$dst/lang/"
 
 sed -i \
 	-e 's/^componentName:.*/componentName:  vortara/' \
@@ -51,7 +55,8 @@ sed -i "s/^      - 'calamares-settings-debian'/      - 'calamares-settings-debia
 # se quita el autostart de Debian para que no salga duplicado.
 rm -f /etc/xdg/autostart/calamares-desktop-icon.desktop
 
-# Lanzador del instalador en español y con el logo de Vortara.
+# Lanzador del instalador con el logo de Vortara, en español y traducido (las
+# traducciones de Debian dicen «Instalar Debian» y se quitan).
 lanzador=/usr/share/applications/calamares-install-debian.desktop
 if [ -f "$lanzador" ]; then
 	sed -i \
@@ -59,8 +64,30 @@ if [ -f "$lanzador" ]; then
 		-e '/^Name\[/d' \
 		-e 's/^Comment=.*/Comment=Instalar Vortara OS en este equipo/' \
 		-e '/^Comment\[/d' \
+		-e '/^GenericName/d' \
 		-e 's/^Icon=.*/Icon=vortara-logo/' \
+		-e 's/^StartupNotify=True$/StartupNotify=true/' \
 		"$lanzador"
+	# Se insertan tras Comment=, dentro del grupo [Desktop Entry].
+	traducciones=$(mktemp)
+	cat > "$traducciones" <<'FIN'
+Name[en]=Install Vortara
+Name[pt]=Instalar o Vortara
+Name[pt_BR]=Instalar o Vortara
+Name[fr]=Installer Vortara
+Name[de]=Vortara installieren
+Name[it]=Installa Vortara
+Name[ca]=Instal·la Vortara
+Comment[en]=Install Vortara OS on this computer
+Comment[pt]=Instalar o Vortara OS neste computador
+Comment[pt_BR]=Instalar o Vortara OS neste computador
+Comment[fr]=Installer Vortara OS sur cet ordinateur
+Comment[de]=Vortara OS auf diesem Computer installieren
+Comment[it]=Installa Vortara OS su questo computer
+Comment[ca]=Instal·la Vortara OS en aquest ordinador
+FIN
+	sed -i "/^Comment=/r $traducciones" "$lanzador"
+	rm -f "$traducciones"
 fi
 
 # Cargador de arranque: en UEFI se instala también el shim y el GRUB firmados

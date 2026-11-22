@@ -1,0 +1,205 @@
+# Traducción de la app de bienvenida de Vortara OS (ca).
+msgid ""
+msgstr ""
+"Project-Id-Version: vortara-bienvenida\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Incluye: {lista}"
+msgstr "Inclou: {lista}"
+
+msgid "Instalar"
+msgstr "Instal·la"
+
+msgid "Instalando…"
+msgstr "S’està instal·lant…"
+
+msgid "✓ Instalado"
+msgstr "✓ Instal·lat"
+
+msgid "Bienvenida a Vortara"
+msgstr "Benvinguda a Vortara"
+
+msgid "Inicio"
+msgstr "Inici"
+
+msgid "Programas"
+msgstr "Programes"
+
+msgid "Primeros pasos"
+msgstr "Primers passos"
+
+msgid "Mostrar esta ventana al iniciar sesión"
+msgstr "Mostra aquesta finestra en iniciar la sessió"
+
+msgid "Te damos la bienvenida a Vortara OS"
+msgstr "Us donem la benvinguda a Vortara OS"
+
+msgid "Versión {numero} «{nombre}» · basada en Debian 13"
+msgstr "Versió {numero} «{nombre}» · basada en Debian 13"
+
+msgid "Basada en Debian 13"
+msgstr "Basada en Debian 13"
+
+msgid ""
+"Estás probando Vortara sin instalarlo: nada cambia en tu equipo.\n"
+"Cuando quieras, instálalo con el botón de abajo."
+msgstr ""
+"Esteu provant Vortara sense instal·lar-lo: no canvia res a l’ordinador.\n"
+"Quan vulgueu, instal·leu-lo amb el botó de sota."
+
+msgid ""
+"Tu sistema está listo. Desde aquí puedes añadir programas para\n"
+"programar, trabajar con documentos o ver vídeos, y dar los primeros pasos."
+msgstr ""
+"El sistema ja està a punt. Des d’aquí podeu afegir programes per\n"
+"programar, treballar amb documents o mirar vídeos, i fer els primers passos."
+
+msgid "Instalar Vortara"
+msgstr "Instal·la Vortara"
+
+msgid "Elegir programas"
+msgstr "Tria programes"
+
+msgid ""
+"Vortara viene ligero de serie. Añade solo los programas que vayas a usar: cada pack se descarga e instala de una vez."
+msgstr ""
+"Vortara ve lleuger de sèrie. Afegiu només els programes que fareu servir: cada paquet es baixa i s’instal·la d’una sola vegada."
+
+msgid ""
+"Podrás instalar estos packs cuando Vortara esté instalado en tu equipo."
+msgstr ""
+"Podreu instal·lar aquests paquets quan Vortara estigui instal·lat a l’ordinador."
+
+msgid "Detalles"
+msgstr "Detalls"
+
+msgid "¿Buscas otra aplicación? Encuentra miles en Flathub"
+msgstr "Cerqueu una altra aplicació? En trobareu milers a Flathub"
+
+msgid "Fondo de escritorio"
+msgstr "Fons d’escriptori"
+
+msgid "Elige otra imagen o un color"
+msgstr "Trieu una altra imatge o un color"
+
+msgid "Configuración"
+msgstr "Configuració"
+
+msgid "Pantalla, sonido, red, usuarios…"
+msgstr "Pantalla, so, xarxa, usuaris…"
+
+msgid "Avisos de actualizaciones"
+msgstr "Avisos d’actualitzacions"
+
+msgid "Vortara avisa; tú decides cuándo actualizar"
+msgstr "Vortara us avisa i vós decidiu quan actualitzar"
+
+msgid "Añade y configura impresoras"
+msgstr "Afegiu i configureu impressores"
+
+msgid "Impresoras"
+msgstr "Impressores"
+
+msgid "Para quien prefiere el teclado"
+msgstr "Per a qui prefereix el teclat"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Ayuda y comunidad"
+msgstr "Ajuda i comunitat"
+
+msgid "Proyecto, dudas y errores"
+msgstr "Projecte, dubtes i errors"
+
+msgid "Preparando «{nombre}»…"
+msgstr "S’està preparant «{nombre}»…"
+
+msgid "No se pudo iniciar la instalación: {error}"
+msgstr "No s’ha pogut iniciar la instal·lació: {error}"
+
+msgid "Actualizando la lista de programas…"
+msgstr "S’està actualitzant la llista de programes…"
+
+msgid "Descargando…"
+msgstr "S’està baixant…"
+
+msgid "Hubo un problema; reintentando…"
+msgstr "Hi ha hagut un problema; es torna a provar…"
+
+msgid "Instalando desde Flathub (puede tardar un poco)…"
+msgstr "S’està instal·lant des de Flathub (pot trigar una mica)…"
+
+msgid "Listo."
+msgstr "Fet."
+
+msgid "Instalando {paquete}…"
+msgstr "S’està instal·lant {paquete}…"
+
+msgid ""
+"No se pudo descargar. Comprueba la conexión a Internet y vuelve a intentarlo."
+msgstr ""
+"No s’ha pogut baixar. Comproveu la connexió a Internet i torneu-ho a provar."
+
+msgid "Hubo un problema al instalar. Mira los detalles."
+msgstr "Hi ha hagut un problema en la instal·lació. Mireu-ne els detalls."
+
+msgid "Petición no válida."
+msgstr "Petició no vàlida."
+
+msgid "Hubo un problema al instalar."
+msgstr "Hi ha hagut un problema en la instal·lació."
+
+msgid ""
+"Los demás programas se instalaron, pero {apps} (de Flathub) no. Comprueba la conexión a Internet y pulsa «Instalar» otra vez."
+msgstr ""
+"La resta de programes s’han instal·lat, però {apps} (de Flathub) no. Comproveu la connexió a Internet i torneu a prémer «Instal·la»."
+
+msgid ""
+"No se pudo instalar {apps} desde Flathub. Comprueba la conexión a Internet."
+msgstr ""
+"No s’ha pogut instal·lar {apps} des de Flathub. Comproveu la connexió a Internet."
+
+msgid "«{nombre}» instalado. Encontrarás los programas en el menú."
+msgstr "S’ha instal·lat «{nombre}». Trobareu els programes al menú."
+
+msgid "Se están instalando programas"
+msgstr "S’estan instal·lant programes"
+
+msgid "Espera a que termine la instalación para cerrar la ventana."
+msgstr "Espereu que acabi la instal·lació per tancar la finestra."
+
+msgid "Desarrollo básico"
+msgstr "Desenvolupament bàsic"
+
+msgid "Lo necesario para empezar a programar."
+msgstr "El necessari per començar a programar."
+
+msgid ""
+"Git, compiladores de C y C++, Python (pip y entornos virtuales), Geany y VSCodium"
+msgstr ""
+"Git, compiladors de C i C++, Python (pip i entorns virtuals), Geany i VSCodium"
+
+msgid "Lenguajes extra"
+msgstr "Llenguatges addicionals"
+
+msgid "Más lenguajes de programación y sus herramientas."
+msgstr "Més llenguatges de programació i les seves eines."
+
+msgid "Node.js y npm, Go, Rust (con Cargo) y Java (OpenJDK)"
+msgstr "Node.js i npm, Go, Rust (amb Cargo) i Java (OpenJDK)"
+
+msgid "Ofimática y multimedia"
+msgstr "Ofimàtica i multimèdia"
+
+msgid "Documentos, correo, fotos y vídeo."
+msgstr "Documents, correu, fotos i vídeo."
+
+msgid ""
+"LibreOffice (Writer, Calc, Impress) en tu idioma, Thunderbird, GIMP y VLC"
+msgstr ""
+"LibreOffice (Writer, Calc, Impress) en la vostra llengua, Thunderbird, GIMP i VLC"
+

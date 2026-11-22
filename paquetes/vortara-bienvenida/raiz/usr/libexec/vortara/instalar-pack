@@ -5,12 +5,18 @@
 # Solo acepta identificadores de /usr/share/vortara/packs.json: nunca nombres de
 # paquetes que vengan de fuera, así que no sirve para instalar otra cosa.
 #
+#   instalar-pack PACK... [--idioma=pt_BR]
+#
+# --idioma elige los paquetes de traducción del pack (por_idioma en packs.json);
+# solo se aceptan códigos con forma de idioma que estén en esa lista.
+#
 # Además de la salida de apt, escribe líneas que lee la app:
 #   fase:<actualizar|descargar|reintentar|flatpak|fin>
 #   error:<red|apt|flatpak|uso>
 # y apt añade las suyas (dlstatus:/pmstatus:) gracias a APT::Status-Fd=1.
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -50,14 +56,23 @@ def main():
     with open(PACKS, encoding="utf-8") as f:
         packs = json.load(f)
 
-    ids = sys.argv[1:]
-    if not ids or any(i not in packs for i in ids):
+    idioma = ""
+    ids = []
+    for arg in sys.argv[1:]:
+        if arg.startswith("--idioma="):
+            idioma = arg.split("=", 1)[1]
+        else:
+            ids.append(arg)
+    if (not ids or any(i not in packs for i in ids)
+            or (idioma and not re.fullmatch(r"[a-z]{2,3}(_[A-Z]{2})?", idioma))):
         aviso("error:uso")
         return 1
 
     paquetes, flatpaks = [], []
     for i in ids:
-        paquetes += [p for p in packs[i].get("apt", []) if p not in paquetes]
+        traducciones = packs[i].get("por_idioma", {})
+        extra = traducciones.get(idioma) or traducciones.get(idioma.split("_")[0]) or []
+        paquetes += [p for p in packs[i].get("apt", []) + extra if p not in paquetes]
         flatpaks += [p for p in packs[i].get("flatpak", []) if p not in flatpaks]
 
     if paquetes:

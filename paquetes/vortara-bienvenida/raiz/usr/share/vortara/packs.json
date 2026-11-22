@@ -4,27 +4,94 @@
     "descripcion": "Lo necesario para empezar a programar.",
     "incluye": "Git, compiladores de C y C++, Python (pip y entornos virtuales), Geany y VSCodium",
     "icono": "applications-development",
-    "apt": ["git", "build-essential", "python3-pip", "python3-venv", "geany"],
-    "flatpak": ["com.vscodium.codium"]
+    "apt": [
+      "git",
+      "build-essential",
+      "python3-pip",
+      "python3-venv",
+      "geany"
+    ],
+    "flatpak": [
+      "com.vscodium.codium"
+    ]
   },
   "lenguajes": {
     "nombre": "Lenguajes extra",
     "descripcion": "Más lenguajes de programación y sus herramientas.",
     "incluye": "Node.js y npm, Go, Rust (con Cargo) y Java (OpenJDK)",
     "icono": "applications-engineering",
-    "apt": ["nodejs", "npm", "golang-go", "rustc", "cargo", "default-jdk"],
+    "apt": [
+      "nodejs",
+      "npm",
+      "golang-go",
+      "rustc",
+      "cargo",
+      "default-jdk"
+    ],
     "flatpak": []
   },
   "ofimatica": {
     "nombre": "Ofimática y multimedia",
     "descripcion": "Documentos, correo, fotos y vídeo.",
-    "incluye": "LibreOffice (Writer, Calc, Impress) en español, Thunderbird, GIMP y VLC",
+    "incluye": "LibreOffice (Writer, Calc, Impress) en tu idioma, Thunderbird, GIMP y VLC",
     "icono": "applications-office",
     "apt": [
-      "libreoffice-writer", "libreoffice-calc", "libreoffice-impress",
-      "libreoffice-gtk3", "libreoffice-l10n-es", "libreoffice-help-es", "hunspell-es",
-      "thunderbird", "thunderbird-l10n-es-es", "gimp", "vlc"
+      "libreoffice-writer",
+      "libreoffice-calc",
+      "libreoffice-impress",
+      "libreoffice-gtk3",
+      "thunderbird",
+      "gimp",
+      "vlc"
     ],
-    "flatpak": []
+    "flatpak": [],
+    "por_idioma": {
+      "es": [
+        "libreoffice-l10n-es",
+        "libreoffice-help-es",
+        "hunspell-es",
+        "thunderbird-l10n-es-es"
+      ],
+      "en": [
+        "libreoffice-help-en-us",
+        "hunspell-en-us"
+      ],
+      "pt": [
+        "libreoffice-l10n-pt",
+        "libreoffice-help-pt",
+        "hunspell-pt-pt",
+        "thunderbird-l10n-pt-pt"
+      ],
+      "pt_BR": [
+        "libreoffice-l10n-pt-br",
+        "libreoffice-help-pt-br",
+        "hunspell-pt-br",
+        "thunderbird-l10n-pt-br"
+      ],
+      "fr": [
+        "libreoffice-l10n-fr",
+        "libreoffice-help-fr",
+        "hunspell-fr",
+        "thunderbird-l10n-fr"
+      ],
+      "de": [
+        "libreoffice-l10n-de",
+        "libreoffice-help-de",
+        "hunspell-de-de",
+        "thunderbird-l10n-de"
+      ],
+      "it": [
+        "libreoffice-l10n-it",
+        "libreoffice-help-it",
+        "hunspell-it",
+        "thunderbird-l10n-it"
+      ],
+      "ca": [
+        "libreoffice-l10n-ca",
+        "libreoffice-help-ca",
+        "hunspell-ca",
+        "thunderbird-l10n-ca"
+      ]
+    }
   }
 }

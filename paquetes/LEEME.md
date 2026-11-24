@@ -6,8 +6,8 @@ Vortara (<https://mmr193226.github.io/Vortara-OS/>) publica sus versiones nuevas
 
 | Paquete | Qué lleva |
 |---|---|
-| `vortara-branding` | Logo, fondos, aspecto de GRUB y su traducción completa al español |
-| `vortara-tema` | Tema «Vortara» (GTK y Cinnamon), barra estilo Windows 7, avatar, inicio de sesión |
+| `vortara-branding` | Logo, fondos (`scripts/generar-fondos.py` crea los «Aero»), aspecto de GRUB y su traducción completa al español |
+| `vortara-tema` | Tema «Vortara» (GTK y Cinnamon), cristal esmerilado tras la barra, barra estilo Windows 7, avatar, inicio de sesión, cursor en máquinas virtuales |
 | `vortara-bienvenida` | App de bienvenida y la lista de packs (`packs.json`) |
 | `vortara-archive-keyring` | Clave pública y dirección del repositorio |
 | `vortara-pack-*` | Metapaquetes de los packs; se generan solos a partir de `packs.json` |

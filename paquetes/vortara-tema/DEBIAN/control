@@ -1,13 +1,13 @@
 Package: vortara-tema
-Version: 26.11.2
+Version: 26.11.3
 Architecture: all
 Maintainer: Vortara OS <mmr193226@users.noreply.github.com>
 Section: x11
 Priority: optional
-Depends: python3, vortara-branding
+Depends: python3, vortara-branding (>= 26.11.4)
 Recommends: papirus-icon-theme, fonts-noto-core
 Homepage: https://github.com/mmr193226/Vortara-OS
-Description: tema «Vortara» para Cinnamon (cristal oscuro, estilo Aero)
+Description: tema «Vortara» para Cinnamon (cristal estilo Aero)
  Tema GTK3 y de Cinnamon con acento teal y cristal oscuro inspirado en Aero,
  barra de tareas al estilo de Windows 7 con el orbe de Vortara como botón de
  inicio, avatar para los usuarios nuevos y pantalla de inicio de sesión a

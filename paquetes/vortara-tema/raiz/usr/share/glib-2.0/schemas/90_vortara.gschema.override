@@ -17,11 +17,13 @@ icon-theme='Papirus-Dark'
 color-scheme='prefer-dark'
 
 [org.cinnamon.desktop.background]
-picture-uri='file:///usr/share/backgrounds/vortara/aurora.png'
+picture-uri='file:///usr/share/backgrounds/vortara/aero.jpg'
 picture-options='zoom'
-primary-color='#0B1F1D'
+primary-color='#0B5E6B'
 
 [org.cinnamon]
+# Cristal esmerilado tras la barra (fondo desenfocado).
+enabled-extensions=['vortara-cristal@vortara']
 favorite-apps=['firefox-esr.desktop', 'nemo.desktop', 'org.gnome.Terminal.desktop']
 # Barra inferior más alta, con iconos grandes (estilo Windows 7). La esquina de
 # la derecha (cornerbar) muestra el escritorio.

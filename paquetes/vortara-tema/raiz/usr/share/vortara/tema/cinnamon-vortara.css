@@ -5,20 +5,24 @@
  * 0400-vortara-tema la añade al final de una copia del tema por defecto.
  * ====================================================================== */
 
-/* --- Panel: cristal translúcido con línea de luz arriba ---------------- */
+/* --- Panel: cristal translúcido con reflejo arriba ---------------------- */
+/* Es translúcido de verdad: debajo, la extensión «Cristal de Vortara» pone el
+ * fondo de pantalla desenfocado, así que se ve el fondo como tras un cristal
+ * esmerilado. La mitad de arriba es más clara (el reflejo del cristal). */
 .panel-top, .panel-bottom, .panel-left, .panel-right {
   font-weight: normal;
-  color: #F0FDFA;
-  background-color: rgba(10, 28, 27, 0.80);
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  background-color: rgba(8, 40, 44, 0.42);
   background-gradient-direction: vertical;
-  background-gradient-start: rgba(52, 92, 89, 0.78);
-  background-gradient-end: rgba(5, 16, 15, 0.90);
+  background-gradient-start: rgba(150, 225, 225, 0.30);
+  background-gradient-end: rgba(4, 30, 34, 0.55);
 }
 .panel-bottom {
-  border-top: 1px solid rgba(0, 0, 0, 0.55);
-  box-shadow: inset 0 1px rgba(127, 227, 214, 0.35);
+  border-top: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.45), inset 0 2px rgba(127, 227, 214, 0.18);
 }
-.panel-top { box-shadow: inset 0 -1px rgba(127, 227, 214, 0.30); }
+.panel-top { box-shadow: inset 0 -1px rgba(255, 255, 255, 0.35); }
 
 .applet-box { border-radius: 4px; }
 .applet-box:hover {
@@ -58,17 +62,17 @@
 .grouped-window-list-item-box .progress { background-color: rgba(45, 212, 191, 0.8); }
 
 .grouped-window-list-thumbnail-menu {
-  background-color: rgba(16, 32, 31, 0.95);
+  background-color: rgba(16, 40, 42, 0.86);
   border: 1px solid rgba(127, 227, 214, 0.30);
 }
 .grouped-window-list-thumbnail-menu .item-box:selected { background-color: rgba(45, 212, 191, 0.22); }
 
 /* --- Menús emergentes y menú de aplicaciones: cristal oscuro ------------ */
 .popup-menu-content {
-  background-color: rgba(14, 30, 29, 0.96);
+  background-color: rgba(14, 34, 36, 0.88);
   background-gradient-direction: vertical;
-  background-gradient-start: rgba(34, 62, 60, 0.97);
-  background-gradient-end: rgba(10, 22, 21, 0.97);
+  background-gradient-start: rgba(48, 88, 90, 0.88);
+  background-gradient-end: rgba(8, 24, 26, 0.92);
   border: 1px solid rgba(127, 227, 214, 0.30);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);

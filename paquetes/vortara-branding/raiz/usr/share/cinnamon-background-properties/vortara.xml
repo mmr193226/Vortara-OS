@@ -3,6 +3,27 @@
 <!-- Fondos de Vortara en Configuración > Fondos. -->
 <wallpapers>
   <wallpaper deleted="false">
+    <name>Vortara Aero</name>
+    <filename>/usr/share/backgrounds/vortara/aero.jpg</filename>
+    <options>zoom</options>
+    <pcolor>#0B5E6B</pcolor>
+    <scolor>#0B5E6B</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Vortara Cielo</name>
+    <filename>/usr/share/backgrounds/vortara/cielo.jpg</filename>
+    <options>zoom</options>
+    <pcolor>#3FA7D6</pcolor>
+    <scolor>#3FA7D6</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
+    <name>Vortara Noche</name>
+    <filename>/usr/share/backgrounds/vortara/noche.jpg</filename>
+    <options>zoom</options>
+    <pcolor>#08323A</pcolor>
+    <scolor>#08323A</scolor>
+  </wallpaper>
+  <wallpaper deleted="false">
     <name>Vortara Aurora</name>
     <filename>/usr/share/backgrounds/vortara/aurora.png</filename>
     <options>zoom</options>

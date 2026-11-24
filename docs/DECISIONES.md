@@ -57,8 +57,27 @@ Diseño propio inspirado en Aero (no usa imágenes ni recursos de Windows):
   esquina derecha para mostrar el escritorio.
 - Avatar de Vortara para los usuarios nuevos (`/etc/skel/.face`), el fondo en
   Configuración > Fondos y la pantalla de inicio de sesión con el mismo tema.
-- No se usa transparencia con desenfoque: Cinnamon no la tiene de serie y
-  costaría rendimiento en equipos con poca RAM.
+- **Cristal esmerilado de verdad**: la barra es translúcida y, debajo, la
+  extensión `vortara-cristal@vortara` (activada por defecto) pone el fondo de
+  pantalla desenfocado. Cinnamon no tiene desenfoque en vivo, y hacerlo en cada
+  fotograma costaría rendimiento; por eso el desenfoque se calcula una sola vez
+  (GdkPixbuf: reducir y volver a ampliar) y solo se repite si cambia el fondo,
+  la pantalla o la barra. Los menús son de cristal translúcido sin desenfoque.
+- Las barras de título no son transparentes: GTK3 pinta el fondo de la ventana
+  debajo, y Muffin solo hace transparentes los marcos de ventanas con canal alfa.
+- **Fondos «Aero»** (`aero.jpg`, `cielo.jpg`, `noche.jpg`, 2560×1440): se dibujan
+  con código (`scripts/generar-fondos.py`: degradados, cintas de luz, rayos y
+  burbujas), así que son propios y de dominio público (CC0). El de por defecto
+  es `aero.jpg`; `aurora.png` sigue disponible.
+
+### Cursor en máquinas virtuales
+
+En VirtualBox, VMware, Hyper-V y QEMU, el cursor «por hardware» a menudo no se
+ve (el ratón funciona, pero la flecha no aparece). `vortara-tema` instala
+`/usr/share/X11/xorg.conf.d/20-vortara-cursor-maquina-virtual.conf`, que pide a
+Xorg dibujar el cursor por software solo con tarjetas gráficas virtuales
+(`MatchDriver`: vmwgfx, vboxvideo, virtio_gpu, qxl, bochs, cirrus, hyperv_drm).
+En equipos reales no cambia nada.
 
 ## 4. Software
 

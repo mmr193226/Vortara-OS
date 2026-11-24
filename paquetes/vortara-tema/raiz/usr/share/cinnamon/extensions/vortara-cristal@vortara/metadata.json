@@ -1,0 +1,9 @@
+{
+    "uuid": "vortara-cristal@vortara",
+    "name": "Vortara Glass",
+    "name[es]": "Cristal de Vortara",
+    "description": "Frosted glass behind the panels: they show the wallpaper blurred, like Aero.",
+    "description[es]": "Cristal esmerilado tras las barras: dejan ver el fondo de pantalla desenfocado, como en Aero.",
+    "url": "https://github.com/mmr193226/Vortara-OS",
+    "cinnamon-version": ["6.0", "6.2", "6.4", "6.6"]
+}

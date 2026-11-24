@@ -32,7 +32,11 @@ jobs:
 
       - name: Construir la ISO
         # El directorio de trabajo va en /mnt, que tiene más espacio libre.
-        run: sudo VORTARA_TRABAJO=/mnt/vortara-build ./scripts/build-iso.sh
+        # Se construye como root: después se devuelve salida/ al usuario normal
+        # para que los pasos siguientes puedan escribir en ella.
+        run: |
+          sudo VORTARA_TRABAJO=/mnt/vortara-build ./scripts/build-iso.sh
+          sudo chown -R "$(id -u):$(id -g)" salida
 
       - name: Suma de comprobación
         run: |

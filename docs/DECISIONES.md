@@ -182,6 +182,12 @@ La app de bienvenida (`vortara-bienvenida`, Python + GTK3):
   propio instalador.
 - **Icono «Instalar Vortara»**: aparece una sola vez y abre el instalador
   directamente. Sin disco, el instalador avisa y no deja continuar.
+- **Instalación en francés** (UEFI): el instalador cambia al francés y pone el
+  teclado francés; el sistema instalado arranca con GRUB en francés («Options
+  avancées pour Vortara GNU/Linux», «Paramètres du micrologiciel UEFI») y la
+  app de bienvenida en francés, con el pack de ofimática «dans votre langue».
+  La presentación seguía en español: se corrigió después con las traducciones
+  de Calamares (comprobadas con el motor QML de Qt).
 - **Repositorio APT publicado** (<https://mmr193226.github.io/Vortara-OS/>):
   GitHub Actions lo firma con la clave del secreto y lo publica; apt acepta la
   firma y ve todos los paquetes. Una actualización real (vortara-branding

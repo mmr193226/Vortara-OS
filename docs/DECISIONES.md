@@ -75,9 +75,16 @@ Diseño propio inspirado en Aero (no usa imágenes ni recursos de Windows):
 En VirtualBox, VMware, Hyper-V y QEMU, el cursor «por hardware» a menudo no se
 ve (el ratón funciona, pero la flecha no aparece). `vortara-tema` instala
 `/usr/share/X11/xorg.conf.d/20-vortara-cursor-maquina-virtual.conf`, que pide a
-Xorg dibujar el cursor por software solo con tarjetas gráficas virtuales
-(`MatchDriver`: vmwgfx, vboxvideo, virtio_gpu, qxl, bochs, cirrus, hyperv_drm).
-En equipos reales no cambia nada.
+Xorg usar el controlador modesetting y dibujar el cursor por software solo con
+tarjetas gráficas virtuales (`MatchDriver`: vmwgfx, vboxvideo, virtio_gpu, qxl,
+bochs, cirrus, hyperv_drm). En equipos reales no cambia nada.
+
+La primera versión (vortara-tema 26.11.3) no ponía `Driver "modesetting"` en la
+sección `OutputClass`: así Xorg no carga ningún controlador («no screens
+found»), LightDM se rinde y el equipo se queda en la pantalla de texto (tty1).
+Corregido en 26.11.4 y probado en QEMU: el escritorio arranca y se ve el cursor.
+La comprobación de los pull requests revisa ahora que ninguna `OutputClass`
+quede sin `Driver`.
 
 ## 4. Software
 

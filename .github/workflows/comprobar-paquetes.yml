@@ -10,6 +10,7 @@ on:
       - "scripts/construir-paquetes.sh"
       - "scripts/construir-repo.sh"
       - "live-build/vortara.conf"
+      - "live-build/config/includes.chroot/**"
       - ".github/workflows/**"
   workflow_dispatch:
 
@@ -27,6 +28,19 @@ jobs:
 
       - name: Comprobar las traducciones
         run: python3 scripts/traducciones.py comprobar
+
+      - name: Revisar la configuración de Xorg
+        # Una sección OutputClass sin «Driver» deja a Xorg sin controlador y el
+        # escritorio no arranca (se queda en la pantalla de texto).
+        run: |
+          fallos=0
+          for f in $(find paquetes live-build -path '*xorg.conf.d/*.conf'); do
+            if grep -q '^Section "OutputClass"' "$f" && ! grep -q '^[[:space:]]*Driver[[:space:]]' "$f"; then
+              echo "::error file=$f::Sección OutputClass sin Driver"
+              fallos=1
+            fi
+          done
+          exit $fallos
 
       - name: Construir los paquetes
         run: ./scripts/construir-paquetes.sh "$RUNNER_TEMP/debs"

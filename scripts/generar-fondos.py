@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 RAIZ = Path(__file__).resolve().parent.parent
 DESTINO = Path(sys.argv[1]) if len(sys.argv) > 1 else \
@@ -134,8 +134,38 @@ def fondo_noche():
     return ruido(img, 0.008)
 
 
+def fuente_mono(tam):
+    for ruta in ("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
+                 "/usr/share/fonts/TTF/DejaVuSansMono.ttf"):
+        if Path(ruta).exists():
+            return ImageFont.truetype(ruta, tam)
+    raise SystemExit("Falta la fuente DejaVu Sans Mono (paquete fonts-dejavu-core)")
+
+
+def fondo_terminal():
+    """Terminal: negro, con un indicador de órdenes en teal. Minimalista."""
+    img = np.zeros((ALTO, ANCHO, 3), np.float32)
+    # Un resplandor teal casi invisible abajo, para que no sea un negro plano.
+    d = np.sqrt(((U - 0.5) * 1.6) ** 2 + ((V - 1.15) * 1.0) ** 2)
+    img += np.exp(-(d / 0.55) ** 2)[..., None] * color("#0f766e") * 0.18
+    # Líneas horizontales muy tenues, como un monitor antiguo.
+    img *= (1 - 0.06 * (Y.astype(int) % 4 == 0))[..., None]
+    imagen = Image.fromarray((np.clip(ruido(img, 0.004), 0, 1) * 255).astype(np.uint8))
+    dibujo = ImageDraw.Draw(imagen)
+    fuente = fuente_mono(46)
+    texto = "vortara:~$ "
+    x, y = int(ANCHO * 0.08), int(ALTO * 0.78)
+    dibujo.text((x, y), texto, font=fuente, fill=(45, 120, 112))
+    ancho = dibujo.textlength(texto, font=fuente)
+    caja = fuente.getbbox("M")
+    dibujo.rectangle([x + ancho, y + caja[1], x + ancho + (caja[2] - caja[0]), y + caja[3]],
+                     fill=(45, 212, 191))
+    return np.asarray(imagen, np.float32) / 255
+
+
 if __name__ == "__main__":
     DESTINO.mkdir(parents=True, exist_ok=True)
     guardar(fondo_aero(), "aero.jpg")
     guardar(fondo_cielo(), "cielo.jpg")
     guardar(fondo_noche(), "noche.jpg")
+    guardar(fondo_terminal(), "terminal.jpg")

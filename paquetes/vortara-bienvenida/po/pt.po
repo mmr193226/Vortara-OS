@@ -172,6 +172,44 @@ msgstr "A instalar programas"
 msgid "Espera a que termine la instalación para cerrar la ventana."
 msgstr "Aguarde que a instalação termine para fechar a janela."
 
+msgid "Elige el aspecto del escritorio: Aero o Terminal"
+msgstr "Escolha o aspeto do ambiente de trabalho: Aero ou Terminal"
+
+msgid ""
+"estilo, tema, aspecto, aero, terminal, vortara, minimalista, transparente"
+msgstr ""
+"estilo, tema, aspeto, aparência, aero, terminal, vortara, minimalista, transparente"
+
+msgid "Estilo de Vortara"
+msgstr "Estilo do Vortara"
+
+msgid "Estilo del escritorio"
+msgstr "Estilo do ambiente de trabalho"
+
+msgid ""
+"Cambia por completo el aspecto: ventanas, barra de tareas, iconos y fondo."
+msgstr ""
+"Muda completamente o aspeto: janelas, barra de tarefas, ícones e fundo."
+
+msgid "Aero"
+msgstr "Aero"
+
+msgid ""
+"Cristal translúcido, fondos con brillo y la barra de tareas al estilo de Windows 7."
+msgstr ""
+"Vidro translúcido, fundos com brilho e a barra de tarefas ao estilo do Windows 7."
+
+msgid ""
+"Negro, sencillo y ligero, como una terminal, con el toque teal de Vortara. Va mejor en equipos con pocos recursos."
+msgstr ""
+"Preto, simples e leve, como um terminal, com o toque azul-petróleo do Vortara. Ideal para computadores com poucos recursos."
+
+msgid "El nuevo estilo se aplicará al reiniciar el equipo."
+msgstr "O novo estilo será aplicado ao reiniciar o computador."
+
+msgid "Reiniciar ahora"
+msgstr "Reiniciar agora"
+
 msgid "Desarrollo básico"
 msgstr "Desenvolvimento básico"
 

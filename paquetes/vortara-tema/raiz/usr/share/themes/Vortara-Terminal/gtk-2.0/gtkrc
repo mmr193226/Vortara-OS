@@ -1,0 +1,2 @@
+# Vortara: las aplicaciones GTK2 (pocas) usan Adwaita oscuro.
+include "/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"

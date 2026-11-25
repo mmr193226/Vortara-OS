@@ -1,0 +1,140 @@
+/* ======================================================================
+ * Vortara Terminal: capa propia sobre el tema por defecto de Cinnamon.
+ * Negro, plano y ligero: sin degradados, sin sombras, sin esquinas
+ * redondeadas, letra de terminal y un solo acento teal.
+ * generar-tema-cinnamon la añade al final de una copia del tema por defecto.
+ * ====================================================================== */
+
+stage {
+  font-family: "DejaVu Sans Mono", monospace;
+  color: #d4d4d4;
+}
+
+/* --- Barra: negra, fina, con una línea arriba --------------------------- */
+#panel, .panel-top, .panel-bottom, .panel-left, .panel-right {
+  font-weight: normal;
+  color: #d4d4d4;
+  text-shadow: none;
+  background-color: #000000;
+  background-gradient-direction: none;
+  background-image: none;
+}
+.panel-bottom { border-top: 1px solid #262626; box-shadow: none; }
+.panel-top { border-bottom: 1px solid #262626; box-shadow: none; }
+.panel-left { border-right: 1px solid #262626; box-shadow: none; }
+.panel-right { border-left: 1px solid #262626; box-shadow: none; }
+
+.applet-box {
+  border-radius: 0;
+  padding-left: 6px;
+  padding-right: 6px;
+  color: #d4d4d4;
+  transition-duration: 0;
+}
+.applet-box:hover, .applet-box:checked {
+  background-color: #111111;
+  color: #2dd4bf;
+  box-shadow: none;
+}
+.applet-label { font-weight: normal; }
+.applet-icon { color: #d4d4d4; }
+.applet-box:hover .applet-icon { color: #2dd4bf; }
+
+/* Botón del menú: «>_ vortara» en teal. */
+.menu-applet-panel-label, .applet-box.menu-applet .applet-label { color: #2dd4bf; font-weight: bold; }
+
+/* --- Lista de ventanas: texto, con el programa activo subrayado --------- */
+.window-list-item-box {
+  background-color: transparent;
+  background-gradient-direction: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: 2px solid transparent;
+  color: #808080;
+  padding: 0 10px;
+  margin: 0 1px;
+  transition-duration: 0;
+}
+.window-list-item-box:hover { background-color: #111111; color: #ffffff; }
+.window-list-item-box:active, .window-list-item-box:checked { color: #d4d4d4; border-bottom-color: #3a3a3a; }
+.window-list-item-box:focus { color: #2dd4bf; border-bottom-color: #2dd4bf; background-color: #0a1a19; }
+.window-list-item-box.window-list-item-demands-attention { border-bottom-color: #ff5f56; color: #ff5f56; }
+.window-list-item-box .progress { background-color: #2dd4bf; }
+.window-list-preview, .window-list-thumbnail-menu {
+  background-color: #000000;
+  border: 1px solid #262626;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Lista agrupada (si alguien la vuelve a poner): plana. */
+.grouped-window-list-item-box { border-radius: 0; box-shadow: none; background-gradient-direction: none; }
+.grouped-window-list-item-box:hover { background-color: #111111; }
+.grouped-window-list-item-box:focus { background-color: transparent; border-bottom: 2px solid #2dd4bf; }
+
+/* --- Menús emergentes y menú de aplicaciones ----------------------------- */
+.popup-menu, .popup-menu-boxpointer { -arrow-border-radius: 0; -arrow-background-color: #000000; -arrow-border-color: #262626; }
+.popup-menu-content {
+  background-color: #000000;
+  background-gradient-direction: none;
+  border: 1px solid #262626;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px 0;
+}
+.popup-menu-item { border-radius: 0; padding: 4px 12px; }
+.popup-menu-item:active { background-color: #2dd4bf; color: #000000; }
+.popup-sub-menu { background-color: #070707; border-radius: 0; box-shadow: none; }
+.popup-separator-menu-item { background-gradient-direction: none; background-color: #262626; height: 1px; }
+
+.menu-favorites-box {
+  background-color: #070707;
+  border: none;
+  border-right: 1px solid #262626;
+  border-radius: 0;
+}
+.menu-favorites-button, .menu-category-button, .menu-application-button {
+  border-radius: 0;
+  transition-duration: 0;
+}
+.menu-favorites-button:hover, .menu-category-button:hover { background-color: #111111; color: #2dd4bf; }
+.menu-application-button-selected, .menu-category-button-selected {
+  background-color: #2dd4bf;
+  background-gradient-direction: none;
+  color: #000000;
+  border-radius: 0;
+}
+#menu-search-entry {
+  background-color: #000000;
+  border: 1px solid #262626;
+  border-radius: 0;
+  box-shadow: none;
+  color: #d4d4d4;
+  caret-color: #2dd4bf;
+}
+#menu-search-entry:focus { border-color: #2dd4bf; }
+
+/* --- Calendario --------------------------------------------------------- */
+.calendar-day-base { border-radius: 0; }
+.calendar-today { background-color: #2dd4bf; color: #000000; border-radius: 0; }
+
+/* --- Alt+Tab, notificaciones, avisos en pantalla ------------------------- */
+.switcher-list, .info-osd, .osd-window, .workspace-osd, #notification, .notification,
+.modal-dialog, .tooltip, .panel-tooltip {
+  background-color: #000000;
+  background-gradient-direction: none;
+  border: 1px solid #262626;
+  border-radius: 0;
+  box-shadow: none;
+  color: #d4d4d4;
+}
+.switcher-list .item-box { border-radius: 0; }
+.switcher-list .item-box:selected { background-color: #0a1a19; border: 1px solid #2dd4bf; }
+.osd-window .level-bar, .level-bar { background-color: #2dd4bf; border-radius: 0; }
+.modal-dialog-button { border-radius: 0; background-gradient-direction: none; background-color: #0d0d0d; border: 1px solid #262626; }
+.modal-dialog-button:hover { border-color: #2dd4bf; color: #2dd4bf; }
+
+/* Resaltado de arrastre sobre la barra. */
+#panel:highlight { background-color: #0f766e; }
+.applet-box:highlight { background-color: #0f766e; }

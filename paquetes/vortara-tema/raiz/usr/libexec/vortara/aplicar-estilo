@@ -1,0 +1,197 @@
+#!/usr/bin/python3
+"""Aplica un estilo de escritorio de Vortara al usuario actual.
+
+Uso: aplicar-estilo aero|terminal
+     aplicar-estilo --pendiente   aplica el estilo elegido en Ajustes si aún no
+                                  se ha aplicado (lo llama la sesión al entrar,
+                                  antes de que arranque Cinnamon)
+
+El estilo elegido se guarda en ~/.config/vortara/estilo y el último aplicado en
+~/.config/vortara/estilo-aplicado. «Aero» es el de por defecto: sus valores son
+los de 90_vortara.gschema.override, así que aplicarlo es volver a ellos.
+"""
+import json
+import os
+import sys
+from pathlib import Path
+
+from gi.repository import Gio, GLib
+
+CONFIG = Path(GLib.get_user_config_dir()) / "vortara"
+ELEGIDO = CONFIG / "estilo"
+APLICADO = CONFIG / "estilo-aplicado"
+ESTILOS = ("aero", "terminal")
+
+# Claves que cambian con el estilo. En «aero» se devuelven a su valor por
+# defecto; en «terminal» se ponen los valores de abajo.
+CLAVES = {
+    "org.cinnamon.desktop.interface": ["gtk-theme", "icon-theme", "cursor-theme", "font-name",
+                                       "enable-animations"],
+    "org.cinnamon.desktop.wm.preferences": ["theme", "titlebar-font"],
+    "org.gnome.desktop.interface": ["gtk-theme", "icon-theme", "color-scheme", "monospace-font-name"],
+    "org.cinnamon.desktop.background": ["picture-uri", "picture-options", "primary-color"],
+    "org.cinnamon.theme": ["name"],
+    "org.cinnamon": ["panels-height", "enabled-applets", "enabled-extensions",
+                     "desktop-effects-workspace", "desktop-effects-on-menus",
+                     "desktop-effects-on-dialogs"],
+    "org.nemo.desktop": ["font"],
+}
+
+# Barra del estilo «Terminal»: lista de ventanas en texto y lo justo a la
+# derecha. Los números del final son los de cada applet (sus ajustes se
+# guardan con ese número en ~/.config/cinnamon/spices/).
+APPLETS_TERMINAL = [
+    "panel1:left:0:menu@cinnamon.org:100",
+    "panel1:left:1:window-list@cinnamon.org:101",
+    "panel1:right:0:systray@cinnamon.org:102",
+    "panel1:right:1:xapp-status@cinnamon.org:103",
+    "panel1:right:2:notifications@cinnamon.org:104",
+    "panel1:right:3:removable-drives@cinnamon.org:105",
+    "panel1:right:4:keyboard@cinnamon.org:106",
+    "panel1:right:5:network@cinnamon.org:107",
+    "panel1:right:6:sound@cinnamon.org:108",
+    "panel1:right:7:power@cinnamon.org:109",
+    "panel1:right:8:calendar@cinnamon.org:110",
+]
+
+TERMINAL = {
+    "org.cinnamon.desktop.interface": {
+        "gtk-theme": "Vortara-Terminal", "icon-theme": "Adwaita", "cursor-theme": "Adwaita",
+        "font-name": "DejaVu Sans Mono 9", "enable-animations": False},
+    "org.cinnamon.desktop.wm.preferences": {
+        "theme": "Vortara-Terminal", "titlebar-font": "DejaVu Sans Mono Bold 9"},
+    "org.gnome.desktop.interface": {
+        "gtk-theme": "Vortara-Terminal", "icon-theme": "Adwaita", "color-scheme": "prefer-dark",
+        "monospace-font-name": "DejaVu Sans Mono 10"},
+    "org.cinnamon.desktop.background": {
+        "picture-uri": "file:///usr/share/backgrounds/vortara/terminal.jpg",
+        "picture-options": "zoom", "primary-color": "#000000"},
+    "org.cinnamon.theme": {"name": "Vortara-Terminal"},
+    "org.cinnamon": {
+        "panels-height": ["1:30"], "enabled-applets": APPLETS_TERMINAL, "enabled-extensions": [],
+        "desktop-effects-workspace": False, "desktop-effects-on-menus": False,
+        "desktop-effects-on-dialogs": False},
+    "org.nemo.desktop": {"font": "DejaVu Sans Mono 9"},
+}
+
+# Ajustes de los applets de la barra «Terminal» (el resto, por defecto).
+SPICES_TERMINAL = {
+    ("menu@cinnamon.org", 100): {
+        "menu-custom": True, "menu-icon": "vortara-terminal-menu", "menu-icon-size": 18,
+        "menu-label": "vortara", "favbox-show": False, "show-category-icons": False},
+    ("calendar@cinnamon.org", 110): {"use-custom-format": True, "custom-format": "%H:%M"},
+}
+
+# Terminal (gnome-terminal), perfil por defecto.
+PERFIL = "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/"
+PERFIL_ESQUEMA = "org.gnome.Terminal.Legacy.Profile"
+PERFIL_AERO = {"use-transparent-background": True, "background-transparency-percent": 18,
+               "use-theme-transparency": False}
+PERFIL_TERMINAL = {"use-transparent-background": False, "use-theme-colors": False,
+                   "background-color": "#000000", "foreground-color": "#D4D4D4",
+                   "cursor-colors-set": True, "cursor-background-color": "#2DD4BF",
+                   "cursor-foreground-color": "#000000"}
+
+
+def ajustes(esquema, ruta=None):
+    fuente = Gio.SettingsSchemaSource.get_default()
+    info = fuente.lookup(esquema, True) if fuente else None
+    if info is None:
+        return None, None
+    if ruta:
+        return Gio.Settings.new_full(info, None, ruta), info
+    return Gio.Settings.new_full(info, None, None), info
+
+
+def poner(s, info, clave, valor):
+    if not info.has_key(clave):
+        return
+    tipo = info.get_key(clave).get_value_type()
+    s.set_value(clave, GLib.Variant(tipo.dup_string(), valor))
+
+
+def escribir_spice(uuid, instancia, valores):
+    """Ajustes iniciales de un applet. Cinnamon completa el resto al cargarlo
+    y conserva estos valores."""
+    carpeta = Path(GLib.get_user_config_dir()) / "cinnamon" / "spices" / uuid
+    carpeta.mkdir(parents=True, exist_ok=True)
+    ruta = carpeta / f"{instancia}.json"
+    datos = {}
+    try:
+        datos = json.loads(ruta.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
+    for clave, valor in valores.items():
+        datos.setdefault(clave, {})["value"] = valor
+    ruta.write_text(json.dumps(datos, indent=4, ensure_ascii=False), encoding="utf-8")
+
+
+def perfil_terminal(valores):
+    """Colores y transparencia del perfil por defecto de la Terminal."""
+    s, info = ajustes(PERFIL_ESQUEMA, PERFIL)
+    if s is None:
+        return
+    for clave in set(PERFIL_AERO) | set(PERFIL_TERMINAL):
+        if info.has_key(clave):
+            s.reset(clave)
+    for clave, valor in valores.items():
+        poner(s, info, clave, valor)
+
+
+def aplicar(estilo):
+    for esquema, claves in CLAVES.items():
+        s, info = ajustes(esquema)
+        if s is None:
+            continue
+        for clave in claves:
+            if not info.has_key(clave):
+                continue
+            if estilo == "terminal" and clave in TERMINAL.get(esquema, {}):
+                poner(s, info, clave, TERMINAL[esquema][clave])
+            else:
+                s.reset(clave)
+    if estilo == "terminal":
+        for (uuid, instancia), valores in SPICES_TERMINAL.items():
+            escribir_spice(uuid, instancia, valores)
+        perfil_terminal(PERFIL_TERMINAL)
+    else:
+        perfil_terminal(PERFIL_AERO)
+    Gio.Settings.sync()
+    CONFIG.mkdir(parents=True, exist_ok=True)
+    APLICADO.write_text(estilo + "\n")
+
+
+def leer(ruta):
+    try:
+        valor = ruta.read_text().strip()
+    except OSError:
+        return ""
+    return valor if valor in ESTILOS else ""
+
+
+def main():
+    arg = sys.argv[1] if len(sys.argv) > 1 else ""
+    if arg == "--pendiente":
+        elegido = leer(ELEGIDO)
+        # Sin elección: el estilo por defecto (Aero) ya viene de serie. La
+        # primera vez solo se prepara la Terminal translúcida, sin tocar nada
+        # más (el usuario puede haber cambiado su fondo o su barra).
+        if not elegido:
+            if not leer(APLICADO):
+                perfil_terminal(PERFIL_AERO)
+                Gio.Settings.sync()
+                CONFIG.mkdir(parents=True, exist_ok=True)
+                APLICADO.write_text("aero\n")
+            return 0
+        if elegido != leer(APLICADO):
+            aplicar(elegido)
+        return 0
+    if arg in ESTILOS:
+        aplicar(arg)
+        return 0
+    print(__doc__, file=sys.stderr)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

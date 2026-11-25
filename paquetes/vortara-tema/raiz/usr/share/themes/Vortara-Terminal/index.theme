@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Vortara Terminal
+Comment=Tema minimalista de Vortara OS: negro, plano y ligero, con acento teal
+Comment[en]=Minimalist Vortara OS theme: black, flat and light, with a teal accent
+Comment[pt]=Tema minimalista do Vortara OS: preto, plano e leve, com destaque azul-petróleo
+Comment[pt_BR]=Tema minimalista do Vortara OS: preto, plano e leve, com destaque azul-petróleo
+Comment[fr]=Thème minimaliste de Vortara OS : noir, plat et léger, avec accent bleu canard
+Comment[de]=Minimalistisches Vortara-OS-Design: schwarz, flach und leicht, mit Petrol-Akzent
+Comment[it]=Tema minimalista di Vortara OS: nero, piatto e leggero, con accento verde acqua
+Comment[ca]=Tema minimalista de Vortara OS: negre, pla i lleuger, amb accent verd blavós
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Vortara-Terminal
+IconTheme=Adwaita
+CursorTheme=Adwaita
+ButtonLayout=:minimize,maximize,close

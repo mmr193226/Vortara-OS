@@ -171,6 +171,42 @@ msgstr "Software is being installed"
 msgid "Espera a que termine la instalación para cerrar la ventana."
 msgstr "Wait for the installation to finish before closing the window."
 
+msgid "Elige el aspecto del escritorio: Aero o Terminal"
+msgstr "Choose the look of the desktop: Aero or Terminal"
+
+msgid ""
+"estilo, tema, aspecto, aero, terminal, vortara, minimalista, transparente"
+msgstr ""
+"style, theme, look, appearance, aero, terminal, vortara, minimalist, transparent"
+
+msgid "Estilo de Vortara"
+msgstr "Vortara Style"
+
+msgid "Estilo del escritorio"
+msgstr "Desktop style"
+
+msgid ""
+"Cambia por completo el aspecto: ventanas, barra de tareas, iconos y fondo."
+msgstr "Completely changes the look: windows, taskbar, icons and wallpaper."
+
+msgid "Aero"
+msgstr "Aero"
+
+msgid ""
+"Cristal translúcido, fondos con brillo y la barra de tareas al estilo de Windows 7."
+msgstr "Translucent glass, shiny wallpapers and a Windows 7-style taskbar."
+
+msgid ""
+"Negro, sencillo y ligero, como una terminal, con el toque teal de Vortara. Va mejor en equipos con pocos recursos."
+msgstr ""
+"Black, simple and light, like a terminal, with Vortara's teal touch. Best for computers with few resources."
+
+msgid "El nuevo estilo se aplicará al reiniciar el equipo."
+msgstr "The new style will be applied when you restart the computer."
+
+msgid "Reiniciar ahora"
+msgstr "Restart now"
+
 msgid "Desarrollo básico"
 msgstr "Basic development"
 

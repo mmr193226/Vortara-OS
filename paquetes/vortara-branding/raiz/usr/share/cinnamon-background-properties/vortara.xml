@@ -30,4 +30,11 @@
     <pcolor>#0B1F1D</pcolor>
     <scolor>#0B1F1D</scolor>
   </wallpaper>
+  <wallpaper deleted="false">
+    <name>Vortara Terminal</name>
+    <filename>/usr/share/backgrounds/vortara/terminal.jpg</filename>
+    <options>zoom</options>
+    <pcolor>#000000</pcolor>
+    <scolor>#000000</scolor>
+  </wallpaper>
 </wallpapers>

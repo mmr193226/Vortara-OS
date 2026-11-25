@@ -1,2 +1,3 @@
 salida/
 *.iso
+__pycache__/

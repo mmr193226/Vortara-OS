@@ -1,0 +1,6 @@
+# Vortara: al entrar en la sesión, antes de que arranque el escritorio, se
+# aplica el estilo (Aero o Terminal) elegido en Ajustes del sistema > Estilo
+# de Vortara. Este archivo lo lee /etc/X11/Xsession: no debe fallar nunca.
+if [ -x /usr/libexec/vortara/aplicar-estilo ]; then
+	/usr/libexec/vortara/aplicar-estilo --pendiente >/dev/null 2>&1 || true
+fi

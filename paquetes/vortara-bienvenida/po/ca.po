@@ -172,6 +172,44 @@ msgstr "S’estan instal·lant programes"
 msgid "Espera a que termine la instalación para cerrar la ventana."
 msgstr "Espereu que acabi la instal·lació per tancar la finestra."
 
+msgid "Elige el aspecto del escritorio: Aero o Terminal"
+msgstr "Tria l'aspecte de l'escriptori: Aero o Terminal"
+
+msgid ""
+"estilo, tema, aspecto, aero, terminal, vortara, minimalista, transparente"
+msgstr ""
+"estil, tema, aspecte, aero, terminal, vortara, minimalista, transparent"
+
+msgid "Estilo de Vortara"
+msgstr "Estil de Vortara"
+
+msgid "Estilo del escritorio"
+msgstr "Estil de l'escriptori"
+
+msgid ""
+"Cambia por completo el aspecto: ventanas, barra de tareas, iconos y fondo."
+msgstr ""
+"Canvia completament l'aspecte: finestres, barra de tasques, icones i fons."
+
+msgid "Aero"
+msgstr "Aero"
+
+msgid ""
+"Cristal translúcido, fondos con brillo y la barra de tareas al estilo de Windows 7."
+msgstr ""
+"Vidre translúcid, fons amb brillantor i la barra de tasques a l'estil de Windows 7."
+
+msgid ""
+"Negro, sencillo y ligero, como una terminal, con el toque teal de Vortara. Va mejor en equipos con pocos recursos."
+msgstr ""
+"Negre, senzill i lleuger, com un terminal, amb el toc verd blavós de Vortara. Ideal per a equips amb pocs recursos."
+
+msgid "El nuevo estilo se aplicará al reiniciar el equipo."
+msgstr "El nou estil s'aplicarà en reiniciar l'equip."
+
+msgid "Reiniciar ahora"
+msgstr "Reinicia ara"
+
 msgid "Desarrollo básico"
 msgstr "Desenvolupament bàsic"
 

@@ -7,7 +7,7 @@ Vortara (<https://mmr193226.github.io/Vortara-OS/>) publica sus versiones nuevas
 | Paquete | Qué lleva |
 |---|---|
 | `vortara-branding` | Logo, fondos (`scripts/generar-fondos.py` crea los «Aero»), aspecto de GRUB y su traducción completa al español |
-| `vortara-tema` | Tema «Vortara» (GTK y Cinnamon), cristal esmerilado tras la barra, barra estilo Windows 7, avatar, inicio de sesión, cursor en máquinas virtuales |
+| `vortara-tema` | Estilos «Aero» y «Terminal» (GTK y Cinnamon) y su selector en Ajustes del sistema, cristal esmerilado tras la barra, barra estilo Windows 7, avatar, inicio de sesión, cursor en máquinas virtuales |
 | `vortara-bienvenida` | App de bienvenida y la lista de packs (`packs.json`) |
 | `vortara-archive-keyring` | Clave pública y dirección del repositorio |
 | `vortara-pack-*` | Metapaquetes de los packs; se generan solos a partir de `packs.json` |
@@ -33,7 +33,9 @@ Cada carpeta tiene:
 
 - **App de bienvenida**: los textos están en español en el código, marcados con
   `_("...")`. Las traducciones, en `vortara-bienvenida/po/<idioma>.po`.
-  - Tras cambiar textos de la app o de `packs.json`:
+  - El módulo «Estilo de Vortara» de Ajustes (en `vortara-tema`) usa el
+    mismo dominio y la misma lista de traducciones.
+  - Tras cambiar textos de la app, del módulo o de `packs.json`:
     `python3 scripts/traducciones.py extraer` (añade los textos nuevos a
     todos los `.po`) y traducirlos.
   - Para un idioma nuevo: copiar `po/vortara-bienvenida.pot` a

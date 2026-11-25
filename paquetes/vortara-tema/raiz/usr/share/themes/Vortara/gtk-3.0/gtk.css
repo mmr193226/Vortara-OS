@@ -183,3 +183,16 @@ headerbar .linked button:checked {
 
 /* --- Ventanas: esquinas superiores redondeadas ---------------------------- */
 decoration { border-radius: 8px 8px 0 0; }
+
+/* --- Menús y ayudas translúcidos (el compositor de Cinnamon los mezcla con
+ * lo que hay detrás) ---------------------------------------------------- */
+menu, .menu, .context-menu {
+  background-color: alpha(#0E2224, 0.86);
+  border: 1px solid alpha(#7FE3D6, 0.30);
+}
+.csd menu, .csd .menu, .csd .context-menu { border-radius: 6px; }
+tooltip, tooltip.background {
+  background-color: alpha(#0A2428, 0.84);
+  border: 1px solid alpha(#7FE3D6, 0.35);
+  border-radius: 6px;
+}

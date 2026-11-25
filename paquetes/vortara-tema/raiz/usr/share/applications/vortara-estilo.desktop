@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Application
+Name=Estilo de Vortara
+Name[en]=Vortara Style
+Name[pt]=Estilo do Vortara
+Name[pt_BR]=Estilo do Vortara
+Name[fr]=Style de Vortara
+Name[de]=Vortara-Stil
+Name[it]=Stile di Vortara
+Name[ca]=Estil de Vortara
+Comment=Elige el aspecto del escritorio: Aero o Terminal
+Comment[en]=Choose the look of the desktop: Aero or Terminal
+Comment[pt]=Escolha o aspeto do ambiente de trabalho: Aero ou Terminal
+Comment[pt_BR]=Escolha a aparência da área de trabalho: Aero ou Terminal
+Comment[fr]=Choisissez l'apparence du bureau : Aero ou Terminal
+Comment[de]=Wählen Sie das Aussehen der Arbeitsfläche: Aero oder Terminal
+Comment[it]=Scegli l'aspetto del desktop: Aero o Terminale
+Comment[ca]=Tria l'aspecte de l'escriptori: Aero o Terminal
+Exec=cinnamon-settings vortara
+Icon=vortara-estilo
+Terminal=false
+Categories=Settings;DesktopSettings;
+OnlyShowIn=X-Cinnamon;
+Keywords=estilo;tema;aero;terminal;style;theme;

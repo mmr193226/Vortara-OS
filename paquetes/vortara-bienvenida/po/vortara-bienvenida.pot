@@ -163,6 +163,40 @@ msgstr ""
 msgid "Espera a que termine la instalación para cerrar la ventana."
 msgstr ""
 
+msgid "Elige el aspecto del escritorio: Aero o Terminal"
+msgstr ""
+
+msgid ""
+"estilo, tema, aspecto, aero, terminal, vortara, minimalista, transparente"
+msgstr ""
+
+msgid "Estilo de Vortara"
+msgstr ""
+
+msgid "Estilo del escritorio"
+msgstr ""
+
+msgid ""
+"Cambia por completo el aspecto: ventanas, barra de tareas, iconos y fondo."
+msgstr ""
+
+msgid "Aero"
+msgstr ""
+
+msgid ""
+"Cristal translúcido, fondos con brillo y la barra de tareas al estilo de Windows 7."
+msgstr ""
+
+msgid ""
+"Negro, sencillo y ligero, como una terminal, con el toque teal de Vortara. Va mejor en equipos con pocos recursos."
+msgstr ""
+
+msgid "El nuevo estilo se aplicará al reiniciar el equipo."
+msgstr ""
+
+msgid "Reiniciar ahora"
+msgstr ""
+
 msgid "Desarrollo básico"
 msgstr ""
 

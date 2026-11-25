@@ -27,6 +27,10 @@ RAIZ = Path(__file__).resolve().parent.parent
 PAQUETE = RAIZ / "paquetes" / "vortara-bienvenida"
 APP = PAQUETE / "raiz" / "usr" / "bin" / "vortara-bienvenida"
 PACKS = PAQUETE / "raiz" / "usr" / "share" / "vortara" / "packs.json"
+# «Estilo de Vortara» en Ajustes del sistema (paquete vortara-tema) usa
+# también este dominio de traducción.
+MODULO_AJUSTES = (RAIZ / "paquetes" / "vortara-tema" / "raiz" / "usr" / "share" / "cinnamon"
+                  / "cinnamon-settings" / "modules" / "cs_vortara.py")
 DIR_PO = PAQUETE / "po"
 DOMINIO = "vortara-bienvenida"
 
@@ -104,16 +108,19 @@ def cabecera_po(idioma=""):
 # --- Extracción --------------------------------------------------------------
 
 def textos_de_la_app():
-    """Textos marcados con _("...") en la app y textos de packs.json."""
+    """Textos marcados con _("...") en la app y en el módulo de Ajustes, y
+    textos de packs.json."""
     textos = []
-    arbol = ast.parse(APP.read_text(encoding="utf-8"))
-    for nodo in ast.walk(arbol):
-        if (isinstance(nodo, ast.Call) and isinstance(nodo.func, ast.Name)
-                and nodo.func.id == "_" and nodo.args
-                and isinstance(nodo.args[0], ast.Constant)
-                and isinstance(nodo.args[0].value, str)):
-            textos.append((nodo.lineno, nodo.args[0].value))
-    textos = [t for _l, t in sorted(textos)]
+    for fuente in (APP, MODULO_AJUSTES):
+        encontrados = []
+        arbol = ast.parse(fuente.read_text(encoding="utf-8"))
+        for nodo in ast.walk(arbol):
+            if (isinstance(nodo, ast.Call) and isinstance(nodo.func, ast.Name)
+                    and nodo.func.id == "_" and nodo.args
+                    and isinstance(nodo.args[0], ast.Constant)
+                    and isinstance(nodo.args[0].value, str)):
+                encontrados.append((nodo.lineno, nodo.args[0].value))
+        textos += [t for _l, t in sorted(encontrados)]
     packs = json.loads(PACKS.read_text(encoding="utf-8"))
     for pack in packs.values():
         textos += [pack["nombre"], pack["descripcion"], pack["incluye"]]

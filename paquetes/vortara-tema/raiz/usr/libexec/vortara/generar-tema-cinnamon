@@ -7,13 +7,15 @@
 # (disparador de dpkg), porque parte de los archivos de Cinnamon.
 set -e
 
-tema=/usr/share/themes/Vortara
-
-# --- Tema de Cinnamon ---------------------------------------------------
-# Se parte del tema por defecto del paquete (así se adapta solo si Cinnamon
-# se actualiza), se cambian sus azules por teal y se añade la capa de Vortara.
-if [ -f /usr/share/cinnamon/theme/cinnamon.css ]; then
-	rm -rf /usr/share/themes/Vortara/cinnamon
+# --- Temas de Cinnamon ---------------------------------------------------
+# Hay dos estilos: «Vortara» (Aero, cristal) y «Vortara-Terminal» (negro y
+# minimalista). Los dos parten del tema por defecto del paquete (así se adaptan
+# solos si Cinnamon se actualiza): se cambian sus azules por teal y se añade la
+# capa propia de cada estilo.
+generar() {
+	tema="/usr/share/themes/$1"
+	capa="/usr/share/vortara/tema/$2"
+	rm -rf "$tema/cinnamon"
 	mkdir -p "$tema/cinnamon"
 	cp -a /usr/share/cinnamon/theme/. "$tema/cinnamon/"
 	sed -i \
@@ -22,11 +24,16 @@ if [ -f /usr/share/cinnamon/theme/cinnamon.css ]; then
 		-e 's/#1f76e1/#0F9488/gI' \
 		-e 's/#78aeed/#5EEAD4/gI' \
 		"$tema/cinnamon/cinnamon.css"
-	cat /usr/share/vortara/tema/cinnamon-vortara.css >> "$tema/cinnamon/cinnamon.css"
+	cat "$capa" >> "$tema/cinnamon/cinnamon.css"
 	# Si no se sustituyó ningún azul, el tema por defecto ha cambiado: avisar.
 	if grep -qi '#3584e4' "$tema/cinnamon/cinnamon.css"; then
-		echo "Aviso: quedan azules sin cambiar en el tema de Cinnamon" >&2
+		echo "Aviso: quedan azules sin cambiar en el tema de Cinnamon $1" >&2
 	fi
+}
+
+if [ -f /usr/share/cinnamon/theme/cinnamon.css ]; then
+	generar Vortara cinnamon-vortara.css
+	generar Vortara-Terminal cinnamon-terminal.css
 fi
 
 # --- Applets de la barra de tareas ---------------------------------------

@@ -70,6 +70,40 @@ Diseño propio inspirado en Aero (no usa imágenes ni recursos de Windows):
   burbujas), así que son propios y de dominio público (CC0). El de por defecto
   es `aero.jpg`; `aurora.png` sigue disponible.
 
+### Dos estilos: «Aero» y «Terminal»
+
+El escritorio tiene dos estilos que lo cambian por completo. Se eligen en
+**Ajustes del sistema > Estilo de Vortara** (módulo
+`cinnamon-settings/modules/cs_vortara.py`) y se aplican **al reiniciar**:
+
+- **Aero** (por defecto): todo lo descrito arriba. Ahora más transparente:
+  barra, menús, Alt+Tab, notificaciones, menús y ayudas de GTK translúcidos, y
+  la Terminal con un 18 % de transparencia.
+- **Terminal**: negro, plano y ligero. Tema GTK `Vortara-Terminal` (sin
+  degradados ni sombras, esquinas rectas, acento teal), tema de Cinnamon con la
+  misma idea (`cinnamon-terminal.css`), letra DejaVu Sans Mono, iconos Adwaita
+  (sencillos), barra fina de 30 px con «>_ vortara» como menú, lista de
+  ventanas en texto y reloj solo con la hora, fondo `terminal.jpg`, sin efectos
+  ni animaciones ni la extensión de cristal, y la Terminal en negro con cursor
+  teal.
+
+Cómo funciona:
+
+- La elección se guarda en `~/.config/vortara/estilo` (cada usuario la suya).
+- Al entrar en la sesión, antes de que arranque Cinnamon,
+  `/etc/X11/Xsession.d/90vortara-estilo` llama a
+  `/usr/libexec/vortara/aplicar-estilo --pendiente`, que aplica el estilo si
+  aún no está aplicado (`~/.config/vortara/estilo-aplicado`). Así el cambio es
+  de una vez y completo, sin medias tintas con el escritorio en marcha.
+- «Aero» son los valores de `90_vortara.gschema.override`: volver a él es
+  devolver las claves a su valor por defecto. Al cambiar de estilo se
+  restablecen la barra, el fondo y el tema (lo que el usuario hubiera cambiado
+  a mano en ellos se pierde).
+- La barra «Terminal» usa applets con número propio (100-110) y sus ajustes se
+  escriben en `~/.config/cinnamon/spices/` antes de que Cinnamon los cargue.
+- Los textos del módulo se traducen con el dominio de la app de bienvenida.
+- Probado con Cinnamon 6.4 en una pantalla virtual: Aero → Terminal → Aero.
+
 ### Cursor en máquinas virtuales
 
 En VirtualBox, VMware, Hyper-V y QEMU, el cursor «por hardware» a menudo no se
